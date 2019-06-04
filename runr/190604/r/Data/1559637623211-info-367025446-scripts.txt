@@ -1,0 +1,53 @@
+# Saved at 5/31/2019 11:03:56 am<span title="5/31/2019 11:03:56 am">Quick Count Simulation</span>
+print('=== Quick Count Simulation - Visualisasi Data ===')
+df <- read.csv(file="tps2014-suara.csv", sep=",", header=F)
+names(df)[1] <- "TPS-ID" # ubah nama kolom
+names(df)[2] <- "TPS-AREA" # ubah nama kolom
+names(df)[3] <- "TPS-NO" # ubah nama kolom
+names(df)[4] <- "Prabowo-Hatta" # ubah nama kolom
+names(df)[5] <- "Jokowi-JK" # ubah nama kolom
+names(df)[6] <- "Sah" # ubah nama kolom
+names(df)[7] <- "Tidak Sah" # ubah nama kolom
+summary(df) # rangkuman data
+tail(df) # lihat data terakhir
+df = df[, 4:5]
+v1 <- sum(df[, 1]) # jumlah total suara prabowo-hatta
+v2 <- sum(df[, 2]) # jumlah total suara jokowi-jk
+m <- v1 + v2
+p <- v1 / m
+print(paste("Real Count: Prabowo-Hatta=", v1 / m * 1# Saved at 6/1/2019 17:10:49 pm<span title="6/1/2019 17:10:49 pm">Normal Distribution</span>
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 6/1/2019 17:10:49 pm<span title="6/1/2019 17:10:49 pm">Normal Distribution</span>
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 6/2/2019 11:15:58 am<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/2/2019 11:15:58 am">Test</span>
+
+myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vTEZDgR0YJK_iuBOrLyRLOx_pZSh03sayLx2eOoZp2BylkFKYBliHnZX3t-2Ny4YSPtL7iDiBvDPn3W/pub?output=csv"
+scores<-read.csv(url(myurl) ) 
+scores
+final<-scores$FINAL/2
+final
+plot(scores$EXAM1, final ,xlab="Exam 1 Scores", ylab="Final exam scores", main="linear regression line")
+mean.Exam1<-mean(scores$EXAM1)
+abline(h=mean.Exam1)
+model1<-lm(scores$EXAM1~ final, data=scores)  
+abline(model1, col="red")
+cor(  scores$EXAM1, final)
+summary.lm(model1)# Saved at 6/4/2019 15:40:06 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/4/2019 15:40:06 pm">Math 115</span>
+v<-c(1,1,2,3,3,4,4.5,4.75,6,6.5,7,7,7, 9,9.5,10)
+h<-hist(v, xlim=c(0,12),ylim=c(0,12),
+     xlab= "change me x", ylab="change me y", main="change me Title", freq=TRUE,
+     col="chocolate",
+ border="brown",
+breaks=c(0,4,10),cex.main=.9,cex.lab=1, cex.axis=1, cex.main=1, cex.sub=1)
