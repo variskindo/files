@@ -1,0 +1,14 @@
+# Saved at 6/3/2019 23:21:28 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/3/2019 23:21:28 pm">Math 115: Histogram Template</span>
+v<-c(1,1,2,3,3,4,4.5,4.75,6,6.5,7,7,7, 9,9.5,10)
+h<-hist(v, xlim=c(0,12),ylim=c(0,12),
+     xlab= "change me x", ylab="change me y", main="change me Title", freq=TRUE,
+     col="chocolate",
+ border="brown",
+breaks=c(0,4,10),cex.main=.9,cex.lab=1, cex.axis=1, cex.main=1, cex.sub=1)
+# Saved at 6/4/2019 8:02:47 am<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/4/2019 8:02:47 am">Sourcing R code from Github</span>
+#Sourcing R code from github
+
+library(RCurl)
+script <- getURL("https://raw.githubusercontent.com/pmcloughlin44/Facebook-side-by-side-Histograms-of-age-by-Sex/master/R%20code"
+, ssl.verifypeer = FALSE)
+eval(parse(text = script))
