@@ -1,0 +1,7 @@
+# Saved at 6/9/2019 11:36:21 am<span title="6/9/2019 11:36:21 am">Skriptik</span>
+library (datasets)
+chickwts
+head (chickwts)
+str (chickwts)
+summary (chickwts)
+hist (chickwts$weight, main = "  ", col = "green", xlab = " ()")
