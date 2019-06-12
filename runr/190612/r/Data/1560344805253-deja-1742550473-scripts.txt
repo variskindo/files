@@ -1,0 +1,27 @@
+# Saved at 11/16/2018 0:40:39 am
+# Saved at 11/16/2018 0:36:21 am
+# Saved at 11/16/2018 0:35:07 am
+# Saved at 11/16/2018 0:29:29 am
+str(obs) # structure of our data
+x<-c(23,-10,45)
+names(x)<-c("q","p","r")
+
+
+# runr--444687497.r (file:///storage/emulated/0/.../)
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code# Saved at 11/16/2018 0:36:21 am
+# Saved at 11/16/2018 0:35:07 am
+# Saved at 11/16/2018 0:29:29 am
+str(obs) # structure of our data
+x<-c(23,-10,45)
+names(x)<-c("q","p","r")
+
+# Saved at 11/19/2018 1:01:09 am
+str(obs) # structure of our data
+x <- dnorm(1000, mean=100,de=30)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
