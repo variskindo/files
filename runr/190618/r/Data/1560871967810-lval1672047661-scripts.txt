@@ -1,0 +1,5 @@
+# Saved at 5/18/2018 22:34:34 pm
+# Saved at 5/18/2018 22:32:41 pm
+# Saved at 5/18/2018 22:31:07 pm
+X=seq(0,5,by=0.01)
+plot(X,dgamma(X,3,2))
