@@ -1,0 +1,10 @@
+# Saved at 8/30/2018 15:16:40 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+
+# Saved at 8/30/2018 15:31:02 pm
+x <- c(rnorm(1000,-5,1.02) , rnorm(1000,-3,0.4))
+plot(density(x))
