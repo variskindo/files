@@ -1,0 +1,91 @@
+# Saved at 3/5/2019 17:50:16 pm
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+modi_txt = readLines("trump.txt")
+modi<-Corpus(VectorSource(modi_txt))
+modi_data<-tm_map(modi,stripWhitespace)
+modi_data<-tm_map(modi_data,tolower)
+modi_data<-tm_map(modi_data,removeNumbers)
+modi_data<-tm_map(modi_data,removePunctuation)
+modi_data<-tm_map(modi_data,removeWords, stopwords("english"))
+modi_data<-tm_map(modi_data, removeWords, c("and","the","our","that","for","are","also","more","has","must","have","should","this","with"))
+tdm_modi<-TermDocumentMatrix (modi_data) #Creates a TDM
+TDM1<-as.matrix(tdm_modi) #Convert this into a matrix format
+v = sort(rowSums(TDM1), decreasing = TRUE) #Gives you the frequencies for every word
+summary(v)
+wordcloud (modi_data, scale=c(5,0.5), random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+
+
+# Saved at 2/27/2019 8:43:42 am
+# ggplot2 examples
+library(ggplot2) 
+library(gridExtra)
+
+# create factors with value labels 
+mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
+   labels=c("3gears","4gears","5gears")) 
+mtcars$am <- factor(mtcars$am,levels=c(0,1),
+   labels=c("Automatic","Manual")) 
+mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
+   labels=c("4cyl","6cyl","8cyl")) 
+
+# Kernel density plots for mpg
+# grouped by number of gears (indicated by color)
+plot1 <- qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5), 
+   main="Distribution of Gas Milage", xlab="Miles Per Gallon", 
+   ylab="Density")
+
+# Scatterplot of mpg vs. hp for each combination of gears and cylinders
+# in each facet, transmittion type is represented by shape and color
+plot2 <- qplot(hp, mpg, data=mtcars, shape=am, color=am, 
+   facets=gear~cyl, size=I(3),
+   xlab="Horsepower", ylab="Miles per Gallon") 
+
+# Separate regressions of mpg on weight for each number of cylinders
+plot3 <- qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"), 
+   method="lm", formula=y~x, color=cyl, 
+   main="Regression of MPG on Weight", 
+   xlab="Weight", ylab="Miles per Gallon")
+
+# Boxplots of mpg by number of gears 
+# observations (points) are overlayed and jittered
+plot4 <- qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"), 
+   fill=gear, main="Mileage by Gear Number",
+   xlab="", ylab="Miles per Gallon")
+
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2, nrow = 2)
+
+
+# Saved at 2/23/2019 5:54:48 am
+library("RODBC")
+library("dplyr")
+library("ggplot2")
+conn <- odbcDriverConnect('driver={SQL Server};server=VMI242621;database=VMR;trusted_connection=true')
+data <- sqlQuery(conn, "SELECT * FROM MRM_FX_RATES")
+data
+plot(data)
+
+
+# Saved at 2/23/2019 5:45:24 am
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+# Saved at 3/23/2019 11:19:09 am
+#https://www.r-bloggers.com/network-visualization-in-r-with-the-igraph-package/
+library(igraph)
+bsk<-read.table("edges.csv", sep=',', dec='.', header=T) #specify the path, separator(tab, comma, ...), decimal point symbol, etc.
+
+# Transform the table into the required graph format:
+bsk.network<-graph.data.frame(bsk, directed=F) #the 'directed' attribute specifies whether the edges are directed
+# or equivelent irrespective of the position (1st vs 2nd column). For directed graphs use 'directed=T'
+
+# Inspect the data:
+V(bsk.network) #prints the list of vertices (people)
+E(bsk.network) #prints the list of edges (relationships)
+degree(bsk.network) #print the number of edges per vertex (relationships per people)
+
+# Plot the graph right away
+plot(bsk.network)
