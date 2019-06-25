@@ -1,0 +1,90 @@
+# Saved at 5/24/2019 10:45:00 am<span title="5/24/2019 10:45:00 am">Facebook Survey Age Histogram</span>
+#Facebook Survey Age Histogram
+
+#Facebook Survey Template
+
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSOQJSNr-6RJoqPJOsyrB5g1R3V4oNJss4oBuuc0WLlYJBo-YxSbyE9MVpCLvcgzD7sdlDq6m6VXYo0/pub?gid=0&single=true&output=csv"
+
+Facebook_Survey<-read.csv(url(Myurl))
+print(Facebook_Survey)
+#Facebook_Survey
+age<-Facebook_Survey$Age
+gender<-Facebook_Survey$Gender
+visits<-Facebook_Survey$VisitsPerWeek
+friends<-Facebook_Survey$Friends
+facebook<-Facebook_Survey$Facebook
+#facebook
+#age
+#gender
+#visits
+#friends
+#typeof(
+#Facebook_Survey)
+average_user_visits=sum(visits)/sum(facebook)
+average_user_age=sum(age)/sum(facebook)
+average_users=mean(facebook)
+average_user_friends=sum(friends)/sum(facebook)
+men<-length(gender)-sum(gender)
+women<-sum(gender)
+#print(paste("Number of people in survey = ", #men+women))
+
+print("Number of people in survey")
+print(men+women)
+print("Number of men in survey")
+print(men)
+print("Number of women in survey")
+print(women)
+print(" Average number of visits per week")
+print(average_user_visits)
+print(" Average age of people in survey")
+print(average_user_age)
+print(" Percent of people in survey who use Facebook")
+print(average_users*100)
+print(" Average number of Facebook friends of Facebook users in survey")
+#average_user_friends
+print(average_user_friends)
+
+
+#Facebook users who are men
+
+# values to be removed
+x<-c(0)
+y<-c(1)
+
+# positions where facebook has zeros or gender is 1
+Positions= which(facebook %in% x | gender %in% y)
+men_user_visits<- visits[-Positions]
+#men_user_visits
+men_user_age<-age[-Positions]
+men_user_friends<-friends[-Positions]
+#men_user_friends
+print(" Ages of men who have Facebook")
+print(men_user_age)
+
+#Facebook users who are women
+
+# positions where Facebook has zeros or gender is 0
+Positions= which(facebook %in% x | gender %in% x)
+women_user_visits<- visits[-Positions]
+#women_user_visits
+women_user_age<-age[-Positions]
+#women_user_friends<-friends[-Positions]
+print(" Ages of women who have Facebook")
+print(women_user_age)
+
+# print the two histograms side-by-side
+par(mfrow=c(1,2))
+w<-hist(women_user_age, main="Women Facebook users by age",col="chocolate",cex.main=.9)
+
+
+text(w$mids,w$counts,labels=w$counts, adj=c(0.5, -0.5))
+
+m<-hist(men_user_age, main="Men Facebook users by age",col="darkmagenta",cex.main=.9)
+
+text(m$mids,m$counts,labels=m$counts, adj=c(0.5, -0.5))
+
+
+
+
+
+
