@@ -1,0 +1,92 @@
+# Saved at 3/5/2019 17:50:16 pm
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+modi_txt = readLines("trump.txt")
+modi<-Corpus(VectorSource(modi_txt))
+modi_data<-tm_map(modi,stripWhitespace)
+modi_data<-tm_map(modi_data,tolower)
+modi_data<-tm_map(modi_data,removeNumbers)
+modi_data<-tm_map(modi_data,removePunctuation)
+modi_data<-tm_map(modi_data,removeWords, stopwords("english"))
+modi_data<-tm_map(modi_data, removeWords, c("and","the","our","that","for","are","also","more","has","must","have","should","this","with"))
+tdm_modi<-TermDocumentMatrix (modi_data) #Creates a TDM
+TDM1<-as.matrix(tdm_modi) #Convert this into a matrix format
+v = sort(rowSums(TDM1), decreasing = TRUE) #Gives you the frequencies for every word
+summary(v)
+wordcloud (modi_data, scale=c(5,0.5), random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+
+
+# Saved at 2/27/2019 8:43:42 am
+# ggplot2 examples
+library(ggplot2) 
+library(gridExtra)
+
+# create factors with value labels 
+mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
+   labels=c("3gears","4gears","5gears")) 
+mtcars$am <- factor(mtcars$am,levels=c(0,1),
+   labels=c("Automatic","Manual")) 
+mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
+   labels=c("4cyl","6cyl","8cyl")) 
+
+# Kernel density plots for mpg
+# grouped by number of gears (indicated by color)
+plot1 <- qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5), 
+   main="Distribution of Gas Milage", xlab="Miles Per Gallon", 
+   ylab="Density")
+
+# Scatterplot of mpg vs. hp for each combination of gears and cylinders
+# in each facet, transmittion type is represented by shape and color
+plot2 <- qplot(hp, mpg, data=mtcars, shape=am, color=am, 
+   facets=gear~cyl, size=I(3),
+   xlab="Horsepower", ylab="Miles per Gallon") 
+
+# Separate regressions of mpg on weight for each number of cylinders
+plot3 <- qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"), 
+   method="lm", formula=y~x, color=cyl, 
+   main="Regression of MPG on Weight", 
+   xlab="Weight", ylab="Miles per Gallon")
+
+# Boxplots of mpg by number of gears 
+# observations (points) are overlayed and jittered
+plot4 <- qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"), 
+   fill=gear, main="Mileage by Gear Number",
+   xlab="", ylab="Miles per Gallon")
+
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2, nrow = 2)
+
+
+# Saved at 2/23/2019 5:54:48 am
+library("RODBC")
+library("dplyr")
+library("ggplot2")
+conn <- odbcDriverConnect('driver={SQL Server};server=VMI242621;database=VMR;trusted_connection=true')
+data <- sqlQuery(conn, "SELECT * FROM MRM_FX_RATES")
+data
+plot(data)
+
+
+# Saved at 2/23/2019 5:45:24 am
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+# Saved at 3/23/2019 11:19:09 am
+#https://www.r-bloggers.com/network-visualization-in-r-with-the-igraph-package/
+library(igraph)
+bsk<-read.table("edges.csv", sep=',', dec='.', header=T) #specify the path, separator(tab, comma, ...), decimal point symbol, etc.
+
+# Transform the table into the required graph format:
+bsk.network<-graph.data.frame(bsk, directed=F) #the 'directed' attribute specifies whether the edges are directed
+# or equivelent irrespective of the position (1st vs 2nd column). For directed graphs use 'directed=T'
+
+# Inspect the data:
+V(bsk.network) #prints the list of vertices (people)
+E(bsk.network) #prints the list of edges (relationships)
+degree(bsk.network) #print the number of edges per vertex (relationships per people)
+
+# Plot the graph right away
+plot(bsk.network)# Saved at 7/2/2019 10:33:14 am<span title="7/2/2019 10:33:14 am">Credit Scoring - KPR</span>
+# === Credit Scoring - KPR ===# +++ Load Data +++print('====== LOAD DATA ======')df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyhead(df, 5)# list types for each attributesapply(df, class)#go-1# +++ Missing Data +++print('====== MISSING DATA ======')library(caret)library(sqldf)library(Amelia)par(mfrow=c(2,1))df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlydim(df)for (i in colnames(df)){   sqldf(paste("select count(*) from df where ", colnames(df[i]), " LIKE '%NULL%'"))   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}head(df)# create a missing mapmissmap(df, col=c("black", "grey"), legend=FALSE)# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)dim(df)# create a missing mapmissmap(df, col=c("black", "grey"), legend=FALSE)#go-2# +++ Create Validation Dataset +++print('====== CREATE VALIDATION DATASET ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# dimensions of datasetdim(training)# list the levels for the classlevels(training$CLASS)# summarize the class distributionpercentage <- prop.table(table(training$CLASS)) * 100cbind(freq=table(training$CLASS), percentage=percentage)#go-3# +++ Statistical Summary +++print('====== STATISTICAL SUMMARY ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# summarize attribute distributionssummary(training)#go-4# +++ Visualize Dataset - Univariate Plots +++print('====== VISUALIZE DATASET - UNIVARIATE PLOTS ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)#df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}head(df)# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# split input and outputx <- training[,3:ncol(df)]colnames(x) # names of columnsy <- training[,2]# boxplot for each attribute on one imagepar(mfrow=c(2,2))for(i in 1:3) {  boxplot(x[,i], main=names(training)[i])}# barplot for class breakdownplot(y)#go-5# +++ Visualize Dataset - Multivariate Plots1 +++print('====== VISUALIZE DATASET - MULTIVARIATE PLOT1 ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# split input and outputx <- training[,3:ncol(df)]y <- training[,2]# scatter plot matrixpairs(training[,1:round(ncol(x)/3)])#go-6# +++ Visualize Dataset - Multivariate Plots2 +++print('====== VISUALIZE DATASET - MULTIVARIATE PLOT2 ======')library(caret)library(lattice)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# split input and outputx <- training[,3:ncol(df)]y <- training[,2]# scatter plot matrixsplom(training[,round(ncol(x)/3)+1:2*round(ncol(x)/3)])#go-7# +++ Visualize Dataset - Multivariate Plots3 +++print('====== VISUALIZE DATASET - MULTIVARIATE PLOT3 ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# split input and outputx <- training[,3:ncol(df)]y <- training[,2]# scatter plot matrixfeaturePlot(x=training[,(2*round(ncol(x)/3)+1):ncol(x)], y=y, plot="pairs")#go-8# +++ Build Models +++print('====== BUILD MODELS ======')library(caret)df <- read.table("kpr.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 500 cases onlyfor (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)df$CLASS = as.factor(df$CLASS)# Split out validation dataset# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE)# select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelsdataset <- df[validationIndex,]# Run algorithms using 10-fold cross-validationtrainControl <- trainControl(method="cv", number=10)metric <- "Acuracy"# LDAset.seed(888)fit.lda <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="lda", metric=metric, trControl=trainControl)# GLMset.seed(888)fit.glm <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="glm", metric=metric, trControl=trainControl)# SVMset.seed(888)fit.svm <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="svmRadial", metric=metric, trControl=trainControl)# CARTset.seed(888)fit.cart <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="rpart", metric=metric, trControl=trainControl)# KNNset.seed(888)fit.knn <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="knn", metric=metric, trControl=trainControl)# RFset.seed(888)fit.rf <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="rf", metric=metric, trControl=trainControl)# Compare algorithmsresults <- resamples(list(LM=fit.lda, GLM=fit.glm, SVM=fit.svm, CART=fit.cart,    KNN=fit.knn, RF=fit.rf))summary(results)dotplot(results)# summarize Best Modelprint(fit.rf)#go-9# +++ Make Predictions +++print('====== MAKE PREDICTIONS ======')library(caret)library(pROC)df <- read.table("kpr.csv", sep=',', dec='.', header=T)for (i in colnames(df)){   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])}# prepare parameters for data transformset.seed(888)dfClean <- df[complete.cases(df),]x <- dfClean[,]preprocessParams <- preProcess(x, method=c("BoxCox"))df <- predict(preprocessParams, x)df$CLASS = as.factor(df$CLASS)# Split out validation dataset# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE)# select 20% of the data for validationvalidation <- df[-validationIndex,]# use the remaining 80% of data to training and testing the modelsdataset <- df[validationIndex,]# Run algorithms using 10-fold cross-validationtrainControl <- trainControl(method="cv", number=10)metric <- "Acuracy"# RFset.seed(888)fit.lda <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,   data=dataset, method="lda", metric=metric, trControl=trainControl)# estimate skill of RF on the validation datasetpredictions <- predict(fit.lda, validation)confusionMatrix(predictions, validation$CLASS)pred <- predict(fit.lda, validation, type="prob")(auc(validation$CLASS, pred[,2]))plot(roc(validation$CLASS, pred[,2]))#go-10
