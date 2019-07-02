@@ -1,0 +1,757 @@
+# Saved at 2/27/2019 8:43:42 am
+# ggplot2 examples
+library(ggplot2) 
+library(gridExtra)
+
+# create factors with value labels 
+mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
+   labels=c("3gears","4gears","5gears")) 
+mtcars$am <- factor(mtcars$am,levels=c(0,1),
+   labels=c("Automatic","Manual")) 
+mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
+   labels=c("4cyl","6cyl","8cyl")) 
+
+# Kernel density plots for mpg
+# grouped by number of gears (indicated by color)
+plot1 <- qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5), 
+   main="Distribution of Gas Milage", xlab="Miles Per Gallon", 
+   ylab="Density")
+
+# Scatterplot of mpg vs. hp for each combination of gears and cylinders
+# in each facet, transmittion type is represented by shape and color
+plot2 <- qplot(hp, mpg, data=mtcars, shape=am, color=am, 
+   facets=gear~cyl, size=I(3),
+   xlab="Horsepower", ylab="Miles per Gallon") 
+
+# Separate regressions of mpg on weight for each number of cylinders
+plot3 <- qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"), 
+   method="lm", formula=y~x, color=cyl, 
+   main="Regression of MPG on Weight", 
+   xlab="Weight", ylab="Miles per Gallon")
+
+# Boxplots of mpg by number of gears 
+# observations (points) are overlayed and jittered
+plot4 <- qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"), 
+   fill=gear, main="Mileage by Gear Number",
+   xlab="", ylab="Miles per Gallon")
+
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2, nrow = 2)# Saved at 2/23/2019 5:54:48 am
+library("RODBC")
+library("dplyr")
+library("ggplot2")
+conn <- odbcDriverConnect('driver={SQL Server};server=VMI242621;database=VMR;trusted_connection=true')
+data <- sqlQuery(conn, "SELECT * FROM MRM_FX_RATES")
+data
+plot(data)# Saved at 2/23/2019 5:45:24 am
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code# Saved at 3/23/2019 11:19:09 am
+#https://www.r-bloggers.com/network-visualization-in-r-with-the-igraph-package/
+library(igraph)
+bsk<-read.table("edges.csv", sep=',', dec='.', header=T) #specify the path, separator(tab, comma, ...), decimal point symbol, etc.
+
+# Transform the table into the required graph format:
+bsk.network<-graph.data.frame(bsk, directed=F) #the 'directed' attribute specifies whether the edges are directed
+# or equivelent irrespective of the position (1st vs 2nd column). For directed graphs use 'directed=T'
+
+# Inspect the data:
+V(bsk.network) #prints the list of vertices (people)
+E(bsk.network) #prints the list of edges (relationships)
+degree(bsk.network) #print the number of edges per vertex (relationships per people)
+
+# Plot the graph right away
+plot(bsk.network)# Saved at 7/2/2019 10:33:14 am<span title="7/2/2019 10:33:14 am">Credit Scoring - KPR</span>
+# === Credit Scoring - KPR ===
+
+# +++ Load Data +++
+print('====== LOAD DATA ======')
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+head(df, 5)
+# list types for each attribute
+sapply(df, class)
+#go-1
+
+# +++ Missing Data +++
+print('====== MISSING DATA ======')
+library(caret)
+library(sqldf)
+library(Amelia)
+par(mfrow=c(2,1))
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+dim(df)
+for (i in colnames(df)){
+   sqldf(paste("select count(*) from df where ", colnames(df[i]), " LIKE '%NULL%'"))
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+head(df)
+# create a missing map
+missmap(df, col=c("black", "grey"), legend=FALSE)
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+dim(df)
+# create a missing map
+missmap(df, col=c("black", "grey"), legend=FALSE)
+#go-2
+
+# +++ Create Validation Dataset +++
+print('====== CREATE VALIDATION DATASET ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# dimensions of dataset
+dim(training)
+# list the levels for the class
+levels(training$CLASS)
+# summarize the class distribution
+percentage <- prop.table(table(training$CLASS)) * 100
+cbind(freq=table(training$CLASS), percentage=percentage)
+#go-3
+
+# +++ Statistical Summary +++
+print('====== STATISTICAL SUMMARY ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# summarize attribute distributions
+summary(training)
+#go-4
+
+# +++ Visualize Dataset - Univariate Plots +++
+print('====== VISUALIZE DATASET - UNIVARIATE PLOTS ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+#df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+head(df)
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,3:ncol(df)]
+colnames(x) # names of columns
+y <- training[,2]
+# boxplot for each attribute on one image
+par(mfrow=c(2,2))
+for(i in 1:3) {
+  boxplot(x[,i], main=names(training)[i])
+}
+# barplot for class breakdown
+plot(y)
+#go-5
+
+# +++ Visualize Dataset - Multivariate Plots1 +++
+print('====== VISUALIZE DATASET - MULTIVARIATE PLOT1 ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,3:ncol(df)]
+y <- training[,2]
+# scatter plot matrix
+pairs(training[,1:round(ncol(x)/3)])
+#go-6
+
+# +++ Visualize Dataset - Multivariate Plots2 +++
+print('====== VISUALIZE DATASET - MULTIVARIATE PLOT2 ======')
+library(caret)
+library(lattice)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,3:ncol(df)]
+y <- training[,2]
+# scatter plot matrix
+splom(training[,round(ncol(x)/3)+1:2*round(ncol(x)/3)])
+#go-7
+
+# +++ Visualize Dataset - Multivariate Plots3 +++
+print('====== VISUALIZE DATASET - MULTIVARIATE PLOT3 ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,3:ncol(df)]
+y <- training[,2]
+# scatter plot matrix
+featurePlot(x=training[,(2*round(ncol(x)/3)+1):ncol(x)], y=y, plot="pairs")
+#go-8
+
+# +++ Build Models +++
+print('====== BUILD MODELS ======')
+library(caret)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+df$CLASS = as.factor(df$CLASS)
+# Split out validation dataset
+# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE)
+# select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+dataset <- df[validationIndex,]
+# Run algorithms using 10-fold cross-validation
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Acuracy"
+# LDA
+set.seed(888)
+fit.lda <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="lda", metric=metric, trControl=trainControl)
+# GLM
+set.seed(888)
+fit.glm <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="glm", metric=metric, trControl=trainControl)
+# SVM
+set.seed(888)
+fit.svm <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="svmRadial", metric=metric, trControl=trainControl)
+# CART
+set.seed(888)
+fit.cart <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="rpart", metric=metric, trControl=trainControl)
+# KNN
+set.seed(888)
+fit.knn <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="knn", metric=metric, trControl=trainControl)
+# RF
+set.seed(888)
+fit.rf <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="rf", metric=metric, trControl=trainControl)
+# Compare algorithms
+results <- resamples(list(LM=fit.lda, GLM=fit.glm, SVM=fit.svm, CART=fit.cart, 
+   KNN=fit.knn, RF=fit.rf))
+summary(results)
+dotplot(results)
+# summarize Best Model
+print(fit.rf)
+#go-9
+
+# +++ Make Predictions +++
+print('====== MAKE PREDICTIONS ======')
+library(caret)
+library(pROC)
+df <- read.table("kpr.csv", sep=',', dec='.', header=T)
+for (i in colnames(df)){
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])
+}
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+df$CLASS = as.factor(df$CLASS)
+# Split out validation dataset
+# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)
+validationIndex <- createDataPartition(df$CLASS, p=0.80, list=FALSE)
+# select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+dataset <- df[validationIndex,]
+# Run algorithms using 10-fold cross-validation
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Acuracy"
+# RF
+set.seed(888)
+fit.lda <- train(CLASS ~ FLAG_OWN_CAR + CNT_CHILDREN + AMT_ANNUITY + DAYS_BIRTH + DAYS_EMPLOYED + DAYS_REGISTRATION,
+   data=dataset, method="lda", metric=metric, trControl=trainControl)
+# estimate skill of RF on the validation dataset
+predictions <- predict(fit.lda, validation)
+confusionMatrix(predictions, validation$CLASS)
+pred <- predict(fit.lda, validation, type="prob")
+(auc(validation$CLASS, pred[,2]))
+plot(roc(validation$CLASS, pred[,2]))
+#go-10# Saved at 7/2/2019 10:34:47 am<span title="7/2/2019 10:34:47 am">Fraud Detection</span>
+# === Fraud Detection ===
+
+# +++ Load Data +++
+print('====== LOAD DATA ======')
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+head(df, 5)
+# list types for each attribute
+sapply(df, class)
+#go-1
+
+# +++ Missing Data +++
+print('====== MISSING DATA ======')
+library(caret)
+library(sqldf)
+library(Amelia)
+par(mfrow=c(2,1))
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+dim(df)
+for (i in colnames(df)){
+   sqldf(paste("select count(*) from df where ", colnames(df[i]), " LIKE '%NULL%'"))
+   df[colnames(df[i])][df[colnames(df[i])] == 'NULL'] <- NA #replace to NA
+   df[, colnames(df[i])] <- as.numeric(df[, colnames(df[i])])   
+}
+head(df)
+# create a missing map
+missmap(df, col=c("black", "grey"), legend=FALSE)
+# prepare parameters for data transform
+set.seed(888)
+dfClean <- df[complete.cases(df),]
+x <- dfClean[,]
+preprocessParams <- preProcess(x, method=c("BoxCox"))
+df <- predict(preprocessParams, x)
+dim(df)
+# create a missing map
+missmap(df, col=c("black", "grey"), legend=FALSE)
+#go-2
+
+# +++ Create Validation Dataset +++
+print('====== CREATE VALIDATION DATASET ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# dimensions of dataset
+dim(training)
+# list the levels for the class
+levels(training$Class)
+# summarize the class distribution
+percentage <- prop.table(table(training$Class)) * 100
+cbind(freq=table(training$Class), percentage=percentage)
+#go-3
+
+# +++ Statistical Summary +++
+print('====== STATISTICAL SUMMARY ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# summarize attribute distributions
+summary(training)
+#go-4
+
+# +++ Visualize Dataset - Univariate Plots +++
+print('====== VISUALIZE DATASET - UNIVARIATE PLOTS ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,1:ncol(df)-1]
+colnames(x) # names of columns
+y <- training[,ncol(df)]
+# boxplot for each attribute on one image
+par(mfrow=c(2,2))
+for(i in 1:3) {
+  boxplot(x[,i], main=names(training)[i])
+}
+# barplot for class breakdown
+plot(y)
+#go-5
+
+# +++ Visualize Dataset - Multivariate Plots1 +++
+print('====== VISUALIZE DATASET - MULTIVARIATE PLOT1 ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,1:ncol(df)-1]
+y <- training[,ncol(df)]
+# scatter plot matrix
+pairs(training[,1:round(ncol(x)/3)])
+#go-6
+
+# +++ Visualize Dataset - Multivariate Plots2 +++
+library(caret)
+library(lattice)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,1:30]
+y <- training[,31]
+# scatter plot matrix
+splom(training[,round(ncol(x)/3)+1:2*round(ncol(x)/3)])
+#go-7
+
+# +++ Visualize Dataset - Multivariate Plots3 +++
+print('====== VISUALIZE DATASET - MULTIVARIATE PLOT3 ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# split input and output
+x <- training[,1:ncol(df)-1]
+y <- training[,ncol(df)]
+# scatter plot matrix
+featurePlot(x=training[,(2*round(ncol(x)/3)+1):ncol(x)], y=y, plot="pairs")
+#go-8
+
+# +++ Build Models +++
+print('====== BUILD MODELS ======')
+library(caret)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+df$Class = as.factor(df$Class)
+# Split out validation dataset
+# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE)
+# select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+dataset <- df[validationIndex,]
+# Run algorithms using 10-fold cross-validation
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Acuracy"
+# LDA
+set.seed(888)
+fit.lda <- train(Class~., data=dataset, method="lda", metric=metric, trControl=trainControl)
+# GLM
+set.seed(888)
+fit.glm <- train(Class~., data=dataset, method="glm", metric=metric, trControl=trainControl)
+# SVM
+set.seed(888)
+fit.svm <- train(Class~., data=dataset, method="svmRadial", metric=metric, trControl=trainControl)
+# CART
+set.seed(888)
+fit.cart <- train(Class~., data=dataset, method="rpart", metric=metric, trControl=trainControl)
+# KNN
+set.seed(888)
+fit.knn <- train(Class~., data=dataset, method="knn", metric=metric, trControl=trainControl)
+# RF
+set.seed(888)
+fit.rf <- train(Class~., data=dataset, method="rf", metric=metric, trControl=trainControl)
+# Compare algorithms
+results <- resamples(list(LM=fit.lda, GLM=fit.glm, SVM=fit.svm, CART=fit.cart, 
+   KNN=fit.knn, RF=fit.rf))
+summary(results)
+dotplot(results)
+# summarize Best Model
+print(fit.rf)
+#go-9
+
+# +++ Make Predictions +++
+print('====== MAKE PREDICTIONS ======')
+library(caret)
+library(pROC)
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 500), ] # select 500 cases only
+df$Class = as.factor(df$Class)
+# Split out validation dataset
+# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE)
+# select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+dataset <- df[validationIndex,]
+# Run algorithms using 10-fold cross-validation
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Acuracy"
+# RF
+set.seed(888)
+fit.rf <- train(Class~., data=dataset, method="rf", metric=metric, trControl=trainControl)
+# estimate skill of RF on the validation dataset
+predictions <- predict(fit.rf, validation)
+confusionMatrix(predictions, validation$Class)
+pred <- predict(fit.rf, validation, type="prob")
+(auc(validation$Class, pred[,2]))
+plot(roc(validation$Class, pred[,2]))
+#go-10# Saved at 7/2/2019 18:49:38 pm<span title="7/2/2019 18:49:38 pm">ISEI Batch #8 - Introduction to Machine Learning</span>
+# Slicing Records
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+head(df, 5)
+#names(df)
+#summary(df)
+df[5, 3]
+df[5, ]
+df[, 3] # same as df[, 'PetalLength']
+df[5, 1:3] # same as df[5, c(1,2,3)]
+df[-(1:140), ] # exclude row 1 to row 140
+#go-1
+
+# Get Type & Sorting Records
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+#get type
+class(df[5, ])
+class(df[, 3])
+#selecting rows at random
+df <- df[sample(1:20,8), ]
+#sorting records
+df[order(df$SepalLength), ] #order to show the index
+#go-2
+
+# Assignment & Filtering Records
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+#assignment
+df$SepalWidth[df$SepalWidth > 3.5] <- NA #replace to NA
+df$PetalLength <- mean(df$PetalLength)
+#filtering
+df[df$SepalLength>median(df$SepalLength) & df$PetalWidth>2.3, ]
+#go-3
+
+# Iterate a df
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+for (row in 1:nrow(df)) {
+ if (row > 10 && row < 20)
+   print(paste(row, df[row, 'SepalLength']))
+}
+#go-4
+
+# === BigQuery Speed Test ===
+library(bigrquery)
+set_service_token("varisk-demo-xxx.json")
+billing <- "varisk-demo" # replace this with your project ID 
+sql <- paste(
+   "SELECT title, SUM(views) AS views FROM `bigquery-samples.wikipedia_benchmark.Wiki100M` ",
+   'WHERE title LIKE "%Ronaldo%" ',
+   "GROUP BY title ",
+   "ORDER BY views DESC",
+   sep="")
+tb <- bq_project_query(billing, sql)
+bq_table_download(tb, max_results = 10)
+#go-5
+
+# === Text Word Clouds ===
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+modi_txt = readLines("trump.txt")
+modi<-Corpus(VectorSource(modi_txt))
+modi_data<-tm_map(modi,stripWhitespace)
+modi_data<-tm_map(modi_data,tolower)
+modi_data<-tm_map(modi_data,removeNumbers)
+modi_data<-tm_map(modi_data,removePunctuation)
+modi_data<-tm_map(modi_data,removeWords, stopwords("english"))
+modi_data<-tm_map(modi_data, removeWords, c("and","the","our","that","for","are","also","more","has","must","have","should","this","with"))
+tdm_modi<-TermDocumentMatrix (modi_data) #Creates a TDM
+TDM1<-as.matrix(tdm_modi) #Convert this into a matrix format
+v = sort(rowSums(TDM1), decreasing = TRUE) #Gives you the frequencies for every word
+summary(v)
+wordcloud (modi_data, scale=c(5,0.5), random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+#go-6# Saved at 7/2/2019 18:50:28 pm<span title="7/2/2019 18:50:28 pm">ISEI Batch #8 - Math Review</span>
+# Matrix
+A = matrix(c(1, 3, 5, 7),  # the data elements 
+  nrow=2,  # number of rows 
+  ncol=2,  # number of columns 
+  byrow = TRUE) # fill matrix by rows 
+B <- matrix(c(2, 4, 6, 8), nrow = 2)
+dimnames(A) <- list(c("row1", "row2"),  c("col1", "col2"))
+colnames(A)
+rownames(A)
+t(A) # transpose of A
+B # print the matrix
+C <- matrix(c(7, 4), nrow=2, ncol=1) 
+C # print the matrix
+# combining matrix
+cbind(B, C) 
+B[,  c(2)] # select columns 2
+B[-1,] # select all rows except first
+D <- A+B # Add the matrices
+E <- A - B # Subtract the matrices
+A * B # Multiply the matrices
+A / B # Divide the matrices
+det(B)
+invB <- solve(B) # inverse of matrix B
+B %*% invB # Matrix multiplication
+#go-1
+
+# Histograms
+library(lattice)
+data(iris) # load dataset
+par(mfrow=c(1,4)) # create a layout of simpler density plots by attribute
+for(i in 1:4) {
+  hist(iris[,i], main=names(iris)[i])
+}
+#go-2
+
+# Density Chats
+library(lattice)
+data(iris) # load dataset
+par(mfrow=c(1,4)) # create a layout of simpler density plots by attribute
+for(i in 1:4) {
+  plot(density(iris[,i]), main=names(iris)[i])
+}
+#go-3
+
+# Box Plots
+library(lattice)
+data(iris) # load dataset
+par(mfrow=c(1,4)) # create a layout of simpler density plots by attribute
+for(i in 1:4) {
+  boxplot(iris[,i], main=names(iris)[i])
+}
+#go-4
+
+# Box Plots
+library("ggpubr") # load packages
+df = iris
+mean(df$Sepal.Length)
+median(df$Sepal.Length)
+range(df$Sepal.Length)
+quantile(df$Sepal.Length)
+sd(df$Sepal.Length)
+require(gridExtra) # par(mfrow=c(2,2)) not working with ggplot
+plot1 <- gghistogram(df, x = "Sepal.Length", bins = 9, add = "mean")
+plot2 <- ggboxplot(df, y = "Sepal.Length", width = 0.5)
+plot3 <- ggqqplot(df, x = "Sepal.Length")
+# Box plot colored by groups: Species
+plot4 <- ggboxplot(df, x = "Species", y = "Sepal.Length",
+   color = "Species", palette = c("#00AFBB", "#E7B800", 
+"#FC4E07"))
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
+#go-5
+
+# Correlation Plot
+library(corrplot)
+data(iris)
+correlations <- cor(iris[,1:4])
+corrplot(correlations, method="circle")
+#go-6
+
+# Scatter Plot
+data(iris)
+plot(iris)
+#go-7
+
+# Scatter Plot
+data(iris)
+pca <- prcomp(iris[,1:4], scale=TRUE)
+summary(pca) # the standard deviation & the variance (factor loadings)
+pca$rotation #  the principal components axis
+par(mfrow=c(2,2)) # create a layout
+plot(pca$x[,1], col=iris[,5]) # projected points on principal component #1
+plot(pca$x[,2], col=iris[,5]) # projected points on principal component #2
+plot(pca$x[,3], col=iris[,5]) # projected points on principal component #3
+plot(pca, type = "l") # screeplot of the Eigenvalues of the 4 PC
+#go-8# Saved at 7/2/2019 19:21:31 pm<span title="7/2/2019 19:21:31 pm">ISEI Batch #8 - Regression, Classification, Clustering & Deep Learning</span>
+# === Contoh Regresi Linear Sederhana ===X = c(1400,1600,1700,1875,1100,1550,2350,2450,1425,1700)Y = c(245,312,279,308,199,219,405,324,319,255)plot(Y ~ X, pch = 20, col = "red")lines(lowess(X, Y), lwd = 2, col = "blue")Z = lm(Y ~ X)summary(Z)abline(Z, lty = 2)confint(Z, level=0.95)#go-1# === Contoh Regresi Berganda ===X1 = c(5.5,7.5,8,8,6.8,7.5,4.5,6.4,7,5,7.2,7.9,5.9,5,7)X2 = c(3.3,3.3,3,4.5,3,4,3,3.7,3.5,4,3.5,3.2,4,3.5,2.7)Y = c(350,460,350,430,350,380,430,470,450,490,340,300,440,450,300)Z = lm(Y ~ X1+X2)summary(Z)confint(Z, level=0.95)#go-2# === Contoh Regresi Berganda - BostonHousing ===library(caret) # load the packagelibrary(mlbench) # load the packagedata(BostonHousing) # load data# trainset.seed(888)trainControl <- trainControl(method="cv", number=5)fit.lm <- train(medv~., data=BostonHousing, method="lm", metric="RMSE",  preProcess=c("center", "scale"), trControl=trainControl)# summarize fitsummary(fit.lm)#go-3# === Ridge/Lasso/Elastic-Net Models ===library(glmnet)  # Package to fit ridge/lasso/elastic net modelsdf <- read.csv('BostonHousing.csv')n = nrow(df) # number of rowsm = ncol(df) # number of columnsx <- data.matrix(df[,1:m-1])y <- data.matrix(df[,m])set.seed(888)  # set seed for reproducibility## Split data into training and testing datasets## 70% of the data will be used for Training and## 30% of the data will be used for Testingtrain_rows <- sample(1:n, .7*n)x.train <- x[train_rows, ]x.test <- x[-train_rows, ] y.train <- y[train_rows]y.test <- y[-train_rows] ## alpha = 0 for Ridge Regression## SSR + lambda x (alpha  x (|slope|) + (1-alpha) x (slope^2))alpha0.fit <- cv.glmnet(x.train, y.train, type.measure="mse", alpha=0, family="gaussian")  # cross validation (cv) to get the optimal value for lambda## run the Testing dataset on the modelalpha0.predicted <- predict(alpha0.fit, s=alpha0.fit$lambda.1se, newx=x.test) ##  calculate the Mean Squared Error (MSE) for the modelmse <- mean((y.test - alpha0.predicted)^2)print(paste("Ridge Regression: mse = ", mse))## alpha = 1, Lasso Regression## SSR + lambda x (alpha  x (|slope|) + (1-alpha) x (slope^2))alpha0.fit <- cv.glmnet(x.train, y.train, type.measure="mse", alpha=1, family="gaussian")  # cross validation (cv) to get the optimal value for lambda## run the Testing dataset on the modelalpha0.predicted <- predict(alpha0.fit, s=alpha0.fit$lambda.1se, newx=x.test) ##  calculate the Mean Squared Error (MSE) for the modelmse <- mean((y.test - alpha0.predicted)^2)print(paste("Lasso Regression: mse = ", mse))plot(y.test - alpha0.predicted) # Lasso is the best here based on MSE## alpha = 0.5, a 50/50 mixture of Ridge and Lasso Regression (Elastic-Net)## SSR + lambda x (alpha  x (|slope|) + (1-alpha) x (slope^2))alpha0.fit <- cv.glmnet(x.train, y.train, type.measure="mse", alpha=1, family="gaussian")  # cross validation (cv) to get the optimal value for lambda## run the Testing dataset on the modelalpha0.predicted <- predict(alpha0.fit, s=alpha0.fit$lambda.1se, newx=x.test) ##  calculate the Mean Squared Error (MSE) for the modelmse <- mean((y.test - alpha0.predicted)^2)print(paste("Elastic-Net Regression: mse = ", mse))#go-4# === Logistic Regression ===df <- read.table("fraud.csv", sep=',', dec='.', header=T)library(dplyr)dplyr::glimpse(df)fit <- glm(Class ~ Time + V1, data=df, family=binomial(link='logit')) # fit modelsummary(fit) # summarize the fit# make predictionsdata = data.frame(Time=df[,1], V1=df[,2]) # the same as data = df[,0:2]probabilities <- predict(fit, data, type='response')predictions <- ifelse(probabilities > 0.5,'pos','neg')# summarize accuracytable(predictions, df$Class)#go-5# === k-Nearest Neighbor ===library(caret)df <- read.table("fraud.csv", sep=',', dec='.', header=T)df$Class = as.factor(df$Class)fit <- knn3(Class ~ V1 + V2, data=df, k=13)X <- df[, c(2, 3)]print(fit) # summarize the fitpredictions <- predict(fit, X, type="class") # make predictionstable(predictions, df$Class) # summarize accuracy#go-6# === Support Vector Machine ===library(kernlab)df<-read.table("fraud.csv", sep=',', dec='.', header=T)df$Class = as.factor(df$Class)fit <- ksvm(Class ~ V1 + V2, data=df, kernel="rbfdot")X <- df[, c(2, 3)]print(fit) # summarize the fitpredictions <- predict(fit, X, type="response") # make predictionstable(predictions, df$Class) # summarize accuracy#go-7# === Classification and Regression Tree (CART) ===library(caret)df<-read.table("fraud.csv", sep=',', dec='.', header=T)df$Class = as.factor(df$Class)set.seed(888)trainControl <- trainControl(method="cv", number=5)fit.rpart <- train(Class ~ V1 + V2, data=df, method="rpart", metric="Accuracy", trControl=trainControl)print(fit.rpart) # summarize fit#go-8# === NaÃÂÃÂ¯ve Bayes ===library(caret)df <- read.table("fraud.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 2500), ] # select 2500 cases onlydf$Class = as.factor(df$Class)set.seed(888)trainControl <- trainControl(method="cv", number=5)fit.nb <- train(Class ~ V1 + V2, data=df, method="nb", metric="Accuracy", trControl=trainControl)print(fit.nb) # summarize fit#go-9# === Confusion Matrix ===library(e1071)library(caret)df<-read.table("fraud.csv", sep=',', dec='.', header=T)df$Class = as.factor(df$Class)fit <- naiveBayes(Class ~ V1 + V2, data=df)X <- df[, c(2, 3)]print(fit) # summarize the fitpredictions <- predict(fit, X, type="class") # make predictionstable(predictions, df$Class) # summarize accuracyconfusionMatrix(predictions, df$Class)#go-10# === Receiver Operating Characteristic (ROC) ===library(rpart)library(pROC)df<-read.table("fraud.csv", sep=',', dec='.', header=T)df$Class = as.factor(df$Class)fit <- rpart(Class ~ V1 + V2, data=df, method='class')X <- df[, c(2, 3)]predictions <- predict(fit, X, type="class") # make predictionstable(predictions, df$Class) # summarize accuracy# print(predictions)pred <- predict(fit, X, type="prob")(auc(df$Class, pred[,2]))plot(roc(df$Class, pred[,2]))#go-11# === Random Forest ===library(caret)library(randomForest)df <- read.table("fraud.csv", sep=',', dec='.', header=T)df <- df[sample(1:15000, 500), ] # select 2500 cases onlydf$Class = as.factor(df$Class)set.seed(888)# Split out validation dataset# create a list of 80% of the rows in the original dataset we can use for trainingvalidationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE)validation <- df[-validationIndex,] # select 20% of the data for validation# use the remaining 80% of data to training and testing the modelstraining <- df[validationIndex,]# Run algorithms using 10-fold cross-validationtrainControl <- trainControl(method="cv", number=10)metric <- "Acuracy"set.seed(888)trainControl <- trainControl(method="repeatedcv", number=10, repeats=3)fit.rf <- train(Class~., data=training, method="rf", metric=metric,   trControl=trainControl, ntree=100)print(fit.rf)print(fit.rf$finalModel)# create standalone model using all training datafinalModel <- randomForest(Class~., training, mtry=30, ntree=100)# make a predictions on "new data" using the final modelfinalPredictions <- predict(finalModel, validation[,1:30])confusionMatrix(finalPredictions, validation$Class)#go-12# === K-Means Clustering ===library(factoextra)df<-read.table("iris.csv", sep=',', dec='.', header=T)# Compute k-means with k = 3set.seed(888)df = df[,1:4] # skip Specieskm.res <- kmeans(df, 3, nstart = 25)print(km.res) # Print the resultskm.res$size # Cluster sizekm.res$centers # Cluster meansfviz_cluster(km.res, data=df)#go-13# Saved at 7/2/2019 19:22:18 pm<span title="7/2/2019 19:22:18 pm">ISEI Batch #8 - One-Year PD</span>
+# Check whether the data-set has missing values library(Amelia)df<-read.csv('ifrs9/oneypd.csv') [1:500,2:45]missmap(df, col=c("black", "gray"), legend=FALSE)#go-1# === Standardize Data ===df<-read.csv('ifrs9/oneypd.csv') [1:500,2:45]# load packageslibrary(caret)# load the dataset# summarize datasummary(df[,2:5]) # select col2,...col5# calculate the pre-process parameters from the datasetpreprocessParams <- preProcess(df[,2:5], method=c("center", "scale"))# summarize transform parametersprint(preprocessParams)# transform the dataset using the parameterstransformed <- predict(preprocessParams, df[,2:5])# summarize the transformed datasetsummary(transformed)#go-2# === PCA Transformation ===df<-read.csv('ifrs9/oneypd.csv') [1:500,2:15]library(caret)# calculate the pre-process parameters from the datasetpreprocessParams <- preProcess(df, method=c("center", "scale", "pca"))print(preprocessParams) # summarize transform parameterstransformed <- predict(preprocessParams, df) # transform the dataset using the parametershead(transformed) # show the transformed dataset#go-3# === Data Splitting ===library(caret); library(dplyr)df<-read.csv('ifrs9/oneypd.csv') [,2:45]df <- dplyr::mutate(df, default_event = if_else(  df$arrears_event == 1 | df$term_expiry_event == 1 |  df$bankrupt_event == 1, 1, 0)) # Default flag definitionset.seed(888)# Perform a stratified sampling: 70% train and 30% testtrainIndex <-caret::createDataPartition(df$default_event, p = .7, list = FALSE)dataTrain <- df[ trainIndex,]dataTest <- df[-trainIndex,]summary(dataTrain[,2:5])summary(dataTest[,2:5])#go-4# === k-fold Cross-Validation ===library(caret); library(dplyr)df<-read.csv('ifrs9/oneypd.csv') [,2:45]df <- df[sample(1:nrow(df), 500), ] # select 500 cases onlydf <- dplyr::mutate(df, default_event = if_else(df$arrears_event == 1 |   df$term_expiry_event == 1 | df$bankrupt_event == 1, 1, 0)) # Default flag definitionset.seed(888)# Perform a stratified sampling: 70% train and 30% testtrainIndex <-caret::createDataPartition(df$default_event, p = .7, list = FALSE)dataTrain <- df[ trainIndex,]dataTest <- df[-trainIndex,]# define training control (repeat 10-fold cross validation with 3 repeats)trainControl <- trainControl(method="repeatedcv", number=10, repeats=3)# evaluate the modelfit <- train(default_event~annual_income+cc_util, data=dataTrain, trControl=trainControl, method="glm")print(fit) # display the results#go-5# === Prepare Data ===library(caret); library(dplyr); library(vars)oneypd<-read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <-caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <-oneypd[ train.index,]test <-oneypd[-train.index,] dplyr::glimpse(train) # Data overview: data content and format#go-6# === Binning Scheme ===library(caret); library(dplyr); library(smbinning) oneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(  oneypd$arrears_event == 1 | oneypd$term_expiry_event == 1 |   oneypd$bankrupt_event == 1, 1, 0))# Recode default event for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <- createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <-oneypd[ train.index, ]test <-oneypd[-train.index, ]# WOE & IV summary tableresult <- smbinning(df=train, y="default_flag", x="bureau_score", p=0.05)result$ivtablepar(mfrow=c(2,2)) boxplot(train$bureau_score~train$default_flag, horizontal=T, frame=F,   col="lightgray",main="Distribution") mtext("bureau_score",3)smbinning.plot(result,option="dist",sub="bureau_score") smbinning.plot(result,option="badrate",sub="bureau_score") smbinning.plot(result,option="WoE",sub="bureau_score")#go-7# === Information Value ===library(caret); library(dplyr); library(smbinning) df <- read.csv('ifrs9/oneypd.csv') [,2:45]oneypd <- df[sample(1:nrow(df), 500), ] # select 500 cases only to get faster result# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <-caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <-oneypd[ train.index,]test <-oneypd[-train.index,] # Information Value (IV) assessmentiv_analysis<-smbinning.sumiv(df=train,y="default_flag")# Plot IV summary tablepar(mfrow=c(1,1))smbinning.sumiv.plot(iv_analysis, cex=1)#go-8# === Multivariate Analysis ===library(caret); library(dplyr); library(corrplot)df <- read.csv('ifrs9/oneypd.csv') [,2:45]# Spearman rank correlationcorr <- cor(as.matrix(df[, c(2,3,4,16,23)]), method = 'spearman')corrplot(corr, method = 'number')  # Graphical inspection#go-9# === Stepwise Regression ===# Discard highly correlated variablelibrary(caret); library(dplyr); library(MASS)oneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <- caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <- oneypd[ train.index,]test <- oneypd[-train.index,]# Stepwise model fittinglogit_full <- glm(default_event~ bureau_score +  annual_income + emp_length + max_arrears_12m +  months_since_recent_cc_delinq + num_ccj + cc_util,  family = binomial(link = 'logit'), data = train)logit_stepwise <- stepAIC(logit_full, k=qchisq(0.05, 1, lower.tail=F), direction = 'both')summary(logit_stepwise)#go-10# === From score to points ===library(caret); library(dplyr); library(MASS)oneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <- caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <- oneypd[ train.index,]test <- oneypd[-train.index,]# Stepwise model fittinglogit_full <- glm(default_event~ bureau_score +  annual_income + emp_length + max_arrears_12m +  months_since_recent_cc_delinq + num_ccj + cc_util,  family = binomial(link = 'logit'), data = train)logit_stepwise <- stepAIC(logit_full, k=qchisq(0.05, 1, lower.tail=F), direction = 'both')# 1. Define a scaling functionscaled_score <- function (logit, odds, offset = 500, pdo = 20){   b = pdo/log(2)   a = offset - b*log(odds)   round(a + b*log((1-logit)/logit))}# 2. Score the entire dataset# 2.1 Use fitted model to score both test and train datasetspredict_logit_test <- predict(logit_stepwise, newdata = test, type = 'response')predict_logit_train <- predict(logit_stepwise, newdata = train, type = 'response')# 2.2 Merge predictions with train/test datatest$predict_logit <-predict(logit_stepwise, newdata = test, type = 'response')train$predict_logit <- predict(logit_stepwise, newdata = train, type = 'response')train$sample = 'train'test$sample = 'test'data_whole <- rbind(train, test)data_score <- data_whole %>%dplyr::select(id, default_event, default_flag, bureau_score,annual_income, max_arrears_12m,months_since_recent_cc_delinq, cc_util, sample, predict_logit)# 2.3 Define scoring parameters in line with objectivesdata_score$score <- scaled_score(data_score$predict_logit, 72, 660, 40)par(mfrow=c(2,1))hist(data_score$predict_logit)hist(data_score$score)#go-11# === PD Calibration ===library(caret); library(dplyr); library(MASS)oneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <- caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <- oneypd[ train.index,]test <- oneypd[-train.index,]# Stepwise model fittinglogit_full <- glm(default_event~ bureau_score +  annual_income + emp_length + max_arrears_12m +  months_since_recent_cc_delinq + num_ccj + cc_util,  family = binomial(link = 'logit'), data = train)logit_stepwise <- stepAIC(logit_full, k=qchisq(0.05, 1, lower.tail=F), direction = 'both')# 1. Define a scaling functionscaled_score <- function (logit, odds, offset = 500, pdo = 20){   b = pdo/log(2)   a = offset - b*log(odds)   round(a + b*log((1-logit)/logit))}# 2. Score the entire dataset# 2.1 Use fitted model to score both test and train datasetspredict_logit_test <- predict(logit_stepwise, newdata = test, type = 'response')predict_logit_train <- predict(logit_stepwise, newdata = train, type = 'response')# 2.2 Merge predictions with train/test datatest$predict_logit <-predict(logit_stepwise, newdata = test, type = 'response')train$predict_logit <- predict(logit_stepwise, newdata = train, type = 'response')train$sample = 'train'test$sample = 'test'data_whole <- rbind(train, test)data_score <- data_whole %>%dplyr::select(id, default_event, default_flag, bureau_score,annual_income, max_arrears_12m,months_since_recent_cc_delinq, cc_util, sample, predict_logit)# 2.3 Define scoring parameters in line with objectivesdata_score$score <- scaled_score(data_score$predict_logit, 72, 660, 40)# 3. Fit logistic regressionpd_model <- glm(default_event~ score,  family = binomial(link = 'logit'), data = data_score)summary(pd_model)# 3.1 Use model coefficients to obtain PDsdata_score$pd <- predict(pd_model, newdata = data_score, type = 'response') hist(data_score$pd)#go-12# === Model Discriminatory Power Validation ===library(caret); library(dplyr); library(MASS); library(optiRum); library(pROC)oneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: 0-default, 1-non-defaultoneypd$default_flag <- dplyr::if_else(oneypd$default_event == 1, 0, 1)set.seed(888)# Perform a stratified sampling: 70% train and 30% testtrain.index <- caret::createDataPartition(oneypd$default_event, p = .7, list = FALSE)train <- oneypd[ train.index,]test <- oneypd[-train.index,]# Stepwise model fittinglogit_full <- glm(default_event~ bureau_score +  annual_income + emp_length + max_arrears_12m +  months_since_recent_cc_delinq + num_ccj + cc_util,  family = binomial(link = 'logit'), data = train)logit_stepwise <- stepAIC(logit_full, k=qchisq(0.05, 1, lower.tail=F), direction = 'both')# 1. Define a scaling functionscaled_score <- function (logit, odds, offset = 500, pdo = 20){   b = pdo/log(2)   a = offset - b*log(odds)   round(a + b*log((1-logit)/logit))}# 2. Score the entire dataset# 2.1 Use fitted model to score both test and train datasetspredict_logit_test <- predict(logit_stepwise, newdata = test, type = 'response')predict_logit_train <- predict(logit_stepwise, newdata = train, type = 'response')# 2.2 Merge predictions with train/test datatest$predict_logit <-predict(logit_stepwise, newdata = test, type = 'response')train$predict_logit <- predict(logit_stepwise, newdata = train, type = 'response')# 3. Gini indexgini_train<-optiRum::giniCoef(train$predict_logit, train$default_event)print(gini_train)# 4. ROC curveplot(roc(train$default_event,train$predict_logit, direction="<"),  col="blue", lwd=3, main="ROC Curve") #go-13# === Random Forest ===library(caret); library(dplyr); library(randomForest)# 1. Upload and prepare data# 1.1. Upload dataoneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: Yes-default, No-non-defaultoneypd$default_indicator <- dplyr::if_else(oneypd$default_event == 1, 1, 0)set.seed(888)# 1.2 Select a subset of variablesoneypd_tree_sel_orig <- oneypd %>%dplyr::select("default_indicator", "default_event","bureau_score",  "time_since_bankrupt", "num_ccj", "time_since_ccj", "ccj_amount",  "ltv", "mob", "max_arrears_12m", "max_arrears_bal_6m",  "avg_bal_6m", "annual_income", "loan_balance", "loan_term",  "cc_util", "emp_length", "months_since_recent_cc_delinq")# 1.3 Filter out NAsoneypd_tree_sel <-oneypd_tree_sel_orig %>%na.omit(oneypd_tree_sel_orig)# 1.4 Create stratified samples: 70% train and 30% testset.seed(888)train_index <-caret::createDataPartition(oneypd_tree_sel$default_event,   p = .7, list = FALSE)train <-oneypd_tree_sel[ train_index,]test <-oneypd_tree_sel[-train_index,] # 2. Perform random forest analysis# 2.1 Fit random forestrf_oneypd <-randomForest(default_indicator ~ .-default_event,  data=oneypd_tree_sel[train_index,], mtry=4, ntree=100,  importance=TRUE, na.action=na.omit)# 2.2 Variable importance analysisimportance(rf_oneypd)varImpPlot(rf_oneypd) #go-14# === Boosting Analysis ===library(caret); library(dplyr); library(gbm)# 1. Upload and prepare data# 1.1. Upload dataoneypd <- read.csv('ifrs9/oneypd.csv') [,2:45]# Date formatoneypd <- dplyr::mutate_at(oneypd, vars(contains('date')), funs(as.Date)) # Round arrears count fieldsoneypd$max_arrears_12m<-round(oneypd$max_arrears_12m,4)oneypd$arrears_months<-round(oneypd$arrears_months,4) # Default flag definition	oneypd <- dplyr::mutate(oneypd, default_event = if_else(oneypd$arrears_event == 1 |   oneypd$term_expiry_event == 1 | oneypd$bankrupt_event == 1, 1, 0))# Recode default event variables for more convenient use: Yes-default, No-non-defaultoneypd$default_indicator <- dplyr::if_else(oneypd$default_event == 1, 1, 0)set.seed(888)# 1.2 Select a subset of variablesoneypd_tree_sel_orig <- oneypd %>%dplyr::select("default_indicator", "default_event","bureau_score",  "time_since_bankrupt", "num_ccj", "time_since_ccj", "ccj_amount",  "ltv", "mob", "max_arrears_12m", "max_arrears_bal_6m",  "avg_bal_6m", "annual_income", "loan_balance", "loan_term",  "cc_util", "emp_length", "months_since_recent_cc_delinq")# 1.3 Filter out NAsoneypd_tree_sel <-oneypd_tree_sel_orig %>%na.omit(oneypd_tree_sel_orig)# 1.4 Create stratified samples: 70% train and 30% testset.seed(888)train_index <-caret::createDataPartition(oneypd_tree_sel$default_event,   p = .7, list = FALSE)train <-oneypd_tree_sel[ train_index,]test <-oneypd_tree_sel[-train_index,] # 3. Perform boosting analysisboost_oneypd=gbm(default_event~.-default_indicator,  data=oneypd_tree_sel[train_index,],distribution="gaussian",  n.trees=100,interaction.depth=4)summary(boost_oneypd)par(mfrow=c(1,2))plot(boost_oneypd, i="cc_util")plot(boost_oneypd, i="max_arrears_12m")# 3.1 Test sample analysisyhat_boost_oneypd=predict(boost_oneypd,  newdata=oneypd_tree_sel[-train_index,], n.trees=100)oneypd_test_boost=oneypd_tree_sel[-train_index,"default_event"]mean((yhat_boost_oneypd-oneypd_test_boost)^2)# 3.2 Inclusion of shrinkageboost_oneypd_1=gbm(default_event~.-default_indicator,  data=oneypd_tree_sel[train_index,],distribution="gaussian",  n.trees=100,interaction.depth=4,shrinkage=0.2,verbose=F)yhat_oneypd_1=predict(boost_oneypd_1,  newdata=oneypd_tree_sel[-train_index,], n.trees=100)mean((yhat_oneypd_1-oneypd_test_boost)^2)#go-15# === Low Default Portfolio Calibration ===# Pluto Tasche approach	library(LDPD)portfolio <- c(10, 15, 25, 40, 10)defaults <- c(1, 2, 0, 0, 0)set.seed(888)pd_one_pt <- PTOnePeriodPD(portfolio, defaults, conf.interval=0.90)pd_one_pt# Tasche quasi maximum likelihood modelpd <- c(0.215, 0.03, 0.001, 0.0001, 0.0001)qmm <-QMMRecalibrate(0.05, pd, portfolio, rating.type="RATING")QMMPlot(qmm) #go-16# Saved at 7/2/2019 19:23:19 pm<span title="7/2/2019 19:23:19 pm">ISEI Batch #8 - Lifetime PD</span>
+# === Database management for account-level modelling ===library(dplyr); library(vars)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and formatdplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)plot(dr_data$year, 100*dr_data$dr_QoQ, pch = 16, col = "red", xlim = c(2003, 2016), main = "Default Rates", xlab = "Year" , ylab = "Default Rate (%)")lines(dr_data$year, 100*dr_data$dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample<-as.factor(ltpd_panel$sample) #go-1# === Default rate regression against MVs ===library(dplyr); library(tseries); # 1. Updload datamac <- read.csv('ifrs9/drts.csv', header = TRUE, sep = ",", dec = ".")dplyr::glimpse(mac)mac$Date <-as.Date(mac$Date,format = '%d/%m/%Y') # 2. KPSS testingkpss.test(mac[,'ir'], null = 'Level', lshort = TRUE)kpss.test(mac[,'ir'], null = 'Trend', lshort = TRUE)# 3. Fit regression model# 3.1. Data preparationdr_t <- as.matrix(mac[5:nrow(mac),2])gdp_tlag <- as.matrix(mac[1:(nrow(mac)-4),3])uer_t <- as.matrix(mac[5:nrow(mac),4])xx <- as.data.frame(cbind(dr_t,gdp_tlag,uer_t)/100)colnames(xx) <- c('dr_tt','gdp_ttlag', 'uer_tt')# 3.2. Fit modelfit <-lm(dr_tt ~ gdp_ttlag + uer_tt, data=xx)summary(fit)# 3.3. Predictdr_fit <-predict(fit,xx) fit <-lm(dr_tt ~ gdp_ttlag, data=xx)plot(dr_tt ~ gdp_ttlag, data = xx)abline(fit)#go-2# === Panel GLM fitting analysis ===library(dplyr); library(vars); library(corrplot)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample<-as.factor(ltpd_panel$sample) # 3. Univariate analysis# 3.1. Create train and test samplestrain <- ltpd_panel %>%dplyr::filter(sample == 'train')test <- ltpd_panel %>%dplyr::filter(sample == 'test')# 3.2. Remaining term analysistrain$default_event <- dplyr::if_else(train$default_flag == 1, 0, 1)train$seasoning <- dplyr::if_else(train$remaining_term > 36, 1, 0) # 4 Multivariate analysismacro_vars<-train %>%dplyr::select(ir, uer, hpi, gdp, cpi, income)# 4.1. Correlation analysiscorr_spearman <- cor(as.matrix(macro_vars), method='spearman') corrplot(corr_spearman, method = 'number')  # Graphical inspection# 5. Model fittinglogit<-glm(default_flag~ seasoning+hpi,  family = binomial(link = 'logit'), data = train)summary(logit)#go-3# === Account-level Model Discriminatory Power Validation ===library(dplyr); library(vars); library(ROCR)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample<-as.factor(ltpd_panel$sample) # 3. Univariate analysis# 3.1. Create train and test samplestrain <- ltpd_panel %>%dplyr::filter(sample == 'train')test <- ltpd_panel %>%dplyr::filter(sample == 'test')# 3.2. Remaining term analysistrain$default_event <- dplyr::if_else(train$default_flag == 1, 0, 1)train$seasoning <- dplyr::if_else(train$remaining_term > 36, 1, 0) # 4 Multivariate analysismacro_vars<-train %>%dplyr::select(ir, uer, hpi, gdp, cpi, income)# 5. Model fittinglogit<-glm(default_flag ~ seasoning+hpi,  family = binomial(link = 'logit'), data = train)# 6. Score accountstrain$predict_logit <- round(predict(logit,  newdata = train, type = 'response'), 7)# 7. Estimate ROC curvepred_train<-ROCR::prediction(train$predict_logit,  train$default_flag)perf_train<-ROCR::performance(pred_train, 'tpr', 'fpr') # 7.1 Plot graphsplot(perf_train, main='ROC curve test', colorize=T)abline(0,1, lty =8, col = 'black')# 8. Compute AUC statisticsauc_train <- ROCR::performance(pred_train, 'auc')#go-4# === Account-level Model-predicted DRs ===library(dplyr); library(vars); library(ROCR)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample<-as.factor(ltpd_panel$sample) # 3. Univariate analysis# 3.1. Create train and test samplestrain <- ltpd_panel %>%dplyr::filter(sample == 'train')test <- ltpd_panel %>%dplyr::filter(sample == 'test')# 3.2. Remaining term analysistrain$default_event <- dplyr::if_else(train$default_flag == 1, 0, 1)train$seasoning <- dplyr::if_else(train$remaining_term > 36, 1, 0) # 4 Multivariate analysismacro_vars<-train %>%dplyr::select(ir, uer, hpi, gdp, cpi, income)# 5. Model fittinglogit<-glm(default_flag ~ seasoning+hpi,  family = binomial(link = 'logit'), data = train)# 6. Score accountstrain$predict_logit <- round(predict(logit,  newdata = train, type = 'response'), 7)# 7. Computation of panel mean valuestrain_data <- train %>%dplyr::group_by(report_date,year) %>%dplyr::summarise(default_rate = mean(default_flag),pd = mean(predict_logit)) %>%dplyr::select(report_date, year, default_rate, pd)# 8. Correlation analysiscorr_train <- cor(train_data$default_rate, train_data$pd, method='pearson')print(paste("Correlation = ", corr_train))plot(train_data$year, train_data$default_rate, type="l", col="red",   main="Actual vs Fitted", ylab="Default Rate", xlab="Year")lines(train_data$year, train_data$pd, col="green")#go-5# === Link Function Estimation via Random Forest ===library(dplyr); library(vars); library(randomForest)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample <- as.factor(ltpd_panel$sample) # 3. Fit random forest# 3.1. Factor dependent variabletrain_def <- ltpd_panel %>% dplyr::filter(sample=="train")test_def <- ltpd_panel %>% dplyr::filter(sample=="test")train_def$def_char = as.factor(ifelse(  train_def$default_flag==0, 'No','Yes'))test_def$def_char = as.factor(ifelse(  test_def$default_flag==0, 'No','Yes'))# 3.2. Fit modelset.seed(888)rf_def <- randomForest(def_char ~ tob + ltv_utd +  gdp + uer + cpi + hpi + ir + gdp_lag, data=train_def, mtry=3,  ntree=50, importance=TRUE, na.action=na.omit)importance(rf_def)#go-6# === Link Function Estimation via Boosting ===library(dplyr); library(vars); library(gbm)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(888)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample <- as.factor(ltpd_panel$sample) # 3. Fit boosting# 3.1. Factor dependent variabletrain_def <- ltpd_panel %>% dplyr::filter(sample=="train")test_def <- ltpd_panel %>% dplyr::filter(sample=="test")train_def$def_char = as.factor(ifelse(  train_def$default_flag==0, 'No','Yes'))test_def$def_char = as.factor(ifelse(  test_def$default_flag==0, 'No','Yes'))# 3.2. Fit modelboost_shr_def <- gbm(default_flag ~ tob + ltv_utd +  gdp + uer + cpi + hpi + ir + gdp_lag, data=train_def,  distribution = 'gaussian', n.trees = 50, interaction.depth=4,  shrinkage=0.3,verbose=F)summary(boost_shr_def)# 4. Predicttrain_def$def_boost_shr <-predict(boost_shr_def,  newdata=train_def, n.trees=50)test_def$def_boost_shr <-predict(boost_shr_def,  newdata=test_def, n.trees=50) #go-7# === Random Forest Discriminatory Power Analysis ===library(dplyr); library(vars); library(randomForest); library(ROCR); library(optiRum)# 1. Upload and check dataltpd_panel <- read.csv('ifrs9/ltpdpanel.csv')# 1.1. Overview of data content and format#dplyr::glimpse(ltpd_panel)ltpd_panel <-dplyr::mutate_at(ltpd_panel,  vars(contains('date')), funs((as.Date(.,format = '%m/%d/%Y'))))# 1.2. Compute default ratesdr_data<-ltpd_panel %>%dplyr::group_by(report_date, year) %>%dplyr::summarise(dr_QoQ = mean(default_flag)) %>%dplyr::select(report_date, year, dr_QoQ)# 2. Create train and test samplesltpd_subset<-ltpd_panel %>%dplyr::select(id, default_ind) %>%dplyr::distinct()# 2.1. Stratified sampling: train 70%, test 30%set.seed(2122)sample_id<-caret::createDataPartition(ltpd_subset$default_ind,p=0.7, list=FALSE)train_id<-ltpd_subset[sample_id,]test_id<-ltpd_subset[-sample_id,]# 2.2. Assign sample ID column and merge datatrain_id$sample <-'train'test_id$sample <-'test'all_id<-rbind(train_id, test_id)all_id<-all_id %>%dplyr::select(id, sample)# 2.3. Join with ltpd datasetltpd_panel<-dplyr::left_join(ltpd_panel,all_id, by = 'id')ltpd_panel$sample <- as.factor(ltpd_panel$sample) # 3. Fit random forest# 3.1. Factor dependent variabletrain_def <- ltpd_panel %>% dplyr::filter(sample=="train")test_def <- ltpd_panel %>% dplyr::filter(sample=="test")train_def$def_char = as.factor(ifelse(  train_def$default_flag==0, 'No','Yes'))test_def$def_char = as.factor(ifelse(  test_def$default_flag==0, 'No','Yes'))# 3.2. Fit modelset.seed(888)rf_def <- randomForest(def_char ~ tob + ltv_utd +  gdp + uer + cpi + hpi + ir + gdp_lag, data=train_def, mtry=3,  ntree=50, importance=TRUE, na.action=na.omit)# 4. Compute Gini index# 4.1. Predict RF modeltrain_def$def_rf <- predict(rf_def, newdata=train_def,type='response')train_def$def_rf_01 = ifelse(train_def$def_rf=='Yes',1,0)# 4.2. Calculate Gini indexgini_train_def <- optiRum::giniCoef(train_def$def_rf_01,train_def$default_flag)print(paste("Gini index = ", gini_train_def))# 5. Calculate AUCpred_train <- ROCR::prediction(train_def$def_rf_01,train_def$default_flag)perf_train <- ROCR::performance(pred_train, 'tpr', 'fpr')auc_train <- ROCR::performance(pred_train, 'auc')print(paste("AUC = ", auc_train@y.values[[1]]))#go-8# Saved at 7/2/2019 19:24:38 pm<span title="7/2/2019 19:24:38 pm">ISEI Batch #8 - LGD & EAD Modelling</span>
+# === Tobit LGD modelling ===library(dplyr); library(caret); library(AER)# 1. Upload datadata_lgd<-read.csv('ifrs9/data_lgd.csv', header = TRUE, sep=',')# 1.1. Overview of the database structuredplyr::glimpse(data_lgd)# 1.2. Histogram of the variable: ltv_utddata_lgd$lossrate <- data_lgd$shortfall / data_lgd$balance_at_defaultsummary(data_lgd$lossrate)hist(data_lgd$lossrate)# 2. Create train and test samplesdata_lgd$flag_sold_1 <- dplyr::if_else(data_lgd$flag_sold == 1, 0, 1)set.seed(888)train_index <-caret::createDataPartition(data_lgd$flag_sold_1,  p = .7, list = FALSE)train <-data_lgd[ train_index,]test <-data_lgd[-train_index,]# 3. Fit tobit regressionfit_tobit <-tobit(lossrate ~ ltv_utd, data = train)summary(fit_tobit)#go-1# === Random Forest LGD ===library(dplyr); library(caret); library(randomForest)# 1. Upload datalgd_data_tree <- read.csv('ifrs9/data_lgd.csv', header = TRUE, sep=',')# 1.1. Select a subset of relevant variableslgd_data_tree_sel_orig <-lgd_data_tree %>%dplyr::select('flag_sold', 'balance_at_default','ltv_utd',  'time_since_default', 'repayment_type_segment', 'tob',  'months_to_maturity', 'region' , 'shortfall_balance_wo')# 1.2. Filter out NAslgd_data_tree_sel <-lgd_data_tree_sel_orig %>%na.omit(lgd_data_tree_sel_orig)# 1.3. Create train and test samplesset.seed(888)train_index <-caret::createDataPartition(  lgd_data_tree_sel$flag_sold, p = .7, list = FALSE)train <-lgd_data_tree_sel[ train_index,]test <-lgd_data_tree_sel[-train_index,]# 2. Fit random forestrf_lgd <- randomForest(shortfall_balance_wo ~ .-flag_sold,  data=lgd_data_tree_sel[train_index,],mtry=4, ntree=100,  importance=TRUE, na.action=na.omit)importance(rf_lgd)varImpPlot(rf_lgd) #go-2# === Random Forest LGD ===library(dplyr); library(caret); library(randomForest); library(MASS)library(gridExtra)# 1. Upload datalgd_data_tree <- read.csv('ifrs9/data_lgd.csv', header = TRUE, sep=',')# 1.1. Select a subset of relevant variableslgd_data_tree_sel_orig <-lgd_data_tree %>%dplyr::select('flag_sold', 'balance_at_default','ltv_utd',  'time_since_default', 'repayment_type_segment', 'tob',  'months_to_maturity', 'region' , 'shortfall_balance_wo')# 1.2. Filter out NAslgd_data_tree_sel <-lgd_data_tree_sel_orig %>%na.omit(lgd_data_tree_sel_orig)# 1.3. Create train and test samplesset.seed(888)train_index <-caret::createDataPartition(  lgd_data_tree_sel$flag_sold, p = .7, list = FALSE)train <-lgd_data_tree_sel[train_index,]test <-lgd_data_tree_sel[-train_index,]# 2. Fit random forestrf_lgd <- randomForest(shortfall_balance_wo ~ .-flag_sold,  data=lgd_data_tree_sel[train_index,],mtry=4, ntree=100,  importance=TRUE, na.action=na.omit)importance(rf_lgd)varImpPlot(rf_lgd) # 3. Predictpar(mfrow=c(2, 1))yhat_rf_lgd_train <- predict(rf_lgd, newdata=train) yhat_rf_lgd_test <- predict(rf_lgd, newdata=test) plot(train$shortfall_balance_wo, yhat_rf_lgd_train)plot(test$shortfall_balance_wo, yhat_rf_lgd_test)#go-3# === Boosting LGD ===library(dplyr); library(caret); library(gbm); library(MASS)# 1. Upload datalgd_data_tree <- read.csv('ifrs9/data_lgd.csv', header = TRUE, sep=',')# 1.1. Select a subset of relevant variableslgd_data_tree_sel_orig <-lgd_data_tree %>%dplyr::select('flag_sold', 'balance_at_default','ltv_utd',  'time_since_default', 'repayment_type_segment', 'tob',  'months_to_maturity', 'region' , 'shortfall_balance_wo')# 1.2. Filter out NAslgd_data_tree_sel <-lgd_data_tree_sel_orig %>%na.omit(lgd_data_tree_sel_orig)# 1.3. Create train and test samplesset.seed(888)train_index <-caret::createDataPartition(  lgd_data_tree_sel$flag_sold, p = .7, list = FALSE)train <-lgd_data_tree_sel[train_index,]test <-lgd_data_tree_sel[-train_index,]# 2. Fit boostingboost_lgd=gbm(shortfall_balance_wo~.-flag_sold,  data=lgd_data_tree_sel[train_index,],  distribution='gaussian',n.trees=100,interaction.depth=4)par(mfrow=c(2,1))summary(boost_lgd)# 3. Predictyhat_boost_lgd_train = predict(boost_lgd,  newdata=lgd_data_tree_sel[train_index,],n.trees=100) summary(yhat_boost_lgd_train)plot(yhat_boost_lgd_train)#go-4# === Forward-Looking Machine Learning LGD ===library(dplyr); library(caret); library(gbm); library(MASS)# 1. Upload datalgd_fwd_macro <- read.csv('ifrs9/lgd_fwd_timeseries.csv', header = TRUE, sep=',')lgd_fwd_macro$sem_def <- as.Date(lgd_fwd_macro$sem_def,format = "%m/%d/%Y")# 1.1. Select a subset of variablelgd_fwd_macro_sel_all <- lgd_fwd_macro %>%dplyr::select('flag_sold', 'balance','ltv_utd',  'repayment_type_segment',  'tob',  'months_to_maturity',  'region',  'shortfall_balance_wo',  'gdp',  'uer',  'cpi',  'hpi',  'ir')# 1.2. Filter historical data setlgd_fwd_macro_sel <- lgd_fwd_macro_sel_all[1:430,]# 1.3. Create train and test samplesset.seed(888)train_index_macro <-caret::createDataPartition(lgd_fwd_macro_sel$flag_sold, p = .7, list = FALSE)train_macro <-lgd_fwd_macro_sel[ train_index_macro,]test_macro <-lgd_fwd_macro_sel[-train_index_macro,]# 2. Fit random forestlibrary(randomForest)set.seed(123)rf_lgd_macro <-randomForest(shortfall_balance_wo~.-flag_sold,  data=train_macro, mtry=4, ntree=100, importance=TRUE,  na.action=na.omit)importance(rf_lgd_macro)# 3. Perform sensitivity analysislgd_data_macro_base <-lgd_fwd_macro_sel_all[431:499,]lgd_data_macro_stress <-lgd_fwd_macro_sel_all[500:568,]yhat_rf_lgd_macro_base <-predict(rf_lgd_macro,  newdata=lgd_data_macro_base)yhat_rf_lgd_macro_stress <-predict(rf_lgd_macro,  newdata=lgd_data_macro_stress) par(mfrow=c(2, 1))plot(lgd_data_macro_base$ltv_utd, yhat_rf_lgd_macro_base)plot(lgd_data_macro_stress$ltv_utd, yhat_rf_lgd_macro_stress)#go-5# === Mortgage GLM Full Prepayment Modelling ===library(dplyr); library(caret); library(vars); library(MASS)# 1. Upload databal_prep <- read.csv('ifrs9/bal_prep.csv', header = TRUE, sep=',')# 1.1. Format datebal_prep <- dplyr::mutate_at(bal_prep,  vars(contains('date')), funs(as.Date))# 1.2. Train and test samplesset.seed(888)train_sample_prep <- caret::createDataPartition(bal_prep$year,  p=0.7, list=FALSE)train_prep <- bal_prep[train_sample_prep, ]test_prep <- bal_prep[-train_sample_prep, ]# 2. Perform GLM analysislogit_prep_full <- glm(prep_flag ~ tob + ltv_utd + uer + gdp +  cpi + hpi + ir, data=train_prep, family = binomial(link = 'logit'))logit_prep <- stepAIC(logit_prep_full,  k = qchisq(0.05, 1, lower.tail=F), direction = 'both')summary(logit_prep)#go-6# === Mortgage Full Prepayment Modelling via Random Forest ===library(dplyr); library(caret); library(vars); library(randomForest)# 1. Upload databal_prep <- read.csv('ifrs9/bal_prep.csv', header = TRUE, sep=',')# 1.1. Format datebal_prep <- dplyr::mutate_at(bal_prep,  vars(contains('date')), funs(as.Date))# 1.2. Train and test samplesset.seed(888)train_sample_prep <- caret::createDataPartition(bal_prep$year,  p=0.7, list=FALSE)train_prep <- bal_prep[train_sample_prep, ]test_prep <- bal_prep[-train_sample_prep, ]# 1.3. Convert prep_flagprep_char = ifelse(train_prep$prep_flag==0, 'No', 'Yes')train_prep = data.frame(train_prep, prep_char)prep_char = ifelse(test_prep$prep_flag==0,'No','Yes')test_prep = data.frame(test_prep,prep_char)# 2. Perform random forest analysisrf_prep <- randomForest(prep_char ~ tob + ltv_utd + uer + gdp +  cpi + hpi + ir, data=train_prep, mtry=2, ntree=50,  importance=TRUE, na.action=na.omit)importance(rf_prep)varImpPlot(rf_prep) # 3. Predict train and test samples# 3.1. Predict traintrain_prep$prep_rf <- predict(rf_prep, newdata=train_prep)table(train_prep$prep_rf, train_prep$prep_char)# 3.2. Predict testtest_prep$prep_rf <- predict(rf_prep, newdata=test_prep)table(test_prep$prep_rf, test_prep$prep_char)#go-7# === Mortgage Full Prepayment Modelling via Boosting ===library(dplyr); library(caret); library(vars); library(gbm)# 1. Upload databal_prep <- read.csv('ifrs9/bal_prep.csv', header = TRUE, sep=',')# 1.1. Format datebal_prep <- dplyr::mutate_at(bal_prep,  vars(contains('date')), funs(as.Date))# 1.2. Train and test samplesset.seed(888)train_sample_prep <- caret::createDataPartition(bal_prep$year,  p=0.7, list=FALSE)train_prep <- bal_prep[train_sample_prep, ]test_prep <- bal_prep[-train_sample_prep, ]# 1.3. Convert prep_flagprep_char = ifelse(train_prep$prep_flag==0, 'No', 'Yes')train_prep = data.frame(train_prep, prep_char)prep_char = ifelse(test_prep$prep_flag==0,'No','Yes')test_prep = data.frame(test_prep,prep_char)# 2. Perform boostingboost_shr_prep <- gbm(prep_flag ~ tob + ltv_utd + uer + gdp +  cpi + hpi + ir, data=train_prep, distribution = 'gaussian',  n.trees = 50, interaction.depth=4, shrinkage=0.2, verbose=F)summary(boost_shr_prep)#go-8# === GLM Full Prepayment Discriminatory Power Analysis ===library(dplyr); library(caret); library(vars); library(optiRum)# 1. Upload databal_prep <- read.csv('ifrs9/bal_prep.csv', header = TRUE, sep=',')# 1.1. Format datebal_prep <- dplyr::mutate_at(bal_prep,  vars(contains('date')), funs(as.Date))# 1.2. Train and test samplesset.seed(888)train_sample_prep <- caret::createDataPartition(bal_prep$year,  p=0.7, list=FALSE)train_prep <- bal_prep[train_sample_prep, ]test_prep <- bal_prep[-train_sample_prep, ]# 2. Perform GLM analysislogit_prep_full <- glm(prep_flag ~ tob + ltv_utd + uer + gdp +  cpi + hpi + ir, data=train_prep, family = binomial(link = 'logit'))logit_prep <- stepAIC(logit_prep_full,  k = qchisq(0.05, 1, lower.tail=F), direction = 'both')summary(logit_prep)# 3. Calculate Gini index# 3.1. Train sampletrain_prep$predict_prep_logit <- predict(logit_prep,  newdata = train_prep, type = 'response')gini_train_prep <- optiRum::giniCoef(train_prep$predict_prep_logit,  train_prep$prep_flag)print(paste("Gini index =", gini_train_prep))# 4.1. Train samplepred_train <- ROCR::prediction(train_prep$predict_prep_logit,  train_prep$prep_flag)auc_train <- ROCR::performance(pred_train, 'auc')print(paste("AUC = ", auc_train@y.values[[1]]))#go-9# === GLM Full Prepayment Goodness-of-fit Over Time ===library(dplyr); library(caret); library(vars); library(optiRum)# 1. Upload databal_prep <- read.csv('ifrs9/bal_prep.csv', header = TRUE, sep=',')# 1.1. Format datebal_prep <- dplyr::mutate_at(bal_prep,  vars(contains('date')), funs(as.Date))# 1.2. Train and test samplesset.seed(888)train_sample_prep <- caret::createDataPartition(bal_prep$year,  p=0.7, list=FALSE)train_prep <- bal_prep[train_sample_prep, ]test_prep <- bal_prep[-train_sample_prep, ]# 2. Perform GLM analysislogit_prep_full <- glm(prep_flag ~ tob + ltv_utd + uer + gdp +  cpi + hpi + ir, data=train_prep, family = binomial(link = 'logit'))logit_prep <- stepAIC(logit_prep_full,  k = qchisq(0.05, 1, lower.tail=F), direction = 'both')summary(logit_prep)# 3. Compute quarterly mean prepayment rates (train set)train_prep$predict_prep_logit <- predict(logit_prep,  newdata = train_prep, type = 'response')train_data<-train_prep %>%dplyr::group_by(report_date,year) %>%dplyr::summarise(prep_actual = mean(prep_flag),prep_fit = mean(predict_prep_logit)) %>%dplyr::select(report_date, year, prep_actual, prep_fit)# 4. Compute annual mean prepayment ratestrain_data <- train_data %>%dplyr::group_by(year) %>%dplyr::summarise(prep_actual_year = sum(prep_actual),  prep_fit_year = sum(prep_fit)) %>%dplyr::select(year, prep_actual_year, prep_fit_year)# 5. Estimate correlation between actual and fitted valuescorr_train <- cor(train_data$prep_actual_year,  train_data$prep_fit_year, method = 'pearson')corr_train#go-10# === EADF modelling ===library(dplyr); library(caret); library(betareg)# 1. Upload dataead <- read.csv('ifrs9/ead.csv', header = TRUE, sep=',')dplyr::glimpse(ead)# 1.1. Train and test samplesset.seed(888) #set seed in order to reproduce sampling resultstrain_sample <- caret::createDataPartition(ead$year,  p=0.7, list=FALSE)train_ead <- ead[train_sample, ]test_ead <- ead[-train_sample, ]# 2. Run beta regressionbeta_ead <- betareg(uti_def ~ uti_ini + gdp, data=train_ead)summary(beta_ead)predict <- cbind(  predict(beta_ead, type = "response"),  predict(beta_ead, type = "link"),  predict(beta_ead, type = "precision"),  predict(beta_ead, type = "variance"),  predict(beta_ead, type = "quantile", at = c(0.25, 0.5, 0.75)))par(mfrow=c(2,1))hist(train_ead$uti_def)hist(predict[,1])#go-11# === CCF modelling ===library(dplyr); library(caret); library(VGAM)# 1. Upload dataead <- read.csv('ifrs9/ead.csv', header = TRUE, sep=',')#dplyr::glimpse(ead)# 1.1. Train and test samplesset.seed(888) #set seed in order to reproduce sampling resultstrain_sample <- caret::createDataPartition(ead$year,  p=0.7, list=FALSE)train_ead <- ead[train_sample, ]test_ead <- ead[-train_sample, ]# 2. Run tobit regressiontobit_ead <- vglm(ccf_ratio ~ uti_ini+gdp,  tobit(Lower=0, Upper=25, type.f = 'cens'), data=train_ead)summary(tobit_ead)predict <- cbind(  predict(tobit_ead, type = "response"),  predict(tobit_ead, type = "link"),  predict(tobit_ead, type = "terms"))par(mfrow=c(2,1))hist(train_ead$ccf_ratio)hist(predict[,1])#go-12# Saved at 7/2/2019 19:26:39 pm<span title="7/2/2019 19:26:39 pm">ISEI Batch #8 - Scenario Analysis and ECL</span>
+# === ARIMA ===library(dplyr); library(tseries); library(urca); library(vars);library("forecast")# 1. Upload datamacv_init <- read.csv('ifrs9/uk_macv.csv', header = TRUE, sep=',')macv<-macv_init[2:54, ] # skip first rowdplyr::glimpse(macv)par(mfrow=c(2, 1))plot(macv$DATE, macv$LN_GDP, type="l", col="green",   main="GDP", ylab="GDP (%)", xlab="Date")lines(macv$DATE, macv$LN_GDP, col="red")# 2. Check for stationarity: ADF test adf_test <- adf.test(macv$LN_CPI, alternative = 'stationary')#print(adf_test) # H0: x has a unit root# 3. Differencingmacv$LN_GDP_D <- diff(macv_init[,"LN_GDP"], lag = 1)macv$LN_CPI_D <- diff(macv_init[,"LN_CPI"], lag = 1)macv$LN_EQ_D <- diff(macv_init[,"LN_EQ"], lag = 1)macv$LN_FX_D <- diff(macv_init[,"LN_FX"], lag = 1)macv$IR_S_D <- diff(macv_init[,"IR_S"], lag = 1)macv$IR_L_D <- diff(macv_init[,"IR_L"], lag = 1)adf_test <- adf.test(macv$LN_CPI_D, alternative = 'stationary')#print(adf_test) # H0: x has a unit root# 4. ARIMA Modelsarima(macv$LN_GDP, order = c(1, 1, 1)) # ARIMA(1, 1, 1)(f.arima <- auto.arima(macv$LN_GDP))(f.forecast <- forecast.Arima(f.arima, h=5)) # forecast up to the next 5 periodplot.forecast(f.forecast, ylab="GDP (%)") # plot forecast#go-1# === VEC Analysis ===library(dplyr); library(tseries); library(urca); library(vars)# 1. Upload datamacv_init <- read.csv('ifrs9/uk_macv.csv', header = TRUE, sep=',')macv<-macv_init[2:54, ] # skip first rowdplyr::glimpse(macv)par(mfrow=c(2, 2))plot(macv$DATE, macv$LN_GDP, type="l", col="green",   main="GDP", ylab="GDP (%)", xlab="Date")lines(macv$DATE, macv$LN_GDP, col="red")# 2. Check for stationarity: ADF test adf_test <- adf.test(macv$LN_CPI, alternative = 'stationary')print(adf_test) # H0: x has a unit root# 3. Differencingmacv$LN_GDP_D <- diff(macv_init[,"LN_GDP"], lag = 1)macv$LN_CPI_D <- diff(macv_init[,"LN_CPI"], lag = 1)macv$LN_EQ_D <- diff(macv_init[,"LN_EQ"], lag = 1)macv$LN_FX_D <- diff(macv_init[,"LN_FX"], lag = 1)macv$IR_S_D <- diff(macv_init[,"IR_S"], lag = 1)macv$IR_L_D <- diff(macv_init[,"IR_L"], lag = 1)adf_test <- adf.test(macv$LN_CPI_D, alternative = 'stationary')print(adf_test) # H0: x has a unit rootVECM2 <- ca.jo(macv[, c('LN_GDP_D', 'LN_CPI_D', 'LN_EQ_D',  'LN_FX_D',  'IR_S_D',  'IR_L_D')],  type = 'trace', ecdet='none', K=2, spec ='transitory')# 4. Diagnostic checks# 4.1. VEC to VAR transformationvec2var <- vec2var(VECM2, r=2)# 4.2. Testsvec2var.norm <- normality.test(vec2var)vec2var.norm$jb.mul# 5. Impulse response analysisirf_irs <- irf(vec2var, impulse="IR_S_D", response="LN_GDP_D",  n.ahead=10, boot=TRUE, ci = 0.99)plot(irf_irs)#go-2
