@@ -1,0 +1,226 @@
+# Saved at 6/3/2019 23:21:28 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/3/2019 23:21:28 pm">Math 115: Histogram Template</span>
+v<-c(1,1,2,3,3,4,4.5,4.75,6,6.5,7,7,7, 9,9.5,10)
+h<-hist(v, xlim=c(0,12),ylim=c(0,12),
+     xlab= "change me x", ylab="change me y", main="change me Title", freq=TRUE,
+     col="chocolate",
+ border="brown",
+breaks=c(0,4,10),cex.main=.9,cex.lab=1, cex.axis=1, cex.main=1, cex.sub=1)
+# Saved at 6/4/2019 8:02:47 am<span title="6/4/2019 8:02:47 am">Sourcing R code from Github</span>
+#Sourcing R code from github
+
+library(RCurl)
+script <- getURL("https://raw.githubusercontent.com/pmcloughlin44/Facebook-side-by-side-Histograms-of-age-by-Sex/master/R%20code"
+, ssl.verifypeer = FALSE)
+eval(parse(text = script))# Saved at 6/4/2019 8:10:03 am<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/4/2019 8:10:03 am">Subscribe</span>
+v<-c(1,1,2,3,3,4,4.5,4.75,6,6.5,7,7,7, 9,9.5,10)
+h<-hist(v, xlim=c(0,12),ylim=c(0,12),
+     xlab= "change me x", ylab="change me y", main="change me Title", freq=TRUE,
+     col="chocolate",
+ border="brown",
+breaks=c(0,4,10),cex.main=.9,cex.lab=1, cex.axis=1, cex.main=1, cex.sub=1)
+# Saved at 6/4/2019 8:11:45 am<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/4/2019 8:11:45 am">Facebook age histogram</span>
+#Facebook Survey Age Histogram
+
+#Facebook Survey Template
+
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSOQJSNr-6RJoqPJOsyrB5g1R3V4oNJss4oBuuc0WLlYJBo-YxSbyE9MVpCLvcgzD7sdlDq6m6VXYo0/pub?gid=0&single=true&output=csv"
+
+Facebook_Survey<-read.csv(url(Myurl))
+print(Facebook_Survey)
+#Facebook_Survey
+age<-Facebook_Survey$Age
+gender<-Facebook_Survey$Gender
+visits<-Facebook_Survey$VisitsPerWeek
+friends<-Facebook_Survey$Friends
+facebook<-Facebook_Survey$Facebook
+#facebook
+#age
+#gender
+#visits
+#friends
+#typeof(
+#Facebook_Survey)
+average_user_visits=sum(visits)/sum(facebook)
+average_user_age=sum(age)/sum(facebook)
+average_users=mean(facebook)
+average_user_friends=sum(friends)/sum(facebook)
+men<-length(gender)-sum(gender)
+women<-sum(gender)
+#print(paste("Number of people in survey = ", #men+women))
+
+print("Number of people in survey")
+print(men+women)
+print("Number of men in survey")
+print(men)
+print("Number of women in survey")
+print(women)
+print(" Average number of visits per week")
+print(average_user_visits)
+print(" Average age of people in survey")
+print(average_user_age)
+print(" Percent of people in survey who use Facebook")
+print(average_users*100)
+print(" Average number of Facebook friends of Facebook users in survey")
+#average_user_friends
+print(average_user_friends)
+
+
+#Facebook users who are men
+
+# values to be removed
+x<-c(0)
+y<-c(1)
+
+# positions where facebook has zeros or gender is 1
+Positions= which(facebook %in% x | gender %in% y)
+men_user_visits<- visits[-Positions]
+#men_user_visits
+men_user_age<-age[-Positions]
+men_user_friends<-friends[-Positions]
+#men_user_friends
+print(" Ages of men who have Facebook")
+print(men_user_age)
+
+#Facebook users who are women
+
+# positions where Facebook has zeros or gender is 0
+Positions= which(facebook %in% x | gender %in% x)
+women_user_visits<- visits[-Positions]
+#women_user_visits
+women_user_age<-age[-Positions]
+#women_user_friends<-friends[-Positions]
+print(" Ages of women who have Facebook")
+print(women_user_age)
+
+# print the two histograms side-by-side
+par(mfrow=c(1,2))
+w<-hist(women_user_age, main="Women Facebook users by age",col="chocolate",cex.main=.9)
+
+
+text(w$mids,w$counts,labels=w$counts, adj=c(0.5, -0.5))
+
+m<-hist(men_user_age, main="Men Facebook users by age",col="darkmagenta",cex.main=.9)
+
+text(m$mids,m$counts,labels=m$counts, adj=c(0.5, -0.5))
+# Saved at 6/11/2019 21:45:17 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/11/2019 21:45:17 pm">Facebook Survey Bar Graph by Sex</span>
+#Facebook Survey Bar Graph
+
+#Facebook Survey Template
+
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSOQJSNr-6RJoqPJOsyrB5g1R3V4oNJss4oBuuc0WLlYJBo-YxSbyE9MVpCLvcgzD7sdlDq6m6VXYo0/pub?gid=0&single=true&output=csv"
+
+Facebook_Survey<-read.csv(url(Myurl))
+Facebook_Survey
+age<-Facebook_Survey$Age
+gender<-Facebook_Survey$Gender
+visits<-Facebook_Survey$VisitsPerWeek
+friends<-Facebook_Survey$Friends
+facebook<-Facebook_Survey$Facebook
+#facebook
+#age
+#gender
+#visits
+#friends
+#typeof(
+#Facebook_Survey)
+average_user_visits=sum(visits)/sum(facebook)
+average_user_age=sum(age)/sum(facebook)
+average_users=mean(facebook)
+average_user_friends=sum(friends)/sum(facebook)
+
+men<-length(gender)-sum(gender)
+women<-sum(gender)
+print("Number of people in survey")
+men+women
+print("Number of men in survey")
+men
+print("Number of women in survey")
+women
+print(" Average number of visits per week")
+average_user_visits
+print(" Average age of people in survey")
+average_user_age
+print(" Percent of people in survey who use Facebook")
+average_users*100
+print(" Average number of Facebook friends of Facebook users in survey")
+average_user_friends
+
+# Bar chart of Facebook users by sex
+
+
+# number men in survey who do not have a Facebook account.
+
+nfm<-0
+for (i in 1:length(gender)){
+ if ( gender[i] ==0 & facebook[i]==0)
+nfm=nfm+1}
+print("number men in survey who  do not have a Facebook account.")
+nfm
+
+
+# number men in survey who  have a Facebook account.
+fm<-0
+for (i in 1:length(gender)){
+ if ( gender[i] ==0 & facebook[i]==1)
+fm=fm+1}
+print("number men in survey who  have a Facebook account.")
+fm
+
+# number women in survey who  do not have a Facebook account.
+nfw<-0
+for (i in 1:length(gender)){
+ if ( gender[i] ==1 & facebook[i]==0)
+nfw=nfw+1}
+print("number women in survey who  do not have a Facebook account.")
+nfw
+
+
+# number women in survey who  have a Facebook account.
+fw<-0
+for (i in 1:length(gender)){
+ if ( gender[i] ==1 & facebook[i]==1)
+fw=fw+1}
+print("number women in survey who  have a Facebook account.")
+fw
+
+# Create the matrix of the values.
+values <- matrix(c(nfm,nfw,fm,fw), nrow = 2, ncol = 2, byrow= TRUE)
+values
+
+#Create the input vectors.
+colors = c("green","orange")
+sex <- c("Men","Women")
+status <- c("No Facebook","Facebook")
+
+# Create the bar chart
+barplot(values, main = "Facebook user breakdown by sex", names.arg = sex, xlab = "Men vs Women", ylab = "number", col = colors)
+
+
+# Add the legend to the chart
+legend("topright", status, cex = .6, fill = colors)# Saved at 6/24/2019 18:10:58 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="6/24/2019 18:10:58 pm">Mass Shooting data</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS3jrMgvq80IIjj6dTMfCzhhKSw69Alr_GIoLUhlLt6YtUa7AJJKUi0SGUSWgGxBwHWDd_Sm_R6_kB8/pub?gid=0&single=true&output=csv"
+Mass_Shooting_Data<-read.csv(url(Myurl))
+#Mass_Shooting_Data
+state<-Mass_Shooting_Data$state
+state
+length(state)
+Positions= which(state=="CA" )
+Positions
+CA_Mass_Shootings<- state[Positions]
+CA_Mass_Shootings
+#NMS=Number of mass shootings
+NMS_CA<-length(CA_Mass_Shootings)
+NMS_CA# Saved at 7/4/2019 22:42:05 pm<span title="7/4/2019 22:42:05 pm">Mass Shooting Dataset</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS3jrMgvq80IIjj6dTMfCzhhKSw69Alr_GIoLUhlLt6YtUa7AJJKUi0SGUSWgGxBwHWDd_Sm_R6_kB8/pub?gid=0&single=true&output=csv"
+Mass_Shooting_Data<-read.csv(url(Myurl))
+#Mass_Shooting_Data
+state<-Mass_Shooting_Data$state
+state
+length(state)
+Positions= which(state=="CA" )
+Positions
+CA_Mass_Shootings<- state[Positions]
+CA_Mass_Shootings
+#NMS=Number of mass shootings
+NMS_CA<-length(CA_Mass_Shootings)
+NMS_CA
