@@ -1,0 +1,18 @@
+# Saved at 2/15/2019 21:03:36 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+y<-rexp(2)
+x=x+y
+x <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+
+
+# Saved at 2/15/2019 21:06:53 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+y<-rpoisson(2)
+x=x+y
+x <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
