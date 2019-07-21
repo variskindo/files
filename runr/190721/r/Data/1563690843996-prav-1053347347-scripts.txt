@@ -1,0 +1,356 @@
+# Saved at 9/14/2018 17:18:12 pm
+l<-function(n)
+{
+a<-5
+c<-4
+z<-c()
+z[1]<-25
+m<-122444
+u<-c()
+for(i in 2:n)
+{
+z[i]<-(a*z[i-1]+c)%%m
+u[i]<-z[i]/m
+}
+u<-z/m
+return (u)
+}
+R<-l(10000)
+Bern<-function (n,p)
+{
+x<-c()
+u<-c()
+for(i in 1:n)
+{
+u[i]<-sample(R,1)
+if( u[i]<=p)
+x[i]<-1
+else
+x[i]<-0
+}
+return (x)
+}
+Bern(10,0.6)
+Binom<-function (N,n,p)
+{
+j<-c()
+for( i in 1:N)
+{
+j[i]<-sum(Bern(n,p))
+}
+return(j)
+}
+s<-Binom(100,10,0.6)
+mean(s)
+
+
+
+ 
+
+
+# Saved at 9/14/2018 17:22:58 pm
+l<-function(n)
+{
+a<-5
+c<-4
+z<-c()
+z[1]<-25
+m<-122444
+u<-c()
+for(i in 2:n)
+{
+z[i]<-(a*z[i-1]+c)%%m
+u[i]<-z[i]/m
+}
+u<-z/m
+return (u)
+}
+R<-l(10000)
+Bern<-function (n,p)
+{
+x<-c()
+u<-c()
+for(i in 1:n)
+{
+u[i]<-runif(1,0,1)
+if( u[i]<=p)
+x[i]<-1
+else
+x[i]<-0
+}
+return (x)
+}
+Bern(10,0.6)
+Binom<-function (N,n,p)
+{
+j<-c()
+for( i in 1:N)
+{
+j[i]<-sum(Bern(n,p))
+}
+return(j)
+}
+s<-Binom(1000,10,0.6)
+mean(s)
+
+
+
+ 
+
+
+# Saved at 9/17/2018 20:34:41 pm
+a<-2
+b<-3
+f<-function (x)
+{
+(1/beta(a,b))*x^(a-1)*(1-x)^(b-1)
+}
+g<-function (x)
+{
+2*x
+}
+x<-seq(0.001,1,length=1000)
+f(x)
+g(x)
+h<-
+
+# Saved at 9/18/2018 11:33:03 am
+ a<-2
+b<-3
+f<-function (x)
+{
+(1/beta(a,b))*x^(a-1)*(1-x)^(b-1)
+}
+g<-function (x)
+{
+2*x
+}
+x<-seq(0.001,1,length=1000)
+f(x)
+g(x)
+h<-f(x)/g(x)
+max(h)
+
+# Saved at 9/19/2018 11:34:37 am
+i<-complex(1,0,1)
+gm<-pi
+th<-pi
+e<-exp(1)
+ei<-cos(pi)+i*sin(pi)
+m<-matrix(c(sin(th),cos(th),cos(th),cos(th),log(1),1,0,0,0,0,2*ei,ei,ei,-3*ei,-2*ei,0,1,0,0,0,3^(sin(th)+cos(th)),-4/(sin(th)^2),2+cos(th+gm),3*log(e),ei,0,0,1,0,0,-4,12*sin(th+gm),-3,9^sin(th),-3,0,0,0,1,0,2*sin(th)+cos(th)^4,cos(th)^4,cos(th)^5,-ei,0,0,0,0,1),nrow=5,ncol=10,byrow=T)
+m
+
+
+# Saved at 9/19/2018 11:54:20 am
+m<-matrix(c(1,0,0,0,1,1,0,0,0,0,-2,-1,-1,3,2,0,1,0,0,0,3,-4,2,3,-1,0,0,1,0,0,-4,-12,-3,9,-3,0,0,0,1,0,2,0,0,0,1,0,0,0,0,1),nrow=5,ncol=10,byrow=T)
+m
+m[2,]<-m[2,]+2*m[1,]
+m[3,]<-m[3,]-3*m[1,]
+m[4,]<-m[4,]+4*m[1,]
+m[5,]<-m[5,]-2*m[1,]
+m
+m[2,]<-m[2,]/-1
+m[3,]
+
+
+# Saved at 9/19/2018 11:54:27 am
+m<-matrix(c(1,0,0,0,1,1,0,0,0,0,-2,-1,-1,3,2,0,1,0,0,0,3,-4,2,3,-1,0,0,1,0,0,-4,-12,-3,9,-3,0,0,0,1,0,2,0,0,0,1,0,0,0,0,1),nrow=5,ncol=10,byrow=T)
+m
+m[2,]<-m[2,]+2*m[1,]
+m[3,]<-m[3,]-3*m[1,]
+m[4,]<-m[4,]+4*m[1,]
+m[5,]<-m[5,]-2*m[1,]
+m
+m[2,]<-m[2,]/-1
+m[3,]
+
+
+# Saved at 9/19/2018 12:00:28 pm
+m<-matrix(c(1,0,0,0,1,1,0,0,0,0,-2,-1,-1,3,2,0,1,0,0,0,3,-4,2,3,-1,0,0,1,0,0,-4,-12,-3,9,-3,0,0,0,1,0,2,0,0,0,1,0,0,0,0,1),nrow=5,ncol=10,byrow=T)
+m
+m[2,]<-m[2,]+2*m[1,]
+m[3,]<-m[3,]-3*m[1,]
+m[4,]<-m[4,]+4*m[1,]
+m[5,]<-m[5,]-2*m[1,]
+m
+m[2,]<-m[2,]/-1
+m[3,]<-m[3,]+4*m[2,]
+m[4,]<-m[4,]+12*m[2,]
+m
+m[3,]<-m[3,]/6
+m[2,]<-m[2,]-m
+
+
+# Saved at 10/10/2018 10:02:39 am
+n<-seq(1,200)
+xn<-(1+(1/n))^n
+plot(n,xn)
+abline(h=exp(1))
+
+# Saved at 10/10/2018 10:54:02 am
+n<-seq(1,200)
+xn<-(1+(1/n))^n
+plot(n,xn)
+abline(h=exp(1))
+exp(1)
+n1<-seq(1,100)
+r<-runif(1,0,1)
+xn<-r^n1
+plot(n1,xn)
+
+# Saved at 10/10/2018 10:55:11 am
+n=5000
+xbar=c()
+mu=2
+sig=sqrt(2)
+for(i in 1:n)
+{
+xbar[i]=mean(rnorm(i,mu,sig^2))
+}
+plot(xbar)
+
+# Saved at 10/17/2018 22:15:02 pm
+m<-matrix(c(1,2,3,-1),nrow=2,byrow=T)
+m
+p<-matrix(c(1,0,3/7,-1/7),nrow=2,byrow=T)
+q<-matrix(c(1,-2,0,1),nrow=2,byrow=T)
+p%*%m%*%q
+k<-solve(p)
+l<-solve(q)
+k
+l
+ap<-t(l)%*%solve(t(k)%*%m%*%t(l))%*%t(k)
+ap
+m%*%ap%*%m
+ap%*%m%*%ap
+
+# Saved at 10/25/2018 15:05:40 pm
+x<-c()
+n<-50000
+y<-seq(1,50000,1)
+for(i in 1:n)
+{
+x[i]<-1/(i^2)
+}
+c<-cumsum(x)
+plot(y,c,"l")
+lines(y,x,"l")
+
+# Saved at 11/4/2018 12:46:40 pm
+x<-c()
+n<-1000
+u<-runif(n,0,1)
+for (i in 1:n)
+{
+if (u[i]<=1/2)
+{x[i]=2*u[i]}
+else
+{
+x[i]=4*u[i]
+}
+}
+M<-x
+brk<-c(0,1,2,4)
+hist(M,breaks=brk,ylim=c(0,1))
+
+# Saved at 11/4/2018 13:09:38 pm
+U<-c()
+n<-1000
+X<-runif(n,1,3)
+for (i in 1:n)
+{
+U[i]<-((X[i]-1)^2)/8
+}
+
+
+# Saved at 11/4/2018 13:17:25 pm
+x<-seq(-5,5,0.001)
+den<-function (x)
+{
+0.5*exp(-abs(x))
+}
+plot(den,x)
+
+
+# Saved at 11/4/2018 18:46:32 pm
+u1<-runif(1000,0,1)
+u2<-runif(1000,0,1)
+x<-sqrt(-2*log(u1))*cos(2*pi*u2)
+X<-x
+n<-500
+k<-20
+Y<-matrix(,byrow=TRUE,nrow=n,ncol=k)
+for(i in 1:n)
+{
+for(j in 1: k)
+{
+Y[i,j]<-rnorm(1,0,1)^2
+}
+}
+P<-rowSums(Y)
+history(P,prob=T,ylim=c(0,4))
+curve(dchisq(x,20,add=TRUE)
+
+
+# Saved at 11/4/2018 19:49:55 pm
+n<-100
+k<-20
+y<-matrix(,byrow=TRUE,nrow=n,ncol=k)
+for(i in 1:n)
+{
+for(j in 1: k)
+{
+y[i,j]<-rnorm(1,0,1)^2
+}
+}
+y
+p<-rowSums(y)
+hist(p,prob=T,ylim=c(0,0.2))
+curve(dchisq(x,20),add=TRUE)
+
+
+# Saved at 11/4/2018 23:03:01 pm
+n<-100
+k<-20
+y<-matrix(,byrow=TRUE,nrow=n,ncol=k)
+for(i in 1:n)
+{
+for(j in 1: k)
+{
+y[i,j]<-rnorm(1,0,1)^2
+}
+}
+p<-rowSums(y)
+hist(p,prob=T,ylim=c(0,0.1))
+curve(dchisq(x,20),add=TRUE)
+acf(p,lag=80)
+n<-1000
+Y1<-rnorm(n,0,1)^2
+Y2<-rnorm(n,0,1)^2
+Y3<-rnorm (n,01)^2
+X<-Y1+Y2
+pdf<-dchisq(X,2)
+plot(X,pdf)
+
+# Saved at 11/4/2018 23:03:06 pm
+n<-100
+k<-20
+y<-matrix(,byrow=TRUE,nrow=n,ncol=k)
+for(i in 1:n)
+{
+for(j in 1: k)
+{
+y[i,j]<-rnorm(1,0,1)^2
+}
+}
+p<-rowSums(y)
+hist(p,prob=T,ylim=c(0,0.1))
+curve(dchisq(x,20),add=TRUE)
+acf(p,lag=80)
+n<-1000
+Y1<-rnorm(n,0,1)^2
+Y2<-rnorm(n,0,1)^2
+Y3<-rnorm (n,01)^2
+X<-Y1+Y2
+pdf<-dchisq(X,2)
+plot(X,pdf)
