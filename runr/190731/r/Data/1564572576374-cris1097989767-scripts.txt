@@ -1,0 +1,244 @@
+# Saved at 10/27/2018 16:25:23 pm
+X <- c (1,2,3,4,5)
+Y <- c (5,4,3,2,1)
+plot (X, Y)
+
+# Saved at 10/27/2018 16:27:39 pm
+X <- c (1,2,3,4,5)
+Y <- c (5,4,3,2,1)
+lm (Y ~ X)
+
+
+# Saved at 10/27/2018 16:28:30 pm
+X <- c (1,2,3,4,5)
+Y <- c (5,4,3,2,1)
+G <- lm (Y ~ X)
+plot (G)
+
+
+# Saved at 10/27/2018 16:29:20 pm
+X <- c (1,2,3,4,5)
+Y <- c (5,4,3,2,1)
+23÷15
+
+
+# Saved at 10/27/2018 16:29:51 pm
+X <- c (1,2,3,4,5)
+Y <- c (5,4,3,2,1)
+23/15
+
+
+# Saved at 10/27/2018 16:35:11 pm
+Locc <- c (5,10,15,20,25)
+Fill <- c (34,12,8,1,0)
+plot (Fill,Locc)
+
+
+# Saved at 10/27/2018 16:39:36 pm
+Locc <- c (5,10,15,20,25)
+Fill <- c (34,12,8,1,0)
+mar <- matrix (as.numeric (0), nrow=5, ncol=5)
+
+# Saved at 10/27/2018 16:39:49 pm
+mar <- matrix (as.numeric (0), nrow=5, ncol=5)
+
+# Saved at 10/27/2018 16:40:12 pm
+matrix (as.numeric (0), nrow=5, ncol=5)
+
+# Saved at 10/27/2018 16:45:00 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+A
+
+# Saved at 10/27/2018 16:45:19 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+A
+
+# Saved at 10/27/2018 16:45:53 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+A
+image (A)
+
+# Saved at 10/27/2018 16:46:35 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+A
+plot (A)
+
+# Saved at 10/27/2018 16:47:20 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+as.dataframe (A)
+A
+
+# Saved at 10/27/2018 16:47:45 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+image(A)
+
+
+# Saved at 10/27/2018 16:50:47 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+image(A)
+Casas <- C (50,22,35)
+Pessoas <-C (100,15,25)
+plot
+
+
+# Saved at 10/27/2018 16:52:18 pm
+A <- matrix (as.numeric (0), nrow=5, ncol=5)
+A [1,] <- 1
+A [,1] <- 1
+A [5,] <- 1
+A [3,5] <- 1
+A [4,5] <- 1
+A [3,3] <- 1
+A [3,4] <- 1
+image(A)
+Casas <- C (50,22,35)
+Pessoas <-C (100,15,25)
+plot(Casas,Pessoas)
+
+
+# Saved at 10/27/2018 16:53:49 pm
+
+
+Casas <- C (50,22,35)
+Pessoas <-C (100,15,25)
+plot(Casas,Pessoas)
+
+
+# Saved at 10/27/2018 16:54:21 pm
+
+
+Casas <- C (50,22,35)
+Pessoas <-C (100,15,25)
+plot(Casas,Pessoas)
+
+
+# Saved at 10/27/2018 16:54:25 pm
+
+
+Casas <- C (50,22,35)
+Pessoas <-C (100,15,25)
+plot(Casas,Pessoas)
+
+
+# Saved at 10/27/2018 16:54:51 pm
+
+
+Casas <- c (50,22,35)
+Pessoas <- c (100,15,25)
+plot(Casas,Pessoas)
+
+
+# Saved at 10/27/2018 18:03:52 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentração  <- c (25,50,100)
+plot (Cerrado,Concentração )
+
+
+
+# Saved at 10/27/2018 18:03:57 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentração  <- c (25,50,100)
+plot (Cerrado,Concentração )
+
+
+
+# Saved at 10/27/2018 18:04:39 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (25,50,100)
+plot (Cerrado,Concentração )
+
+
+# Saved at 10/27/2018 18:04:58 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (25,50,100)
+plot (Cerrado,Concentracao )
+
+
+# Saved at 10/27/2018 18:06:09 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+plot (Cerrado,Concentracao )
+
+
+# Saved at 10/27/2018 18:11:10 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+Modelo <- lm (Concentracao ~ Cerrado)
+plot (Modelo)
+
+
+# Saved at 10/27/2018 18:11:28 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+Modelo <- glm (Concentracao ~ Cerrado)
+plot (Modelo)
+
+
+# Saved at 10/27/2018 18:12:58 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+resu <- glm (Concentracao ~ Cerrado)
+summary (resu)
+abline (resu)
+plot (resu)
+
+
+# Saved at 10/28/2018 12:11:23 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+plot (Cerrado,Concentracao)
+
+
+# Saved at 10/28/2018 23:37:14 pm
+Cerrado<- c (1,2,3,4,5,6)
+Concentracao  <- c (5,10,15,25,50,100)
+plot (Cerrado,Concentracao)
