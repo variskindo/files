@@ -1,0 +1,5 @@
+# Saved at 9/1/2019 13:55:29 pm<span title="9/1/2019 13:55:29 pm">body_temp</span>
+body_temp<-c(97.4,98,98.5,98.7,98.8,98.8,99.1,99.2,99.5,100,100.3,100.4)
+hist(body_temp<c(97,98,99.5,100,101)col="white",main="body_temp",
+xlab="nonuniform bin sizes",
+ylab="density of body temp")
