@@ -1,0 +1,23 @@
+# Saved at 3/22/2019 16:06:22 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this codevFFg&Rs# Saved at 7/5/2019 8:47:50 am<span title="7/5/2019 8:47:50 am">Test</span>
+library(caret)
+print("Nave Bayes")
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 2500), ] # select 2500 cases only
+df$Class = as.factor(df$Class)
+set.seed(888)
+trainControl <- trainControl(method="cv", number=5)
+fit.nb <- train(Class ~ V1 + V2, data=df, method="nb", metric="Accuracy", trControl=trainControl)
+print(fit.nb) # summarize fit# Saved at 8/24/2019 11:45:07 am<span title="8/24/2019 11:45:07 am">ECL Report</span>
+plot(iris)
+varisk.createPdfReport()
+varisk.createPdfReport()
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,200,200' # using specified width and height
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,Y' # using original width and height
+csvFileName <- "fileNameNoExt.csv"
+varisk.saveLines(csvFileName, s)
+varisk.createExcelReport(csvFileName=csvFileName)
