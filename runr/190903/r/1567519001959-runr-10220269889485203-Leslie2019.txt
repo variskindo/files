@@ -1,0 +1,57 @@
+####################
+# Cohorte Noviembre
+####################
+rm(list=ls(all=TRUE))
+a<-c(0,0.61,2.5,2.85,3,1.9,0.92,0,0)
+b<-c(0.9,0.933333333,0.892857143,0.8,0.75,0.422222222,0.736842105,0.428571429,0)
+
+n<-9
+A<-matrix(0*rnorm(n*n),nrow=n)
+sec<-1:n
+for (i in sec)
+{A[1,i]<-a[i]
+if (i<length(sec)) 
+	A[i+1,i]<-b[i]}
+
+#P<-(u$vectors[,1] u$vectors[,2] u$vectors
+
+####################
+# Cohorte Febrero
+####################
+
+rm(list=ls(all=TRUE))
+a<-c(0.00,0.50,3.20,2.90,0.00,0.00,0.00,0.58,0.78)
+
+b<-c(0.78,1.00,0.68,0.50,0.56,0.34,0.53,0.44,1.00)
+
+n<-9
+A<-matrix(0*rnorm(n*n),nrow=n)
+sec<-1:n
+for (i in sec)
+{A[1,i]<-a[i]
+if (i<length(sec)) 
+	A[i+1,i]<-b[i]}
+A
+
+#Calcula autovalores y autovectores de A
+u<-eigen(A)
+
+#Calcula módulos de los autovalores
+r<-abs(u$values)
+
+#Calcula "C"
+x1<-c(340,266,266,181,90,50,17,9,4)
+x0<-matrix(x1,nrow=9,byrow=TRUE)
+Pinv<-solve(u$vectors)
+C<-Pinv%*%x0
+
+#Estima x9
+x9<-C[1]*u$values[1]^8*u$vectors[,1]
+
+#Cálculo exacto de x9
+
+for (k in 1:8)
+ x1<-A%*%x1
+
+
+
