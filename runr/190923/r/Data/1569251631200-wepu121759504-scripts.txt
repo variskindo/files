@@ -1,0 +1,13 @@
+# Saved at 12/9/2018 7:58:02 am
+H<-c(7,12,28,3,41)
+M<-c("Mar","April","May","Jun","July")
+barplot (H,names.arg=M,xlab="Month",ylab="Revenue",col="blue",main="Revenue chart",border="red")
+
+# Saved at 12/10/2018 22:17:42 pm
+require (datasets)
+mtcars
+mtcars$vs
+mtcars$gear
+frequency(mtcars$vs)
+boxplot(mtcars$vs,mtcars$gear,main="car distribution")
+boxplot (mtcars$vs)
