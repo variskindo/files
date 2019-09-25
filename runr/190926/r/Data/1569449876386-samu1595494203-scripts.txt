@@ -1,0 +1,6 @@
+# Saved at 9/26/2019 3:47:55 am<span title="9/26/2019 3:47:55 am">Top 10 tourist hotspots</span>
+x<-c("France","Spain","USA","China","Italy","Turkey","Mexico","Germany","Thailand","UK")
+v<-c(89,83,80,63,62,46,41,39,38,36)
+print(x)
+print (v)
+pie(v,main="Annual visitors recieved by Countries in millions",col=2:11,labels=x)
