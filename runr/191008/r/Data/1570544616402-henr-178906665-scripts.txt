@@ -1,0 +1,27 @@
+# Saved at 9/18/2018 19:49:08 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+read.csv(file="file:///storage/emulated/0/Download/activité.csv",sep=",",header=TRUE)
+
+# Saved at 9/18/2018 19:59:22 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+getwd()
+list.files(path=".")
+head(read.csv("./x.csv",sep=",",header=TRUE))
+
+# Saved at 9/19/2018 17:10:49 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+getwd()
+
+##head(read.csv("./x.csv",sep=",",header=TRUE))
