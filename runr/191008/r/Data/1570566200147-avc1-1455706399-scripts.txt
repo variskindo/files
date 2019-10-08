@@ -1,0 +1,14 @@
+# Saved at 10/8/2019 13:23:19 pm<span title="10/8/2019 13:23:19 pm">A6</span>
+scores<-data.frame("T1"=c(78,67,92,85,69,56),
+"T2"=c(86,65,89,85,75,62),"F"=c(82,72,90,8272,60))
+str(scores)
+F<-scores$F
+T1<-scores$T1
+T2<-scores$T2
+m2=lm(F~T1+T2,data=scores)
+print("summaryof model 2")
+summary(m2)
+plot(m2$residuals)
+#plot(T1,T2,F)
+print("predictsthe final exam of a student who received a score of 74% on the first test and 81% on the second test")
+predict(m2,data.frame(T1=74,T2=82))
