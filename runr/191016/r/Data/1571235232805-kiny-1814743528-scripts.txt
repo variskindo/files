@@ -1,0 +1,42 @@
+# Saved at 10/16/2019 16:17:33 pm<span title="10/16/2019 16:17:33 pm">Starting R programing again all the basics.</span>
+# r basics
+#this an editor not a console
+a=4
+b <- 5
+b+a
+log10(100)
+# Saved at 10/16/2019 17:13:52 pm<span title="10/16/2019 17:13:52 pm">R basics</span>
+# r basics
+#this an editor not a console
+a=4
+b <- 5
+b+a
+log10(100)
+f=floor(1.5)
+f
+cl=ceiling(1.5)
+cl
+rd=round(1.4)
+rd
+rd1=round(1.5)
+rd1
+dv=3/2
+dv
+mt=2*2
+mt
+md=5%%2
+md
+qt=5%/%2
+qt
+ab=abs(-2.0)
+ab
+class(a)
+A = as.integer(a)
+class(A)
+Aa="letters"
+class(Aa)
+t=TRUE
+class(t)
+ff=factor(c("boy","girl","boy","girl"))
+ff
+nlevels(ff)
