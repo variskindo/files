@@ -1,0 +1,7 @@
+# Saved at 10/16/2019 16:17:33 pm<span title="10/16/2019 16:17:33 pm">Starting R programing again all the basics.</span>
+# r basics
+#this an editor not a console
+a=4
+b <- 5
+b+a
+log10(100)
