@@ -1,0 +1,28 @@
+# Saved at 10/20/2019 22:36:46 pm<span title="10/20/2019 22:36:46 pm">data5</span>
+#Data=../r/191020/runr-ayuk898845395-data5.xlsx
+#Sheet=1
+print(obs) #display the data
+#Data=../r/191020/runr-ayuk898845395-data5.xlsx
+#Sheet=1
+#mengaktifkan packages car untuk vif
+install.packages("car")
+library(car)
+
+#mengambil data
+data=read.csv("data5.csv")
+
+#model regresi
+reg=lm(y~x1+x2+x3+x4,data=data)
+summary(reg)
+
+#multikolinearitas check
+cor(data[,c(-1,-2)])
+
+#check VIF
+vif(reg) #VIF=1/(R^2)
+
+#solving multicollinearity
+XX=data$x3/data$x2
+regres2 <- lm(y ~x1+x2+x3+x4,data=data)
+summary(regres2)
+vif(regres2)
