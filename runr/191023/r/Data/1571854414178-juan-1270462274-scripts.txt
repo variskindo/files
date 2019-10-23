@@ -1,0 +1,6 @@
+# Saved at 12/11/2018 6:50:32 am
+year<-rep(2008:2010, each=4)
+quarter<-rep(1:4, 3)
+cpi<-c(162.2,164.6, 166.5,166, 166.2, 167, 168.6, 169.5, 171, 172.1, 173.3, 174)
+plot(cpi, xaxt="n", ylab="CPI", xlab="")
+axis(1, labels=paste(year, quarter, sep="Q") , at=1:12, las=3)
