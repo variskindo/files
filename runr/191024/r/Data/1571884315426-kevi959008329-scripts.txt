@@ -1,0 +1,328 @@
+# Saved at 10/24/2019 9:31:54 am<span title="10/24/2019 9:31:54 am">W9_D</span>
+---
+output:
+  word_document: default
+  html_document: default
+---
+************************************************************************************************************   
+Week    : 9   
+Title   : Studi kasus Clustering   
+Nama    : jojo
+NIM     :   
+Date    : 2019-10   
+Asisten :    
+Waktu   : Max 200 menit     
+***************************************************************************************************************       
+ 
+***************************************************************************************************************
+
+
+**Soal K-means**   
+============================================================================
+
+CASE 1 
+-----------------------------------------------------------------------------------
+Pertanyaan: Apakah ada pengaruh pemilihan variabel dengan hasil cluster?
+
+
+-----------------------------------------------------------------------------------
+
+A. Mari kita panggil data iris Sepal.Length dan Sepal.Width simpan sebagai newiris1. 
+   iris Petal.Length dan Petal.Width simpan sebagai newiris2.
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+newiris1 <- iris[c(1,2)]
+newiris2 <- iris[c(3,4)]
+```
+
+B. Apply kmeans ke newiris1.
+   Simpan clustering result dalam kc1 untuk newiris1 Jumlah cluster=3.
+   Simpan clustering result dalam kc2 untuk newiris2 Jumlah cluster=3.
+   
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+(kc1 <- kmeans(newiris1, 3))
+(kc2 <- kmeans(newiris2, 3))
+```
+
+C. Bandingkan Species label dengan hasil clustering kc1 dan kc2. Mana yang lebih baik?
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+table(iris$Species, kc1$cluster)
+table(iris$Species, kc2$cluster)
+
+```
+
+D. Plot clusters dan titik pusatnya
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+plot(newiris1[c("Sepal.Length", "Sepal.Width")], col=kc1$cluster)
+points(kc1$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=8, cex=2)
+plot(newiris2[c("Petal.Length", "Petal.Width")], col=kc2$cluster)
+points(kc2$centers[,c("Petal.Length", "Petal.Width")], col=1:3, pch=8, cex=2)
+```
+
+E. Comparing SSE
+   Lihat struktur kc1
+   Hitung sse kc1 simpan sebagai sse1
+   Hitung sse kc2 simpan sebagai sse2
+   Bandingkan mana yang lebih baik
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+str(kc1)
+sse1 <- kc1$tot.withinss
+sse2 <- kc2$tot.withinss
+sse1
+sse2
+
+```
+
+Kesimpulan: pengaruh pemilihan variable dengan hasil cluter tidak mempengaruhi dalam clsutering yang di lakukan di atas  karna eror di atas sama
+-----------------------------------------------------------------------------------------------------
+Case 2:
+Pertanyaan: Apakah ada pengaruh banyak variabel dengan hasil cluster?
+ cluster------------------------------------------------------------------------------------------------------
+
+A. Mari kita panggil data iris 
+   Petal.Length, Petal.Width simpan sebagai newirisA.
+   Sepal.Width, Petal.Length, Petal.Width  simpan sebagai newirisB.
+   Sepal.Length, Sepal.Width, Petal.Length dan Petal.Width simpan sebagai newirisC.   
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+newirisA <- iris[3:4]
+newirisB <- iris[2:4]
+newirisC <- iris[1:4]
+newirisA 
+newirisB 
+newirisC 
+```
+
+B. Apply kmeans.
+   Simpan clustering result dalam kcA untuk newirisA Jumlah cluster=3.
+   Simpan clustering result dalam kcB untuk newirisB Jumlah cluster=3.
+   Simpan clustering result dalam kcC untuk newirisC Jumlah cluster=3.   
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+(kcA <- kmeans(newirisA, 3))
+(kcB <- kmeans(newirisB, 3))
+(kcC <- kmeans(newirisC, 3))
+```
+
+C. Bandingkan Species label dengan hasil clustering kcA,kcB, dan kcC. Mana yang lebih baik?
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+table(iris$Species, kcA$cluster)
+table(iris$Species, kcB$cluster)
+table(iris$Species, kcC$cluster)
+
+```
+
+kcA 50,48,46   
+kcB 0,0,41
+kcC 50,2,48
+Yang lebih baik: yang lebih baik KCA   
+
+
+D. Comparing SSE
+   Hitung sse kcA simpan sebagai sseA
+   Hitung sse kcB simpan sebagai sseB
+   Hitung sse kcC simpan sebagai sseC
+
+   Bandingkan mana yang lebih baik
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+sseA <- kcA$tot.withinss
+sseB <- kcB$tot.withinss
+sseC <- kcC$tot.withinss
+sseA
+sseB
+sseC
+
+```
+
+Kesimpulan: banyaknya variabel SSEC
+
+Case 3:
+Pertanyaan: Berapa jumlah kluster yang lebih baik?
+Di atas kita tahun jumlah spesies iris adalah 3 sehingga jumlah kluster=3.
+Baagaimana kalau kita belum tahu?
+Maka kita sekarang mencoba mencari nilai k=?
+
+A. Mari kita panggil data iris 
+   Petal.Length, Petal.Width simpan sebagai newirisX.
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+newirisX <- iris[3:4]
+newirisX
+```   
+
+B. Apply kmeans.
+   Simpan clustering result dalam kcX3 untuk newirisX Jumlah cluster=3.
+   Simpan clustering result dalam kcX4 untuk newirisX Jumlah cluster=4.
+   Simpan clustering result dalam kcX5 untuk newirisX Jumlah cluster=5.
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+kcX3 <- kmeans(newirisX,3, nstart= 20, iter.max = 15)
+kcX4 <- kmeans(newirisX,4, nstart= 20, iter.max = 15)
+kcX5 <- kmeans(newirisX,5, nstart= 20, iter.max = 15)
+```
+
+C.Buatlah plot untuk k=3 dan k=5.
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+
+par(mfrow=c(1,3))
+plot(newirisX[c("Petal.Length", "Petal.Width")], col=kcX3$cluster, main="k=3")
+points(kcX3$centers[,c("Petal.Length", "Petal.Width")], col=1:3, pch=8, cex=2)
+plot(newirisX[c("Petal.Length", "Petal.Width")], col=kcX4$cluster, main="k=4")
+points(kcX4$centers[,c("Petal.Length", "Petal.Width")], col=1:4, pch=8, cex=2)
+plot(newirisX[c("Petal.Length", "Petal.Width")], col=kcX5$cluster, main="k=5")
+points(kcX5$centers[,c("Petal.Length", "Petal.Width")], col=1:5, pch=8, cex=2)
+```  
+
+D. Apply kmeans.Hitung SSE untuk k=1,2,...5. Bandingkan!
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+sse <- sapply(1:5,function(k){kmeans(newirisX,k, nstart= 20, iter.max = 15)$tot.withinss})
+sse
+par(mfrow=c(1,1))
+plot(1:5,sse,type="b",main="Elbow method",xlab="Number of clusters (k)",ylab="Sum of squares due to error (SSE)")
+```   
+Perhatikan SSE dan k pada elbow graph.   
+Pada k = 1, 550.89533   
+Pada k = 2, 86.39022     
+Pada k = 3, 31.37136  
+Pada k = 4, 19.46599  
+Pada k = 5, 13.91691
+...   
+Jadi minimal kluster yang bisa dibuat adalah k = 5
+
+
+Case HC
+
+
+A. Gunakan data newirisX dan perhitungan jarak euclidean.
+   Buat dendrodramnya untuk k=3,k=4 dan k=5
+```{R}
+mydata=newirisX
+# Ward Hierarchical Clustering
+d <- dist(newirisX, method = "euclidean") # distance matrix
+fit <- hclust(d, method="ward.D2")
+par(mfrow=c(1,4))
+plot(fit) # display dendogram
+groups <- cutree(fit, k=2) # cut tree into 2 clusters
+# draw dendogram with red borders around the 2 clusters
+rect.hclust(fit, k=2, border="red")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=3) # cut tree into 3 clusters
+# draw dendogram with red borders around the 3 clusters
+rect.hclust(fit, k=3, border="red")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=4) # cut tree into 4 clusters
+# draw dendogram with red borders around the 4 clusters
+rect.hclust(fit, k=4, border="red")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+
+
+
+```
+
+Case 2
+We ll use the built-in R dataset USArrest which contains statistics, 
+in arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973. 
+It includes also the percent of the population living in urban areas.
+It contains 50 observations on 4 variables:
+[,1] Murder numeric Murder arrests (per 100,000)
+[,2] Assault numeric Assault arrests (per 100,000)
+[,3] UrbanPop numeric Percent urban population
+[,4] Rape numeric Rape arrests (per 100,000)
+
+A. Explore dataset USArrest
+```{R}
+# Load the data set
+data("USArrests")
+
+#  Remove any missing value (i.e, NA values for not available) That might be present in the data
+df <- na.omit(USArrests)
+
+# View the firt 6 rows of the data
+head(df, n = 6)
+
+# compute some descriptive statistics
+desc_stats <- data.frame(
+  Min = apply(df, 2, min), # minimum
+  Med = apply(df, 2, median), # median
+  Mean = apply(df, 2, mean), # mean
+  SD = apply(df, 2, sd), # Standard deviation
+  Max = apply(df, 2, max) # Maximum
+  )
+desc_stats <- round(desc_stats, 1)
+head(desc_stats)
+
+# As we don t want the hierarchical clustering result to depend to an arbitrary variable unit, we start by scaling the data 
+df <- scale(df)
+head(df)
+```
+
+B. Buat dan bandingkan HC dengan metode jarak ward.D2 dan complete  dan buat denderodramnya
+```{R}
+
+d1 <- dist(df, method = "euclidean")
+res.d1 <- hclust(d, method = "ward.D2", )
+
+d2 <- dist(df, method = "euclidean")
+res.d2 <- hclust(d2, method = "complete", )
+
+# Plot the obtained dendrogram
+plot(res.d1, cex = 0.6, hang = -1)
+plot(res.d2, cex = 0.6, hang = -1)
+
+
+```
+
+C. Buat dan bandingkan HC model top-down dan bottop-up dari data di atas. 
+
+```{R}
+#install.packages("cluster")
+library(cluster)
+
+# ------------------------Model AGNES (bottom-up) Agglomerative Nesting (Hierarchical Clustering)
+library("cluster")
+# Compute agnes()
+res.agnes <- agnes(df, method = "ward")
+# Agglomerative coefficient
+res.agnes$ac
+## [1] 0.934621
+# plot.hclust() vertikal
+plot(as.hclust(res.agnes), cex = 0.6, hang = -1)
+# plot.dendrogram() horisontal
+plot(as.dendrogram(res.agnes), cex = 0.6, 
+     horiz = TRUE)
+
+# -------------------------MODEL DIANA (top-down) DIvisive ANAlysis Clustering
+# Compute diana()
+res.diana <- diana(df)
+# Plot the tree
+plot(as.hclust(res.diana), cex = 0.6, hang = -1)
+# plot.dendrogram()
+plot(as.dendrogram(res.diana), cex = 0.6, 
+     horiz = TRUE)
+
+
+set.seed(1234)
+ss <- sample(1:50, 10)
+library(dendextend)
+# Compute distance matrix
+hc1 <- as.hclust(res.agnes)
+hc2 <- as.hclust(res.diana)
+
+# Create two dendrograms
+dend1 <- as.dendrogram (hc1)
+dend2 <- as.dendrogram (hc2)
+dend_list <- dendlist(dend1,dend2)
+tanglegram(dend1, dend2,
+  highlight_distinct_edges = FALSE, # Turn-off dashed lines
+  common_subtrees_color_lines = FALSE, # Turn-off line colors
+  common_subtrees_color_branches = TRUE, # Color common branches 
+  main = paste("entanglement =", round(entanglement(dend_list), 2))
+  )
+
+
+```
+
+
+
+
+***************************************************************************************************************       
+Good luck   
+***************************************************************************
