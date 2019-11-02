@@ -1,0 +1,9 @@
+# Saved at 11/2/2019 10:50:49 am<span title="11/2/2019 10:50:49 am">one</span>
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
