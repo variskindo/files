@@ -1,0 +1,93 @@
+# Saved at 3/22/2019 16:06:22 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this codevFFg&Rs# Saved at 7/5/2019 8:47:50 am<span title="7/5/2019 8:47:50 am">Test</span>
+library(caret)
+print("Nave Bayes")
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 2500), ] # select 2500 cases only
+df$Class = as.factor(df$Class)
+set.seed(888)
+trainControl <- trainControl(method="cv", number=5)
+fit.nb <- train(Class ~ V1 + V2, data=df, method="nb", metric="Accuracy", trControl=trainControl)
+print(fit.nb) # summarize fit# Saved at 8/24/2019 11:45:07 am<span title="8/24/2019 11:45:07 am">ECL Report</span>
+plot(iris)
+varisk.createPdfReport()
+varisk.createPdfReport()
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,200,200' # using specified width and height
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,Y' # using original width and height
+csvFileName <- "fileNameNoExt.csv"
+varisk.saveLines(csvFileName, s)
+varisk.createExcelReport(csvFileName=csvFileName)# Saved at 9/4/2019 5:58:16 am<span title="9/4/2019 5:58:16 am">iphone</span>
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+print( test )
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 9/5/2019 16:36:58 pm<span title="9/5/2019 16:36:58 pm">VaRisk ECL</span>
+varisk.sendMobilePush("Report", "New Report has been emailed.")
+varisk.sendEmail(emailTo="bk.yudiaatmaja@gmail.com", subject="R", message="This is a test")
+script <- "var d = '2019-09-05';var t = '16:15:';\n"
+script <- paste0(script, "variskExecJs('variskOpenMenu(`vcr_borrowers_menu.html`, `Borrowers`)', d, t + '00');\n") #123
+script <- paste0(script, "variskExecJs('variskOpenExMenu(`/var/var.html?airb=1`, `Advanced IRB Approach`)', d, t + '05');\n") #123
+script <- paste0(script, "var s='selectFlowchartNode(`Scenario Discrete Probabilities`);runModel();';\n") #123
+script <- paste0(script, "variskExecJs('variskOpenModel(`macro-scenarios`, `IFRS 9 - Macroeconomic Scenarios`, true, `' + s + '`)', d, t + '10');") #123
+varisk.createJs(script)# Saved at 11/14/2019 7:35:05 am<span title="11/14/2019 7:35:05 am">ECL Bank DKI</span>
+#data <- varisk.readObj('demo-ecl-dki-models-1.rda', prefix=FALSE)
+
+df <- varisk.readCsv("Data/dki/psak71/mev1.csv")
+mac <- df
+ts <- ts(mac, start=c(2014,4), frequency=12) # monthly data
+#fit <- forecast::tslm(odr ~ gdp + uer, data=ts)
+#summary(fit)
+n <- nrow(mac)
+odr <- as.matrix(mac[5:n, 'odr'])
+int1 <- as.matrix(mac[4:(n-1), 'int'])
+int2 <- as.matrix(mac[3:(n-2), 'int'])
+cpi1 <- as.matrix(mac[4:(n-1), 'cpi'])
+cpi2 <- as.matrix(mac[3:(n-2), 'cpi'])
+gdp4 <- as.matrix(mac[1:(n-4), 'gdp'])
+int <- as.matrix(mac[5:n, 'int'])
+idr <- as.matrix(mac[5:n, 'idr'])
+cpi <- as.matrix(mac[5:n, 'cpi'])
+oil <- as.matrix(mac[5:n, 'oil'])
+df <- as.data.frame(cbind(odr, gdp4, int1, int2, cpi1, cpi2, int, idr, cpi, oil))
+colnames(df) <- c('odr', 'gdp4', 'int1', 'int2', 'cpi1', 'cpi2', 'int', 'idr', 'cpi', 'oil')
+
+#' ### Pencarian model regresi terbaik
+#+
+fit <- varisk.findBestTslm(df, ts.start=c(2014,4), ts.frequency=12)
+#' <b>Nama variabel: </b><code style="padding:0 4px">
+{{paste(colnames(df), collapse=", ")}}
+#' </code><br><b>Banyaknya kombinasi regresi yang mungkin: </b><code style="padding:0 4px">
+{{fit[[1]]}}
+#' </code><br><b>Model regresi terbaik </b><code style="padding:0 4px">
+{{fit[[2]]}}
+#' </code>
+#+
+summary(fit[[3]])
+
+
+#mac <- as.data.frame(macv.values)
+#names(mac) <- c("Date", "odr", "gdp", "int", "idr", "cpi", "oil")
+#mac
+
+#varisk.tweetCreateToken()
+#hashtag <- "#HandmaidsTale"
+#tweets <- variskTweetSearch(hashtag, n=2000)
+#unique(tweets$screen_name)
+#users <- variskTweetSearchUsers(hashtag, nUsers=20)
+
+#cnn <- get_timeline("detik", n = 3200)
+#ts_plot(cnn, "hours")
+
+#data <- varisk.readObj('demo-ecl-credit-card-data.rda', prefix=FALSE) # revolvers
+#data <- varisk.readObj('demo-anti-fraud-data.rda', prefix=FALSE)
+
+#R=1 memberitahu sistem agar running R bukan Python
+#Server=2
