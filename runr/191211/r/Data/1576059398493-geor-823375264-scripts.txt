@@ -1,0 +1,132 @@
+# Saved at 11/14/2019 12:54:55 pm<span title="11/14/2019 12:54:55 pm">My Scratch</span>
+#str(obs) # structure of our data
+#x <- rnorm(1000)
+#str(x)
+#go
+#hx <- hist(x, breaks=50, plot=FALSE)
+#plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
+
+x <- c(5, 8, 4, 1, 5, 6, 5, 9, 4, 2, 5, 7, 5, 3, 6, 4, 5, 3, 7, 6)
+
+table(x)# Saved at 11/14/2019 12:55:50 pm<span title="11/14/2019 12:55:50 pm">MATH 1280 Unit 1</span>
+#str(obs) # structure of our data
+#x <- rnorm(1000)
+#str(x)
+#go
+#hx <- hist(x, breaks=50, plot=FALSE)
+#plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
+
+x <- c(5, 8, 4, 1, 5, 6, 5, 9, 4, 2, 5, 7, 5, 3, 6, 4, 5, 3, 7, 6)
+
+table(x)# Saved at 11/27/2019 12:30:38 pm<span title="11/27/2019 12:30:38 pm">MATH 1280 clean slate</span>
+#str(obs) # structure of our data
+#x <- rnorm(1000)
+#str(x)
+#go
+#hx <- hist(x, breaks=50, plot=FALSE)
+#plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
+# Saved at 11/27/2019 12:32:18 pm<span title="11/27/2019 12:32:18 pm">MATH 1280 clean slate</span>
+## Saved at 11/27/2019 13:07:40 pm<span title="11/27/2019 13:07:40 pm">MATH 1280 unit 2 flowers</span>
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+print(obs) #display the data
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+print(obs) #display the data
+#flowers <- read.csv(191127/runr-geor-823375264-flowers.xlsx)
+
+
+getwd()# Saved at 12/4/2019 13:42:10 pm<span title="12/4/2019 13:42:10 pm">MATH 1280 Unit 2</span>
+#Data=../r/191128/runr-geor-823375264-ex1.xlsx
+#Sheet=1
+#print(obs) #display the data
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+#print(obs) #display the data
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+#print(obs) #display the data
+#flowers <- read.csv("../r/191127/runr-geor-823375264-flowers.xlsx")
+#obs
+#table(obs$Sepal.Width)
+#freq <- table(obs)
+#rel.freq <- freq/sum(freq)
+#rel.freq
+#cumsum(rel.freq)
+#freq <- counts(obs)
+#cumsum(freq)
+#summary(obs)
+#getwd()
+#summary(obs)
+table(obs)# Saved at 12/11/2019 4:16:38 am<span title="12/11/2019 4:16:38 am">MATH 1280 Unit 3</span>
+#Data=../r/191128/runr-geor-823375264-ex1.xlsx
+#Sheet=1
+#print(obs) #display the data
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+#print(obs) #display the data
+#Data=../r/191127/runr-geor-823375264-flowers.xlsx
+#Sheet=1
+#print(obs) #display the data
+#flowers <- read.csv("../r/191127/runr-geor-823375264-flowers.xlsx")
+#obs
+#table(obs$Sepal.Width)
+#freq <- table(obs)
+#rel.freq <- freq/sum(freq)
+#rel.freq
+#cumsum(rel.freq)
+#freq <- counts(obs)
+#cumsum(freq)
+#summary(obs)
+#getwd()
+#summary(obs)
+#table(obs)
+
+
+#x <- c(11.9, 11.0, 12.4, 16.9, 16.3, 13.3, 9.1, #17.0, 11.0, 9.3, 25.3, 17.4, 17.4)
+#median(x)
+#max(x)
+#summary (x)
+#boxplot(x)
+#sd(obs$id)
+#sd(obs$bmi)
+#sd(obs$systolic)
+#sd(obs$distolic)
+#sd(obs$age)
+#y <- c(1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, #5, 5, 6, 6)
+#mean(y)
+#sd(y)
+#summary(y)
+#cumsum(y)
+#yf <- table(y)
+#sum(yf)
+#yf/sum(yf)
+#cumsum(yf/sum(yf))
+#t <- c(232, 251, 257, 268, 238, 222, 265, 263, #252, 246, 253, 248, 256, 248, 230, 219, 224, #267, 259, 254, 254, 261, 248, 221, 252, 269, #269, 273, 273, 259, 251, 222, 248, 224)
+#mean(t)
+#sd(t)
+#summary(t)
+#a <- c(8, 6, 9, 9, 8, 7, 8, 9, 10, 8, 10, 5, 4, 10, 9, #9)
+#mean(a)
+#b <- c(9, 8, 7, 8, 9, 10, 9, 10, 7, 8, 10, 9, 9, 4, 6, #3)
+#barplot(table(b))
+#speed <- c(60, 83.3, 71, 64.4, 75, 90, 87, 73)
+
+#mean(speed)
+#sd(speed)
+#min(speed)
+#shoes <- c(2, 4, 20, 8, 6, 4, 5)
+#mean(shoes)
+#tricky <- c(1, 2, 3, 4, 5, 6 ,7)
+#mean(tricky)
+#d <- c(11.9, 11.0, 12.4, 16.9, 16.3, 13.3, 9.1, #17.0, 11.0, 9.3, 25.3, 17.4, 17.4)
+#median(d)
+g <- c(4, 6, 6, 12, 18, 18, 18, 200)
+mean(g)
+sd(g)
