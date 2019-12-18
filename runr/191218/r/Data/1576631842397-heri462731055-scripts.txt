@@ -1,0 +1,5 @@
+# Saved at 12/18/2019 8:17:21 am<span title="12/18/2019 8:17:21 am">tes</span>
+luassegitiga <-function (a, t){
+   luas = 0.5*a*t
+   return (luas)
+}
