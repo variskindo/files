@@ -1,0 +1,10 @@
+# Saved at 12/25/2019 21:53:20 pm<span title="12/25/2019 21:53:20 pm">Contoh. 2.1.1</span>
+contoh<-function (expr, age, t) {
+sxt <- eval({x=age+t; expr})
+sx <- eval({x=age; expr})
+output <- (sx-sxt) /sx
+output}
+
+
+expr <- expression (1-(x/100))
+contoh(expr, age=30,t=10)
