@@ -1,0 +1,12 @@
+# Saved at 8/1/2018 19:54:54 pm
+combn(x=0:4 ,m=3)
+pnorm(7.1,7,3)
+qnorm(0.8,7,3)
+library(MASS) # used for fractions function
+Omega<-expand.grid(roll1 = 1:6, roll2 = 1:6, roll3 = 1:6)
+H<- subset(Omega, roll1+roll2+roll3 ==9)
+G<- subset(Omega, roll1+roll2+roll3 ==10)
+PH<-dim(H)[1]/dim(Omega)[1] # PH
+fractions(PH)
+(PG<-dim(G)[1]/dim(Omega)[1])*100
+ 
