@@ -1,0 +1,50 @@
+# Saved at 8/1/2018 19:54:54 pm
+combn(x=0:4 ,m=3)
+pnorm(7.1,7,3)
+qnorm(0.8,7,3)
+library(MASS) # used for fractions function
+Omega<-expand.grid(roll1 = 1:6, roll2 = 1:6, roll3 = 1:6)
+H<- subset(Omega, roll1+roll2+roll3 ==9)
+G<- subset(Omega, roll1+roll2+roll3 ==10)
+PH<-dim(H)[1]/dim(Omega)[1] # PH
+fractions(PH)
+(PG<-dim(G)[1]/dim(Omega)[1])*100
+ # Saved at 12/29/2019 14:50:30 pm<span title="12/29/2019 14:50:30 pm">Stat Assignment</span>
+
+seq(from = 5, to = 100,by = 5)
+
+
+c(rep(x= "Treatment One", times = 20), rep(x= "Treatment Two", times = 18), rep(x = "Treatment Three", times = 22))
+
+stem1<- c(23.5, 12.0, 21.0, 22.0, 19.1, 21.5, 22.1, 20.4, 18.3, 21.6, 23.3, 21.0, 22.1, 23.0, 12.0)
+stem2<- c(17.4, 20.4, 20.0, 20.0, 18.4, 18.6, 18.6, 15.3, 16.5, 18.0, 16.3, 18.0, 12.8, 15.5, 18.0)
+stem3<-c(23.5, 12.0, 21.0, 22.0, 19.1, 21.5, 22.1, 20.4, 18.3, 21.6, 23.3, 21.0, 22.1, 23.0, 120)
+stem4<-c(17.4, 20.4, 20.0, 20.0, 18.4, 18.6, 18.6, 15.3, 16.5, 18.0, 16.3, 18.0, 12.8, 15.5, 180)
+mean(stem1)
+mean(stem2)
+sqrt(var(stem1))
+sqrt(var(stem2))
+c(mean(stem1), sqrt(var(stem1)))
+c(mean(stem2), sqrt(var(stem2)))
+
+c(median(stem1), mad(stem1, constant = 1))
+c(median(stem2), mad(stem2, constant = 1))
+
+median(abs(stem1 - median(stem1)))
+median(abs(stem2 - median(stem2)))
+
+
+
+mean(stem3)
+mean(stem4)
+sqrt(var(stem3))
+sqrt(var(stem4))
+c(mean(stem3), sqrt(var(stem3)))
+c(mean(stem4), sqrt(var(stem4)))
+c(median(stem3), mad(stem3, constant = 1))
+c(median(stem4), mad(stem4, constant = 1))
+median(abs(stem3 - median(stem3)))
+median(abs(stem4 - median(stem4)))
+# Saved at 12/31/2019 18:45:44 pm<span title="12/31/2019 18:45:44 pm">countby5</span>
+#Question one
+seq(from = 5, to = 100,by = 5)
