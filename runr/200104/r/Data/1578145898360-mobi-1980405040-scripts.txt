@@ -1,0 +1,6 @@
+# Saved at 1/4/2020 14:51:37 pm<span title="1/4/2020 14:51:37 pm">Test</span>
+install.packages("dslabs")
+library(dslabs)
+x <- data(murders)
+
+str(murders)
