@@ -1,0 +1,18 @@
+library(foreign)
+datasurvival=read.csv("/storage/emulated/0/WhatsApp/Media/WhatsApp Documents/Anderson.csv")
+head(datasurvival)
+library(survival)
+library(survminer)
+library(dplyr)
+glimpse(datasurvival)
+#survt = holds the survival times
+#status = censored
+#rx = obatnya
+datasurvival$rx=as.factor(datasurvival$rx)
+datasurvival$sex=as.factor(datasurvival$sex)
+datasurvival$catlogwbc=as.factor(datasurvival$catlogwbc)
+surv_object=Surv(time=datasurvival$survt,event=datasurvival$status)
+surv_object
+fit1=survfit(surv_object~rx,data=datasurvival)
+summary(fit1)
+ggsurvplot(fit1,data=datasurvival,pval=T)
