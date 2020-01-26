@@ -1,0 +1,29 @@
+# Saved at 1/26/2020 19:18:33 pm<span title="1/26/2020 19:18:33 pm">Semi circle curves with radius pi/2</span>
+x1=seq(0,pi,by=.001)
+x2=seq(pi,2*pi,by=.001)
+
+x=cbind(x1,x2)
+y1=sqrt((pi/2)^2-(x1-(pi/2))^2)
+y2=-sqrt((pi/2)^2-(x2-(3*pi/2))^2)
+
+y=cbind(y1,y2)
+
+plot(x,y,type="l")# Saved at 1/26/2020 23:07:15 pm<span title="1/26/2020 23:07:15 pm">Semicircle and sine graph with colour in btn</span>
+
+x1=seq(0,pi,by=.001)
+x2=seq(pi,2*pi,by=.001)
+
+
+x=cbind(x1,x2)
+y1=sqrt((pi/2)^2-(x1-(pi/2))^2)
+y2=-sqrt((pi/2)^2-(x2-(3*pi/2))^2)
+
+
+y=cbind(y1,y2)
+
+
+plot(x,y,type="l",col="green")
+y3=sin(x)
+polygon(x,y3,type="l")
+points(x,y3,type="l",col="red")
+polygon(c(x,rev(x)),c(y3,rev(y)),col="blue")
