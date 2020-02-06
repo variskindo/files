@@ -1,0 +1,77 @@
+# Saved at 2/5/2020 22:49:19 pm<span title="2/5/2020 22:49:19 pm">Test</span>
+#Data=../r/200205/runr-1293994657465360-powerflow_case.txt
+print(obs) #display the data
+# filename of the basecase
+filename <- "../r/200205/runr-1293994657465360-powerflow_case.txt"
+
+# read case metadata
+metadata <- unlist(strsplit(readLines(file(filename,'r'),1),","))
+savcase <- data.frame(nbus=NA,nline=NA,ntran=NA,nbranch=NA)
+savcase[,c('nbus','nline','ntran','nbranch')] <- as.numeric(c(metadata[c(4,5,6)],sum(as.numeric(metadata[c(5,6)]))))
+
+
+# read the bus and branch tables from the case
+bus <- read.csv(file=filename, header=FALSE, skip=1, check.names=TRUE, nrows=savcase$nbus)
+branch <- read.csv(file=filename, header=FALSE, skip=(savcase$nbus+1), check.names=TRUE, nrows=(savcase$nline+savcase$ntran))[c(-9,-10,-11)]
+names(bus) <- c('type','bus','class','v','d','pgen','qgen','pload','qload','kv','xprime')
+names(branch) <- c('type','from','to','r','x','b','c','tap')
+
+
+# Create the PQ and dV vectors
+dV <- matrix(c(bus$d[-1],bus$v[-1]),2*(savcase$nbus-1),1)
+PQ <- matrix(c(bus$pgen[-1]-bus$pload[-1],bus$qgen[-1]-bus$qload[-1]),2*(savcase$nbus-1),1)
+
+
+# create Ybus matrix
+Ybus <- matrix(0,savcase$nbus,savcase$nbus)
+for(i in seq(savcase$nbranch)){
+  from <- branch$from[i]
+  to <- branch$to[i]
+  Ybus[from,from] <- Ybus[from,from] + 1/complex(real=branch$r[i], imaginary=branch$x[i]) + complex(real=0,imaginary=branch$b[i])/2
+  Ybus[to,to] <- Ybus[to,to] + 1/complex(real=branch$r[i], imaginary=branch$x[i]) + complex(real=0,imaginary=branch$b[i])/2
+  Ybus[from,to] <- Ybus[from,to] - 1/complex(real=branch$r[i], imaginary=branch$x[i])
+  Ybus[to,from] <- Ybus[to,from] - 1/complex(real=branch$r[i], imaginary=branch$x[i])
+}
+
+
+# Compute magnitude and angle of Ybus
+magY <- Mod(Ybus)
+angY <- Arg(Ybus)
+
+
+# iterate
+for(i in seq(1)){
+  # create Jacobian matrix
+  J <- matrix(0,2*(savcase$nbus-1),2*(savcase$nbus-1))
+  for(k in seq(2, savcase$nbus, 1)){
+    for(n in seq(2, savcase$nbus, 1)){
+      if(k==n) {
+        J[k-1,k-1] <- (-1)*bus$v[k]*sum(magY[-k,n]*bus$v[-k]*sin(bus$d[k]-bus$d[n]-angY[-k,n]))
+        J[k-1,k+savcase$nbus-2] <- bus$v[k]*magY[k,k]*cos(angY[k,k])+sum(magY[k,]*bus$v[]*cos(bus$d[k]-bus$d[]-angY[k,]))
+        J[k+savcase$nbus-2,k-1] <- bus$v[k]*sum(magY[-k,n]*bus$v[-k]*cos(bus$d[k]-bus$d[-k]-angY[-k,n]))
+        J[k+savcase$nbus-2,k+savcase$nbus-2] <- (-1)*bus$v[k]*magY[k,k]*sin(angY[k,k])+sum(magY[k,]*bus$v[]*sin(bus$d[k]-bus$d[]-angY[k,]))
+      }
+      if(k!=n) {
+        J[k-1,n-1] <- bus$v[k]*magY[k,n]*bus$v[n]*sin(bus$d[k]-bus$d[n]-angY[k,n])
+        J[k-1,n+savcase$nbus-2] <- bus$v[k]*magY[k,n]*cos(bus$d[k]-bus$d[n]-angY[k,n])
+        J[k+savcase$nbus-2,n-1] <- (-1)*bus$v[k]*magY[k,n]*bus$v[n]*cos(bus$d[k]-bus$d[n]-angY[k,n])
+        J[k+savcase$nbus-2,n+savcase$nbus-2] <- bus$v[k]*magY[k,n]*sin(bus$d[k]-bus$d[n]-angY[k,n])
+      }
+    }
+  }
+
+
+  # Compute new dV and PQ matrices
+  print(PQ)
+  for(k in seq(2, savcase$nbus, 1)){
+    PQ[k-1] <- bus$v[k]*sum(magY[k,]*bus$v*cos(bus$d[k]-bus$d-angY[k,]))
+    PQ[savcase$nbus+k-2] <- bus$v[k]*sum(magY[k,]*bus$v*sin(bus$d[k]-bus$d-angY[k,]))
+  }
+  print(PQ)
+ 
+  dV <- dV + solve(J) %*% PQ
+ 
+  bus$v[-1] <- dV[seq(savcase$nbus,length(dV),1)]
+  bus$d[-1] <- dV[seq(1,savcase$nbus-1,1)]
+  #print(bus)
+}
