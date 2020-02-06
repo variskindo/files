@@ -1,0 +1,39 @@
+# Saved at 11/26/2019 10:27:39 am
+preTreat <- c(150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+
+postTreat <- c(140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130, 135,140,140,145,145,145,150,140)
+ 
+print("Number in our sample")
+length(preTreat)
+print("Standard deviation of our before treatment group")
+sd(preTreat)
+print("Standard deviation of our after treatment group")
+sd(postTreat)
+print("Mean of our before treatment group")
+mean(preTreat)
+print("Mean of our after treatment group")
+mean(postTreat)
+boxplot(preTreat, postTreat, main="Blood pressure before and after treatment",
+names=c("preTreat data", "postTreat data"), col=c("orange","red"))
+
+t.test(preTreat, postTreat,  alternative = "two.sided", paired = TRUE, conf.level =.99) 
+# Saved at 2/5/2020 21:56:34 pm<span title="2/5/2020 21:56:34 pm">t</span>
+import numpy as np
+import matplotlib.pyplot as plt
+height = [35, 30, 10, 25, 40, 5]
+bars = ('Apple', 'Orange', 'Banana', 'Kiwi', 'Blueberry', 'Grape')
+col = ('Green', 'Orange', 'Yellow', 'Brown', 'Blue', 'Red')
+y_pos = np.arange(len(bars))
+# Create horizontal bars
+plt.barh(y_pos, height)
+plt.show()# Saved at 2/6/2020 0:35:37 am<span title="2/6/2020 0:35:37 am">success</span>
+import numpy as np
+bars = ('Apple', 'Orange', 'Banana', 'Kiwi', 'Blueberry', 'Grape')
+height = [35, 30, 10, 25, 40, 5]
+plt.title('Favorite Fruit')
+plt.xlabel('Number of People')
+plt.ylabel('Types of Fruit')
+y_pos = np.arange(len(bars))
+plt.barh(y_pos, height,
+color = ['green', 'orange', 'yellow', 'brown', 'blue', 'red'])
+plt.yticks(y_pos, bars)
