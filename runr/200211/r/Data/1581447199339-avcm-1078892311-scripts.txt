@@ -1,0 +1,50 @@
+# Saved at 11/26/2019 10:27:39 am
+preTreat <- c(150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+
+postTreat <- c(140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130, 135,140,140,145,145,145,150,140)
+ 
+print("Number in our sample")
+length(preTreat)
+print("Standard deviation of our before treatment group")
+sd(preTreat)
+print("Standard deviation of our after treatment group")
+sd(postTreat)
+print("Mean of our before treatment group")
+mean(preTreat)
+print("Mean of our after treatment group")
+mean(postTreat)
+boxplot(preTreat, postTreat, main="Blood pressure before and after treatment",
+names=c("preTreat data", "postTreat data"), col=c("orange","red"))
+
+t.test(preTreat, postTreat,  alternative = "two.sided", paired = TRUE, conf.level =.99) # Saved at 2/5/2020 21:56:34 pm<span title="2/5/2020 21:56:34 pm">t</span>
+import numpy as np
+import matplotlib.pyplot as plt
+height = [35, 30, 10, 25, 40, 5]
+bars = ('Apple', 'Orange', 'Banana', 'Kiwi', 'Blueberry', 'Grape')
+col = ('Green', 'Orange', 'Yellow', 'Brown', 'Blue', 'Red')
+y_pos = np.arange(len(bars))
+# Create horizontal bars
+plt.barh(y_pos, height)
+plt.show()# Saved at 2/6/2020 0:35:37 am<span title="2/6/2020 0:35:37 am">success</span>
+import numpy as np
+bars = ('Apple', 'Orange', 'Banana', 'Kiwi', 'Blueberry', 'Grape')
+height = [35, 30, 10, 25, 40, 5]
+plt.title('Favorite Fruit')
+plt.xlabel('Number of People')
+plt.ylabel('Types of Fruit')
+y_pos = np.arange(len(bars))
+plt.barh(y_pos, height,
+color = ['green', 'orange', 'yellow', 'brown', 'blue', 'red'])
+plt.yticks(y_pos, bars)# Saved at 2/9/2020 18:42:20 pm<span title="2/9/2020 18:42:20 pm">A1_Histogram_ example</span>
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100), col="darkmagenta", xlab="nonuniform bin sizes", ylab="Density of histogram", main="Ages_Jazmine_Martinez")# Saved at 2/10/2020 17:42:13 pm<span title="2/10/2020 17:42:13 pm">A1_histogram_example</span>
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100), col="darkmagenta", main="Ages_Ismerai_Mendez", xlab="non uniform bin sizes", ylab="density of Histogram") 
+
+# Please click 'Run Script' to execute this code
+#go# Saved at 2/11/2020 10:53:18 am<span title="2/11/2020 10:53:18 am">A1_Histogram_example i.m</span>
+Ages<-c (22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100), col="dark magenta", main="Ages_Ismerai_Mendez", xlab="nonuniform bin sizes", ylab="density of Histogram") 
+ 
+# Please click 'Run Script' to execute this code
+#go
