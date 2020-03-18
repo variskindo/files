@@ -1,0 +1,19 @@
+# Saved at 11/26/2019 10:27:39 am
+preTreat <- c(150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+
+postTreat <- c(140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130, 135,140,140,145,145,145,150,140)
+ 
+print("Number in our sample")
+length(preTreat)
+print("Standard deviation of our before treatment group")
+sd(preTreat)
+print("Standard deviation of our after treatment group")
+sd(postTreat)
+print("Mean of our before treatment group")
+mean(preTreat)
+print("Mean of our after treatment group")
+mean(postTreat)
+boxplot(preTreat, postTreat, main="Blood pressure before and after treatment",
+names=c("preTreat data", "postTreat data"), col=c("orange","red"))
+
+t.test(preTreat, postTreat,  alternative = "two.sided", paired = TRUE, conf.level =.99) 
