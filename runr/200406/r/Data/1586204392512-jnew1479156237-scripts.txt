@@ -1,0 +1,12 @@
+# Saved at 4/6/2020 15:19:52 pm<span title="4/6/2020 15:19:52 pm">Lab 3</span>
+#Data=../r/200406/runr-jnew1479156237-prelab3practicedata.csv 2.xls
+#Sheet=1
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
