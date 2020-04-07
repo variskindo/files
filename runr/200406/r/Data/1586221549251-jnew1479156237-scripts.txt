@@ -1,0 +1,25 @@
+# Saved at 4/6/2020 15:19:52 pm<span title="4/6/2020 15:19:52 pm">Lab 3</span>
+#Data=../r/200406/runr-jnew1479156237-prelab3practicedata.csv 2.xls
+#Sheet=1
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 4/6/2020 20:05:49 pm
+#Data=../r/200406/runr-jnew1479156237-prelab3practicedata.csv 2.xls
+#Sheet=1
+print(obs) #display the data
+#Data=../r/200406/runr-jnew1479156237-prelab3practicedata.csv 2.xls
+#Sheet=1
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FA
+plx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))in(n,y,elections, a lease clik'Run Script' to execute this code#govvarbin(n,y,data,alpha=0.05,R=6varbin(n,y,daat)
+varbin(n,y,data,alpha=0.05,R=5000)
