@@ -1,0 +1,4 @@
+# Saved at 4/11/2020 21:42:40 pm<span title="4/11/2020 21:42:40 pm">Prueba 1</span>
+#download.packages("readr")
+library("readr")
+datos <- read_csv(file.choosen())
