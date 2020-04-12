@@ -1,0 +1,25 @@
+# Saved at 4/11/2020 21:42:40 pm<span title="4/11/2020 21:42:40 pm">Prueba 1</span>
+#download.packages("readr")
+library("readr")
+datos <- read_csv(file.choosen())# Saved at 4/12/2020 0:37:00 am<span title="4/12/2020 0:37:00 am">Prueba 1</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+
+
+# Saved at 4/12/2020 13:39:05 pm<span title="4/12/2020 13:39:05 pm">Prueba 2</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
