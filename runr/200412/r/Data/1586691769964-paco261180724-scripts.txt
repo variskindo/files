@@ -1,0 +1,30 @@
+# Saved at 4/12/2020 0:37:00 am<span title="4/12/2020 0:37:00 am">Prueba 1</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)# Saved at 4/12/2020 13:39:05 pm<span title="4/12/2020 13:39:05 pm">Prueba 2</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+W'&#t3G&BFF6G&&G&BbF6W2&W&WF&r77brFW2BW7B'#WV7WFFVC'#'#&w&"fVBvFWB6FSFb7GS&fB6SSR"3""673'V&vB##5%Fc# Saved at 4/12/2020 13:42:44 pm<span title="4/12/2020 13:42:44 pm">Prueba 2.2</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C:/Almacenamiento/Almacenamiento interno compartido/Android/data/com.dropbox.android/6. ndices/Ibex diario 07-08.csv")
+ibex19<- read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+W'&#t36VVF6VVFFW&6'FFG&BFF6G&&G&BbF6W2&WF&r77brFW2BW7B'#WV7WFFVC'#'#&w&"fVBvFWB6FSFb7GS&fB6SSR"3""673'V&vB##%5Fc
