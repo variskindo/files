@@ -1,0 +1,54 @@
+# Saved at 4/12/2020 0:37:00 am<span title="4/12/2020 0:37:00 am">Prueba 1</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C./Users/FranciscoJos/Dropbox/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)# Saved at 4/12/2020 13:39:05 pm<span title="4/12/2020 13:39:05 pm">Prueba 2</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 07-08.csv")
+ibex19<- read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+W'&#t3G&BFF6G&&G&BbF6W2&W&WF&r77brFW2BW7B'#WV7WFFVC'#'#&w&"fVBvFWB6FSFb7GS&fB6SSR"3""673'V&vB##5%Fc# Saved at 4/12/2020 13:42:44 pm<span title="4/12/2020 13:42:44 pm">Prueba 2.2</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("C:/Almacenamiento/Almacenamiento interno compartido/Android/data/com.dropbox.android/6. ndices/Ibex diario 07-08.csv")
+ibex19<- read_csv("C:/Android/data/com.dropbox.android/6. ndices/Ibex/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+W'&#t36VVF6VVFFW&6'FFG&BFF6G&&G&BbF6W2&WF&r77brFW2BW7B'#WV7WFFVC'#'#&w&"fVBvFWB6FSFb7GS&fB6SSR"3""673'V&vB##%5Fc# Saved at 4/12/2020 22:38:37 pm<span title="4/12/2020 22:38:37 pm">Prueba 3</span>
+#download.packages("readr")
+library("readr")
+ibex07 <-read_csv("/storage/emulated/0/Android/data/com.dropbox.android/6. Indices/IBEX.csv")
+Bitcoin<- read_csv("/storage/emulated/0/Android/data/com.dropbox.android/6. Indices/Ibex diario 19-20.csv")
+
+
+library(ggplot2)
+Ibex07.2<- matrix("ibex07", nrow=508,ncol=1)
+Ibex19.2<- matrix("ibex19", nrow=327,ncol=1)
+# Saved at 4/13/2020 21:20:58 pm<span title="4/13/2020 21:20:58 pm">Machine Learning 1</span>
+library(caret)
+df <- read.table("sample-ml.csv", sep=',', dec='.', header=T)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# dimensions of dataset
+dim(training)
+# list the levels for the class
+levels(training$Class)
+# summarize the class distribution
+percentage <- prop.table(table(training$Class)) * 100
+cbind(freq=table(training$Class), percentage=percentage)
