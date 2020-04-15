@@ -1,0 +1,9 @@
+# Saved at 8/26/2018 10:52:41 am
+B=2
+B
+W=data(cars)
+V=W[1-5,1]
+dim(cars)
+H=dim(W)
+H
+W
