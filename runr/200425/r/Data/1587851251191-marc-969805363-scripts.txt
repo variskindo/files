@@ -1,0 +1,80 @@
+# Saved at 4/25/2020 22:53:09 pm<span title="4/25/2020 22:53:09 pm">Prueba</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+ac<-if(length(aa)>1){
+aa
+} else {
+ab
+}
+cat(aa)# Saved at 4/25/2020 22:55:11 pm<span title="4/25/2020 22:55:11 pm">Prueba</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+ac<-if(length(aa)>1){
+aa
+} else {
+ab
+}
+cat(ac)
+cat(aa)
+cat(ab)# Saved at 4/25/2020 23:03:12 pm<span title="4/25/2020 23:03:12 pm">Prueba</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+if(length(aa)>1){
+ac<-aa
+num<-2
+} else {
+ac<-ab
+num<-3
+}
+cat(ac)
+cat(num)
+cat(aa)
+cat(ab)# Saved at 4/25/2020 23:10:17 pm<span title="4/25/2020 23:10:17 pm">Prueba</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+if(length(aa)>1){
+ac<-aa
+num<-2
+empresa<-c(paste("Empresa","segunda parte2"))
+apellido<-c(paste("Apellido","primera parte"))
+} else {
+ac<-ab
+num<-3
+empresa<-c(paste("Empresa","segunda parte3"))
+apellido<-c(paste("Apellido","primera parte"))}
+cat(ac)
+cat(num)
+cat(aa)
+cat(ab)
+empresa
+apellido
+# Saved at 4/25/2020 23:47:30 pm<span title="4/25/2020 23:47:30 pm">Mejorado</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+if(length(aa)>1){
+ac<-aa
+num<-2
+empresa<-c(paste("Empresa","segunda parte2"))
+apellido<-c(paste("Apellido","primera parte"))
+Tu[num]<-c(apellido, empresa)
+} else {
+ac<-ab
+num<-3
+empresa<-c(paste("Empresa","segunda parte3"))
+apellido<-c(paste("Apellido","primera parte"))
+Tu[num]<-c(apellido, empresa)
+
+}
+cat(ac)
+cat(num)
+cat(aa)
+cat(ab)
+empresa
+apellido
+
+Tu
