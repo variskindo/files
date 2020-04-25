@@ -1,0 +1,10 @@
+# Saved at 4/25/2020 22:53:09 pm<span title="4/25/2020 22:53:09 pm">Prueba</span>
+Tu<-c("reRe","wer","DeUf","SeSe")
+aa<-unlist(gregexpr("[A-Z]",Tu[2]))
+ab<-unlist(gregexpr("[A-Z]",Tu[3]))
+ac<-if(length(aa)>1){
+aa
+} else {
+ab
+}
+cat(aa)
