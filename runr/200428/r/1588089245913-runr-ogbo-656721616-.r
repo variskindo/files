@@ -1,0 +1,7 @@
+A=c(770,2812,613,643)
+B=c(1501,5981,2457,715)
+C=c(2355,4501,2088,701)
+Data=data.frame(A,B,C)
+Colours=c("Red","Black","Green","Blue")
+barplot(as.matrix(Data),main="Multiple Components Bar Chart for ND1 Class",ylab="Naira",xlab="Years",names.arg=c("2017","2018","2019"),cex.lab=1.6,cex.main=1.5,beside=TRUE,col=Colours)
+legend("topright",c("Frederal Govt","State Govt","Other Public Savings"),cex=1.1,fill=Colours)
