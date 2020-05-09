@@ -1,0 +1,89 @@
+# Saved at 11/26/2019 10:27:39 am
+preTreat <- c(150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+
+postTreat <- c(140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130, 135,140,140,145,145,145,150,140)
+ 
+print("Number in our sample")
+length(preTreat)
+print("Standard deviation of our before treatment group")
+sd(preTreat)
+print("Standard deviation of our after treatment group")
+sd(postTreat)
+print("Mean of our before treatment group")
+mean(preTreat)
+print("Mean of our after treatment group")
+mean(postTreat)
+boxplot(preTreat, postTreat, main="Blood pressure before and after treatment",
+names=c("preTreat data", "postTreat data"), col=c("orange","red"))
+
+t.test(preTreat, postTreat,  alternative = "two.sided", paired = TRUE, conf.level =.99) 
+# Saved at 4/29/2020 18:20:05 pm<span title="4/29/2020 18:20:05 pm">quiz 9</span>
+data<-c(83, 81, 82, 79, 78, 77, 79, 79, 82, 81)
+p=.8
+q=.2
+n=100
+sd<-sqrt(p*q)
+se<-sd/sqrt(n)
+x1<-83/100; x2<-81/100; x3<-82/100; x4<-79/100; x5<-78/100; 
+x6<-77/100; x7<-79/100; x8<-79/100; x9<-82/100; x10<-81/100;
+Sample_means<-c(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10)
+print("Sample means")
+Sample_means
+z1<-(x1-p)/se; z2<-(x2-p)/se; z3<-(x3-p)/se; z4<-(x4-p)/se; z5<-(x5-p)/se;
+z6<-(x6-p)/se; z7<-(x7-p)/se; z8<-(x8-p)/se; z9<-(x9-p)/se; z10<-(x10-p)/se;
+
+Sample_zscores<-c(z1,z2,z3,z4,z5,z6,z7,z8,z9,z10)
+print("Sample z-scores")
+Sample_zscores 
+hist(Sample_means, breaks=c(.77,.78,.79,.8,.81, .82,.83))
+hist(Sample_zscores, freq=FALSE, breaks=c(-1,-.5,0,.5, 1))
+curve(dnorm(x, mean=0, sd=1), col="blue", add=TRUE)
+# Saved at 5/9/2020 14:39:23 pm<span title="5/9/2020 14:39:23 pm">A10</span>
+Myurl<-https://docs.google.com/spreadsheets/d/e/2PACX-1vQF2UJm4O6IQQVo59b8a6EaOGcLo0s3MbpHU2bEm6bPWoxVbmwAfeU8_B39q5h5MhgBKglSjTUf9xOM/pub?output=csv
+
+Coronavirus_Data<-read.csv(url(Myurl))
+#Coronavirus_Data
+Total_Cases_by_Country<-Coronavirus_Data$Total.Cases
+Total_Deaths_by_Country<-Coronavirus_Data$Total.Deaths
+Countries_with_Coronavirus<-Coronavirus_Data$Country..Other
+#Coronavirus_Data
+Serious_Cases_by_Country<-Coronavirus_Data$Serious..Critical
+Daily_Deaths_by_Country<-Coronavirus_Data$New.Deaths
+head(Coronavirus_Data)
+#Remove commas from numbers
+Total_Cases_by_Country<-(as.numeric(gsub(",", "", Total_Cases_by_Country, fixed = TRUE)))
+Total_Deaths_by_Country<-(as.numeric(gsub(",", "", Total_Deaths_by_Country, fixed = TRUE)))
+Serious_Cases_by_Country<-(as.numeric(gsub(",", "",Serious_Cases_by_Country, fixed = TRUE)))
+Daily_Deaths_by_Country<-(as.numeric(gsub(",", "", Daily_Deaths_by_Country, fixed = TRUE)))
+
+
+#Replace NA with zeros
+ Total_Deaths_by_Country[is.na(Total_Deaths_by_Country)]<-0
+Serious_Cases_by_Country[is.na(Serious_Cases_by_Country)]<-0
+Daily_Deaths_by_Country[is.na(Daily_Deaths_by_Country)]<-0
+
+Daily_Deaths_by_Country
+# Regression model
+
+#Lets get R to read the cleaned Coronavirus data. 
+Cleaned_data<- data.frame("DD"=Daily_Deaths_by_Country,
+ "SC" =Serious_Cases_by_Country, "TD"=Total_Deaths_by_Country) 
+ 
+str(Cleaned_data)   #This  gives a description of the dataset Cleaned_data
+
+Daily_Deaths<-Cleaned_data$DD  
+Serious_Cases<-Cleaned_data$SC
+Total_Deaths<-Cleaned_data$TD
+
+#Model 1
+#We will create a linear model to see how well the number of people in critical condition from Coronavirus in a country predict the daily deaths in that country.
+
+M1= lm(Daily_Deaths ~Serious_Cases,data=Cleaned_data ) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.plot(Serious_Cases,  Daily_Deaths, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1 ) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted number of daily Coronavirus deaths for a country that currently has 3,500] people in critical condition.")  
+predict](M1,data.frame(Serious_Cases=3500))
+
+
