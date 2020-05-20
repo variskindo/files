@@ -1,0 +1,18 @@
+# Saved at 5/20/2020 14:04:27 pm<span title="5/20/2020 14:04:27 pm">Pulse</span>
+#Data=../r/200520/runr-1871152079686271-Pulse.xlsx
+#Sheet=1
+print(obs) #display the data
+#Data=../r/200520/runr-1871152079686271-Pulse.xlsx
+#Sheet=1
+print(obs) #display the data
+#Data=../r/200520/runr-1871152079686271-Pulse.xlsx
+#Sheet=1
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
