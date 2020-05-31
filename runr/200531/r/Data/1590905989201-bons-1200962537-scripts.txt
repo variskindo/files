@@ -1,0 +1,1009 @@
+# Saved at 5/31/2020 8:19:48 am<span title="5/31/2020 8:19:48 am">vagexam scripts</span>
+#Data=../r/200531/runr-bons-1200962537-kbth20.csv
+print(obs) #display the data
+#Data=../r/data.csv
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+
+substituteNA (iris, type="zero")
+
+head(kbth20)#*********WHO_VE ANALYSIS*************
+#loading data 19-May-2020
+
+library(haven) #package for loading SAS dataset
+
+vagexam <- read_sas("lot_vagexam_analyze_19May2020.sas7bdat")
+#View(vagexam)
+
+#some descriptives
+summary(vagexam)
+#colnames(vagexam)
+summary(vagexam$obs_age)  #missing values
+sum(vagexam$obs_age, na.rm = T) #omit missing values (#7 missing values)
+sum(is.na(vagexam$obs_age))# to get the missing values in obs_age (n=7)
+
+#Categorization of age into =<19", "20-34", "=>35"
+vagexam$agecat <- cut(vagexam$obs_age, breaks=c(0,19,34,50), labels = c("=<19", "20-34", "=>35"))
+summary(vagexam$agecat)
+
+#converting marital status into categorical variable (as a factor)
+str(vagexam$obs_marital)# as.numeric
+sum(is.na(vagexam$obs_marital)) # 7 missing 
+vagexam$obs_marital <- as.factor(vagexam$obs_marital)#convert obs_marital into a factor
+str(vagexam$obs_marital)
+summary(vagexam$obs_marital)
+
+#Recode OR Collapse marital factor levels into manually defined groups (Excluded 15 (unknown=8 and missing=7))
+library(forcats) # package for categorizing the factor variable #FORMULA: fct_collapse(x, Yes = c("Y", "Yes"), No = c("N", "No"), NULL = "H")
+vagexam$maritalcat <- fct_collapse(vagexam$obs_marital, single="1", married.cohabiting="2", non.cohabiting="3", NULL=c("4","9","NA"))
+summary(vagexam$maritalcat) #22 missing comprising 7 original NA plus (other =5) and (unknown=10)
+
+#Recode maritalcat
+vagexam$maritalcat.f <- fct_collapse(vagexam$obs_marital, single="1", married.cohabiting="2", NULL=c("3","4","9","NA"))
+summary(vagexam$maritalcat.f)#55 missing comprising 7 original NA plus (other =5), 33 non-cohabiting and (unknown=10)
+
+#Recode marital status and include "other"
+vagexam$maritalcat.other <- fct_collapse(vagexam$obs_marital, single="1", married.cohabiting="2", other=c("3","4","9","NA"))
+summary(vagexam$maritalcat.other)#55 missing comprising 7 original NA plus (other =5), 33 non-cohabiting and (unknown=10)
+
+
+#converting education into categorical variable (as a factor)
+str(vagexam$obs_edu)# as.numeric
+vagexam$obs_edu <- as.factor(vagexam$obs_edu)
+str(vagexam$obs_edu)
+sum(is.na(vagexam$obs_edu)) 
+summary(is.na(vagexam$obs_edu)) # 7 missing 
+
+#Recode OR Collapse education factor levels into manually defined groups (Excluded as missing= 15 (other-6, unknown (99)=2 and missing=7)), vocational training was added to secondary
+vagexam$educcatt <- fct_collapse(vagexam$obs_edu, no.primary=c("0","1","2","3"), secondary=c("4","5","9"), tertiary=c("6","7"),NULL=c("8","99","NA"))
+summary(vagexam$educcatt)
+#Recode educattion
+vagexam$educcatt <- fct_collapse(vagexam$obs_edu, no.education=c("0"), primary=c("1","2","3"), secondary=c("4","5","9"), tertiary=c("6","7"),NULL=c("8","99","NA"))
+summary(vagexam$educcatt.f)
+
+
+#******CHECKING FOR MISSING NUMBERS in education******
+sum(is.na(vagexam$obs_edu))
+sum(complete.cases(vagexam$obs_edu))
+sum(!complete.cases(vagexam$obs_edu))
+
+#Categorizing number of pregnancy (combined 0 and 1)
+str(vagexam$obs_preg)
+vagexam$obs_preg <- as.factor(vagexam$obs_preg)
+summary(vagexam$obs_preg) # 7 missing 
+vagexam$no.preg <- fct_collapse(vagexam$obs_preg, gravida_1=c("0","1"), gravida_24=c("2","3","4"), gravida_5n=c("5","6","7","8","9","11","12","13","17"),NULL=c("99","NA"))
+summary(vagexam$no.preg) #(Excluded as missing 9 (unknown (99)=2 and missing=7)
+
+#Categorizing number of previous births 
+str(vagexam$obs_birth)
+vagexam$obs_birth <- as.factor(vagexam$obs_birth)
+summary(vagexam$obs_birth)#Missing 7
+#Recoding OR Categorizing
+vagexam$prev.births <- fct_collapse(vagexam$obs_birth, para_0="0", para_13=c("1","2","3"), para_4n=c("4","5","6","7","8","11","12"),NULL=c("99","NA"))
+summary(vagexam$prev.births)# (Excluded as missing 9 (unknown (99)=2 and missing=7)
+
+#Categorizing mode of delivery (vaginal and CS)
+str(vagexam$obs_deliverymode_1)
+vagexam$obs_deliverymode_1 <- as.factor(vagexam$obs_deliverymode_1)
+summary(vagexam$obs_deliverymode_1) #Original missing=42
+#Recoding mode of delivery
+vagexam$mod.del <- fct_collapse(vagexam$obs_deliverymode_1, vaginal=c("1","2","5"), cesarean=c("3"),NULL=c("4","6","9","NA"))
+summary(vagexam$mod.del)   #(Excluded as missing 67 (3.3%) comprising (unknown (99)=21,laparotomy=4 and original missing=42)
+table(vagexam$mod.del)
+prop.table(table(vagexam$mod.del))
+str(vagexam$mod.del)
+
+#***Recoding Mistreatment level 1
+summary(vagexam$prev.births)
+summary(vagexam$compositeL1)
+summary(vagexam$private.compositeL3)
+
+str(vagexam$firstvag_consent)
+mistreat1 <- as.numeric(vagexam$firstvag_consent)
+
+summary(vagexam$firstvag_consent)
+str(vagexam$obs_anyvagprivateinfo)
+mistreat2 <- as.numeric(vagexam$obs_anyvagprivateinfo)
+summary(mistreat2)
+is.na(mistreat2) <- 0
+str(mistreat2)
+
+summary(vagexam$obs_anyvagprivateinfo)
+str(vagexam$obs_anyvag_private)
+summary(vagexam$obs_anyvag_private)
+mistreat3 <- as.numeric(vagexam$obs_anyvag_private)
+str(mistreat3)
+summary(mistreat3)
+
+mist.all <- sum(vagexam$mistreat.a12, mistreat2, mistreat3, NULL==0)
+summary(mist.all)
+View(mist.all)
+vagexam$mistreat.a1 <- fct_collapse(vagexam$firstvag_consent, no="1", yes="2", NULL=c("0","9","999","NA"))
+summary(vagexam$mistreat.a1)
+
+# CREATING OVERALL MISTREATMENT
+#mistreat1
+mistreat.1 <- as.numeric(vagexam$mistreat.a1)
+str(mistreat.1)
+mistreat.1[is.na(mistreat.1)] <- 0
+summary(mistreat.1)
+View(mistreat.1)
+mistreat.11 <- cut(mistreat.1, breaks = c(-1))
+
+
+#mistreat2
+mistreat2 <- as.numeric(vagexam$privateinfo.compositeL2)
+str(mistreat2)
+mistreat2[is.na(mistreat2)] <- 0
+summary(mistreat2)
+View(mistreat2)
+
+
+
+#mistreat3
+mistreat3 <- as.numeric(vagexam$private.compositeL3)
+str(mistreat3)
+mistreat3[is.na(mistreat3)] <- 0
+summary(mistreat3)
+
+mistreat.L <- (mistreat.1 + mistreat2 + mistreat3)
+str(mistreat.L)
+View(mistreat.L)
+vagexam$mistreat.L <- (mistreat.1 + mistreat2 + mistreat3)
+summary(vagexam$mistreat.L)
+
+#Final mistreatment categories
+mistreatment.any <- cut(vagexam$mistreat.L, breaks = c(-1, 0,7), labels = c())
+summary(vagexam$compositeL1)
+summary(vagexam$privateinfo.compositeL2)
+summary(vagexam$private.compositeL3)
+
+mistreat11 <- as.numeric(vagexam$firstvag_consent[999=="NA"])
+str(mistreat11)
+
+
+
+
+
+
+
+
+
+#Categorizing TIME of admission to labour ward (missing=15)
+#day and night category
+str(vagexam$adm_timeward)
+sum(is.na(vagexam$adm_timeward)) # Original missing=7
+adm_time.ward <- as.factor(vagexam$adm_timeward)
+
+range(vagexam$adm_timeward, na.rm = T)
+sum(complete.cases(vagexam$adm_timeward))
+day.night <- cut(chron::times(vagexam$adm_timeward) , breaks = (1/24) * c(0,7.99,19.99,24), labels=c("1","2","3"))
+summary(day.night)
+length(day.night)
+str(day.night)
+vagexam$day.nightcat <- fct_collapse(day.night, day=c("2"), night=c("1","3"),NULL=c("NA"))
+summary(vagexam$day.nightcat)
+
+#*********CORRECT CATEGORIZATION********
+day.night <- cut(chron::times(vagexam$adm_timeward) , breaks = (1/24) * c(-1,7.99,19.99,24), labels=c("1","2","3"))
+summary(day.night) # Original missing=7
+length(day.night)
+str(day.night)
+vagexam$day.nightcat <- fct_collapse(day.night, day=c("2"), night=c("1","3"),NULL=c("NA"))
+summary(vagexam$day.nightcat)
+
+
+#************package(chron)*******
+#duration in minutes
+library(chron) # r package used (library(chron))
+sum(is.na(vagexam$obs_deliverytime_1))# Original missing=42
+sum(is.na(vagexam$adm_timeward))  #Original missing=7
+vagexam$adm.t1 <- 60*24*as.numeric(times(vagexam$adm_timeward))
+vagexam$adm.t2 <- 60*24*as.numeric(times(vagexam$obs_deliverytime_1))
+vagexam$duration.m <- (vagexam$adm.t2- vagexam$adm.t1)
+#View(vagexam$duration.m)
+vagexam$duration.mabs <- abs(vagexam$duration.m)
+summary(vagexam$duration.mabs) #Original missing=49
+
+
+#*************duration in hours****************
+vagexam$adm.ta <- 24*as.numeric(times(vagexam$adm_timeward))
+vagexam$adm.tb <- 24*as.numeric(times(vagexam$obs_deliverytime_1))
+vagexam$duration.h <- (vagexam$adm.tb- vagexam$adm.ta)
+#View(vagexam$duration.h)
+vagexam$duration.habs <- abs(vagexam$duration.h)
+summary(vagexam$duration.habs)  #Original missing=49
+#mean duration of labour in hours
+mean(vagexam$duration.habs, na.rm = T)
+median(vagexam$duration.habs, na.rm = T)
+
+
+#Recoding duration of labour (<4h and =>4h)
+vagexam$duration.cat4h <- cut(vagexam$duration.habs, breaks = c(0,3.999, 25), labels = c("<4hour","=>4hours"))
+summary(vagexam$duration.cat4h)
+#Median duration of labour
+tapply(vagexam$duration.habs, vagexam$mod.del, median, na.rm=T)
+#mean duration
+mean(vagexam$duration.h, na.rm = T)
+
+#*****deliverytime_2 IS EMPTY
+#View(vagexam$obs_deliverytime_2)
+
+#View(vagexam$durationab)
+#is.na(vagexam$adm_timeward)
+#list(is.na(vagexam$adm_timeward))
+sum(is.na(vagexam$adm_timeward))
+#View(vagexam$adm_timeward)
+vagexam$obs_deliverymode_2 <- as.factor(vagexam$obs_deliverymode_2)
+summary(vagexam$obs_deliverymode_2)
+#Missing 9
+
+
+#Country descriptives
+str(vagexam$country_id_adm)
+country <- as.factor(vagexam$country_id_adm)
+
+#save.image(file = "ve_who.Rdata")
+
+#HIV
+str(vagexam$obs_hiv)
+hiv <- as.factor(vagexam$obs_hiv)
+summary(hiv)
+
+#Previous cesarean
+str(vagexam$obs_cs)
+prev.cs <- as.factor(vagexam$obs_cs)
+summary(prev.cs) #Original missing=7
+vagexam$prev.cscat <- fct_collapse(prev.cs, no_0="0", yes_12=c("1","2"), NULL=c("99","NA"))
+summary(vagexam$prev.cscat)
+
+#cesarean section
+str(vagexam$obs_cs)
+vagexam$obs_cs <- as.factor(vagexam$obs_cs)
+summary(vagexam$obs_cs)
+
+
+#Any vaginal exam (obs_vag_exam)
+str(vagexam$obs_vagexam_1) 
+vagexam$obs_vagexam_1 <- as.factor(vagexam$obs_vagexam_1) 
+summary(vagexam$obs_vagexam_1) #Results: no=4 (0.3%), yes=1337 (99.7%), missing=675
+table(vagexam$obs_vagexam_1) # The first vaginal exam represent any vaginal exam and this should be 1337 and not 1435 
+prop.table(table(vagexam$obs_vagexam_1))
+vagexam$obs_vagexam_2 <- as.factor(vagexam$obs_vagexam_2)
+summary(vagexam$obs_vagexam_2)
+#REVISED from Hedieh
+#Overall vaginal exam: Any vaginal exam (anyvagexam)
+str(vagexam$anyvagexam)
+vagexam$anyvagexam <- as.factor(vagexam$anyvagexam)
+summary(vagexam$anyvagexam) #The 1435 obtained as any vaginal exam represents the sum of all the multiple vaginal examinations 
+#                            and it does not seem to be correct. Because those who had two or theee vag exams must have had the first exam
+#                            and we can't sum them together to represent any vaginal exam
+#  1    2 
+# 581 1435
+
+#number of vaginal exam
+str(vagexam$firstexamnum)
+vagexam$firstexamnum <- as.factor(vagexam$firstexamnum)
+summary(vagexam$firstexamnum)
+# 0    1      2    3    4    5    6    7    8 
+# 581 1337   62   23    8    2    1    1    1  (TOTAL=1435)
+
+#*******Composite of informed and permitted)
+#first vaginal exam ()
+str(vagexam$firstvag_consent)
+vagexam$firstvag_consent <- as.factor(vagexam$firstvag_consent)
+summary(vagexam$firstvag_consent)
+#Recode first vag_consent
+vagexam$compositeL1 <- fct_collapse(vagexam$firstvag_consent, not.consented=("1"), consented=("2"),NULL=c("0","9","999"))
+summary(vagexam$compositeL1)
+
+
+#Any breast exam
+#vagexam$obs_vag_breast_1 .....Fisrt breast exam
+breast.exam1 <- as.factor(vagexam$obs_vag_breast_1)
+summary(breast.exam1)
+#    1    2    9  NA's 
+# 1072  264    1  679  (264 represents the very first breast exposure during vag exam and hence any breast exposure)
+#Revised Hedieh
+anyvag.breast1 <- as.factor(vagexam$obs_anyvag_breast)
+summary(anyvag.breast1)#The 299 obtained as any breast exposure represents the sum of all the multiple breast exposures during vaginal examinations 
+#                            and it does not seem to be correct. Because those who had two or theee breast exposures during vag exams must have had the first breast
+#                            exposure and we can't sum them together to represent any vaginal exam
+#   0    1    2    9 
+# 581 1135  299    1  
+#Recode anyvag.breast
+vagexam$obs_anyvag_breast <- as.factor(vagexam$obs_anyvag_breast)
+summary(vagexam$obs_anyvag_breast)
+vagexam$any.breast_exp <- fct_collapse(vagexam$obs_anyvag_breast, no=("1"), yes=("2"),NULL=c("0","9"))
+summary(vagexam$any.breast_exp)
+
+
+#Any genital exposure (obs_anyvag_genital)
+str(vagexam$obs_anyvag_genital)
+vagexam$obs_anyvag_genital <- as.factor(vagexam$obs_anyvag_genital)
+summary(vagexam$obs_anyvag_genital)
+#Recode obs_anyvag_genital
+vagexam$any.genital_exp <- fct_collapse(vagexam$obs_anyvag_genital, no=("1"), yes=c("2"),NULL=c("0","9"))
+summary(vagexam$any.genital_exp)
+
+#Composite breast and genital
+str(vagexam$obs_anyvag_private)
+vagexam$obs_anyvag_private <- as.factor(vagexam$obs_anyvag_private)
+summary(vagexam$obs_anyvag_private)
+#Recode obs_anyvag_private
+vagexam$private.compositeL3 <- fct_collapse(vagexam$obs_anyvag_private, no=("1"), yes=c("2"),NULL=c("9","NA"))
+summary(vagexam$private.compositeL3)
+
+#anyvag privateinfo Level 2
+str(vagexam$obs_anyvagprivateinfo)
+vagexam$obs_anyvagprivateinfo <- as.factor(vagexam$obs_anyvagprivateinfo)
+summary(vagexam$obs_anyvagprivateinfo)
+
+#Recode anyvag privateinfo Level 2
+vagexam$privateinfo.compositeL2 <- fct_collapse(vagexam$obs_anyvagprivateinfo, no=("1"), yes=c("2"),NULL=c("9","NA"))
+summary(vagexam$privateinfo.compositeL2)
+
+#First vaginal exam
+str(vagexam$firstvag_exam)
+vagexam$firstvag_exam <- as.factor(vagexam$firstvag_exam)
+summary(vagexam$firstvag_exam)
+#View(vagexam$compositeL1)
+#Overall mistreatment
+mistreatment.al <- sum(as.numeric(vagexam$compositeL1), as.numeri(vagexam$privateinfo.compositeL2), as.numeric(vagexam$private.compositeL3), na.rm = T)
+LL1 <- fct_collapse(vagexam$obs_anyvagprivateinfo, no=("1"), yes=c("2"),NULL=c("9","NA"))
+summary(vagexam$privateinfo.compositeL2)
+LL2
+LL3
+level1 <- as.numeric(vagexam$compositeL1)
+level2 <- as.numeric(vagexam$privateinfo.compositeL2) 
+level3 <- as.numeric(vagexam$private.compositeL3)
+
+library(dplyr)
+vagexam%>%
+  mutate(level.all=level1+level2+level3)
+View(level)
+
+summary(lev)
+View(mistreatment.al)
+summary(mistreatment.al)
+mistreatment.al <- 
+
+#Mistreatment level 1 descriptives  
+table(vagexam$maritalcat, vagexam$compositeL1)
+table(vagexam$maritalcat)
+table(vagexam$compositeL1)  
+table(vagexam$compositeL1,vagexam$maritalcat)  
+  
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat))
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat),1)
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat),2)
+  
+ 
+#maritalcat.f 
+table(vagexam$maritalcat.f, vagexam$compositeL1)
+table(vagexam$maritalcat.f)
+table(vagexam$compositeL1)
+prop.table(table(vagexam$compositeL1))
+
+table(vagexam$compositeL1,vagexam$maritalcat.f)  
+
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat.f))
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat.f),1)
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat.f),2)
+
+
+prop.test(table(vagexam$compositeL1,vagexam$maritalcat.f))  
+prop.test(table(vagexam$compositeL1,vagexam$maritalcat.f),1)  
+prop.test(table(vagexam$compositeL1,vagexam$maritalcat.f),2) 
+
+
+#maternal age 
+table(vagexam$agecat)
+table(vagexam$compositeL1,vagexam$agecat) 
+prop.table(table(vagexam$compositeL1,vagexam$agecat),1)
+
+#maritalcat.f 
+table(vagexam$maritalcat.f)
+table(vagexam$compositeL1,vagexam$maritalcat.f) 
+prop.table(table(vagexam$compositeL1,vagexam$maritalcat.f),1)
+
+#Education 
+table(vagexam$educcatt)
+table(vagexam$compositeL1,vagexam$educcatt) 
+prop.table(table(vagexam$compositeL1,vagexam$educcatt),1)
+
+# Number of pregnancies
+table(vagexam$no.preg)
+table(vagexam$compositeL1,vagexam$no.preg) 
+prop.table(table(vagexam$compositeL1,vagexam$no.preg),1)
+
+# Number of previous births
+table(vagexam$prev.births)
+table(vagexam$compositeL1,vagexam$prev.births) 
+prop.table(table(vagexam$compositeL1,vagexam$prev.births),1)
+
+# Previous cs 
+table(vagexam$prev.cscat)
+table(vagexam$compositeL1,vagexam$prev.cscat) 
+prop.table(table(vagexam$compositeL1,vagexam$prev.cscat),1)
+
+#mode od delivery 
+table(vagexam$mod.del)
+table(vagexam$compositeL1,vagexam$mod.del) 
+prop.table(table(vagexam$compositeL1,vagexam$mod.del),1)
+
+# Time of admission 
+table(vagexam$day.nightcat)
+table(vagexam$compositeL1,vagexam$day.nightcat) 
+prop.table(table(vagexam$compositeL1,vagexam$day.nightcat),1)
+round(prop.table(table(vagexam$compositeL1,vagexam$day.nightcat),1),3)
+
+# Labour duration in hours 
+table(vagexam$duration.cat4h)
+table(vagexam$compositeL1,vagexam$duration.cat4h) 
+prop.table(table(vagexam$compositeL1,vagexam$duration.cat4h),1)
+round(prop.table(table(vagexam$compositeL1,vagexam$duration.cat4h),1),3)
+
+
+#**********Mistreatment level 2 descriptives*******************  
+table(vagexam$privateinfo.compositeL2)
+prop.table(table(vagexam$privateinfo.compositeL2))# no=1249, yes=179
+sum(is.na(vagexam$privateinfo.compositeL2))# missing=588
+
+
+#maternal age 
+table(vagexam$agecat)
+table(vagexam$privateinfo.compositeL2,vagexam$agecat) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$agecat),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$agecat),1),3)
+
+# Marital status category 
+#maritalcat.f 
+table(vagexam$maritalcat.f)
+table(vagexam$privateinfo.compositeL2,vagexam$maritalcat.f) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$maritalcat.f),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$maritalcat.f),1),3)
+
+#Education 
+table(vagexam$educcatt)
+table(vagexam$privateinfo.compositeL2,vagexam$educcatt) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$educcatt),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$educcatt),1),3)
+
+# Number of pregnancies
+table(vagexam$no.preg)
+table(vagexam$privateinfo.compositeL2,vagexam$no.preg) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$no.preg),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$no.preg),1),3)
+
+# Number of previous births
+table(vagexam$prev.births)
+is.na(table(vagexam$privateinfo.compositeL2,vagexam$prev.births))
+table(vagexam$privateinfo.compositeL2,vagexam$prev.births) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$prev.births),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$prev.births),1),3)
+
+# Previous cs 
+table(vagexam$prev.cscat)
+table(vagexam$privateinfo.compositeL2,vagexam$prev.cscat) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$prev.cscat),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$prev.cscat),1),3)
+
+#mode od delivery 
+table(vagexam$mod.del)
+table(vagexam$privateinfo.compositeL2,vagexam$mod.del) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$mod.del),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$mod.del),1),3)
+
+# Time of admission 
+table(vagexam$day.nightcat)
+table(vagexam$privateinfo.compositeL2,vagexam$day.nightcat) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$day.nightcat),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$day.nightcat),1),3)
+
+# Labour duration in hours 
+table(vagexam$duration.cat4h)
+table(vagexam$privateinfo.compositeL2,vagexam$duration.cat4h) 
+prop.table(table(vagexam$privateinfo.compositeL2,vagexam$duration.cat4h),1)
+round(prop.table(table(vagexam$privateinfo.compositeL2,vagexam$duration.cat4h),1),3)
+
+
+#*********Mistreatment level 3 descriptives************  
+table(vagexam$private.compositeL3)
+prop.table(table(vagexam$private.compositeL3))# no=170, yes=260
+sum(is.na(vagexam$private.compositeL3))# missing=586
+
+
+#maternal age 
+table(vagexam$agecat)
+table(vagexam$private.compositeL3,vagexam$agecat) 
+prop.table(table(vagexam$private.compositeL3,vagexam$agecat),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$agecat),1),3)
+
+# Marital status category 
+#maritalcat.f 
+table(vagexam$maritalcat.f)
+table(vagexam$private.compositeL3,vagexam$maritalcat.f) 
+prop.table(table(vagexam$private.compositeL3,vagexam$maritalcat.f),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$maritalcat.f),1),3)
+
+#Education 
+table(vagexam$educcatt)
+table(vagexam$private.compositeL3,vagexam$educcatt) 
+prop.table(table(vagexam$private.compositeL3,vagexam$educcatt),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$educcatt),1),3)
+
+# Number of pregnancies
+table(vagexam$no.preg)
+table(vagexam$private.compositeL3,vagexam$no.preg) 
+prop.table(table(vagexam$private.compositeL3,vagexam$no.preg),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$no.preg),1),3)
+
+# Number of previous births
+table(vagexam$prev.births)
+table(vagexam$private.compositeL3,vagexam$prev.births) 
+prop.table(table(vagexam$private.compositeL3,vagexam$prev.births),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$prev.births),1),3)
+
+# Previous cs 
+table(vagexam$prev.cscat)
+table(vagexam$private.compositeL3,vagexam$prev.cscat) 
+prop.table(table(vagexam$private.compositeL3,vagexam$prev.cscat),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$prev.cscat),1),3)
+
+#mode od delivery 
+table(vagexam$mod.del)
+table(vagexam$private.compositeL3,vagexam$mod.del) 
+prop.table(table(vagexam$private.compositeL3,vagexam$mod.del),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$mod.del),1),3)
+
+# Time of admission 
+table(vagexam$day.nightcat)
+table(vagexam$private.compositeL3,vagexam$day.nightcat) 
+prop.table(table(vagexam$private.compositeL3,vagexam$day.nightcat),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$day.nightcat),1),3)
+
+# Labour duration in hours 
+table(vagexam$duration.cat4h)
+table(vagexam$private.compositeL3,vagexam$duration.cat4h) 
+prop.table(table(vagexam$private.compositeL3,vagexam$duration.cat4h),1)
+round(prop.table(table(vagexam$private.compositeL3,vagexam$duration.cat4h),1),3)
+
+#Vaginal exam
+#first vaginal exam
+str(vagexam$firstexamnum)
+vagexam$initial.ve <- fct_collapse(vagexam$firstexamnum, no_initial.ve="0", initial_ve="1",  more.ve2=c("2","3","4","5","6","7","8"))
+summary(vagexam$initial.ve)
+
+
+str(vagexam$obs_curtainspost_1)
+str(vagexam$obs_curtainspost_2)
+summary(vagexam$obs_curtainspost_1)
+str(vagexam$obs_curtainspost_2)
+
+summary(vagexam$obs_curtainsbirth_2)
+is.numeric(vagexam$obs_curtainsbirth_2)
+
+
+str(vagexam$country_id_adm)
+vagexam$country.cat <- as.factor(vagexam$country_id_adm)
+
+#Bivariate logistic analysis MISTREATMENT 1)
+fit.age <- glm(compositeL1~agecat, data = vagexam, family = "binomial")
+summary(fit.age)
+exp(coef(fit.age))
+exp(coef(fit.age))
+exp(confint(fit.age))
+exp(cbind(coef(fit.age), confint(fit.age2)))
+round(exp(cbind(coef(fit.age), confint(fit.age))),3)
+
+library(Amelia)
+library(aod)
+
+
+#fit marital status
+fit.marital <- glm(compositeL1~maritalcat.f, data = vagexam, family = "binomial")
+summary(fit.marital)
+exp(cbind(coef(fit.marital), confint(fit.marital)))
+round(exp(cbind(coef(fit.marital), confint(fit.marital))),3)
+
+
+#fit Education
+fit.education <- glm(compositeL1~educcatt, data = vagexam, family = "binomial")
+summary(fit.education)
+exp(cbind(coef(fit.education), confint(fit.education)))
+round(exp(cbind(coef(fit.education), confint(fit.education))),3)
+
+#fit No of pregnancy
+fit.no_preg <- glm(compositeL1~no.preg, data = vagexam, family = "binomial")
+summary(fit.no_preg)
+exp(cbind(coef(fit.no_preg), confint(fit.no_preg)))
+round(exp(cbind(coef(fit.no_preg), confint(fit.no_preg))),3)
+
+#fit previous births
+fit.prev_birth <- glm(compositeL1~prev.births, data = vagexam, family = "binomial")
+summary(fit.prev_birth)
+exp(cbind(coef(fit.prev_birth), confint(fit.prev_birth)))
+round(exp(cbind(coef(fit.prev_birth), confint(fit.prev_birth))),3)
+
+#fit mode of del
+fit.mod_del <- glm(compositeL1~mod.del, data = vagexam, family = "binomial")
+summary(fit.mod_del)
+exp(cbind(coef(fit.mod_del), confint(fit.mod_del)))
+round(exp(cbind(coef(fit.mod_del), confint(fit.mod_del))),3)
+
+#fit Time of admission day/night
+fit.night_day <- glm(compositeL1~day.nightcat, data = vagexam, family = "binomial")
+summary(fit.night_day)
+exp(cbind(coef(fit.night_day), confint(fit.night_day)))
+round(exp(cbind(coef(fit.night_day), confint(fit.night_day))),3)
+
+#fit duration of labour
+fit.duration <- glm(compositeL1~duration.cat4h, data = vagexam, family = "binomial")
+summary(fit.duration)
+exp(cbind(coef(fit.duration), confint(fit.duration)))
+round(exp(cbind(coef(fit.duration), confint(fit.duration))),3)
+
+#Bivariate logistic analysis****MISTREATMENT 2)*****
+#fit age2
+fit.age2 <- glm(privateinfo.compositeL2~agecat, data = vagexam, family = "binomial")
+summary(fit.age2)
+exp(cbind(coef(fit.age2), confint(fit.age2)))
+round(exp(cbind(coef(fit.age2), confint(fit.age2))),3)
+
+
+#fit marital status2
+fit.marital2 <- glm(privateinfo.compositeL2~maritalcat.f, data = vagexam, family = "binomial")
+summary(fit.marital2)
+exp(cbind(coef(fit.marital2), confint(fit.marital2)))
+round(exp(cbind(coef(fit.marital2), confint(fit.marital2))),3)
+
+
+#fit Education2
+fit.education2 <- glm(privateinfo.compositeL2~educcatt, data = vagexam, family = "binomial")
+summary(fit.education2)
+exp(cbind(coef(fit.education2), confint(fit.education2)))
+round(exp(cbind(coef(fit.education2), confint(fit.education2))),3)
+
+#fit No of pregnancy2
+fit.no_preg2 <- glm(privateinfo.compositeL2~no.preg, data = vagexam, family = "binomial")
+summary(fit.no_preg2)
+exp(cbind(coef(fit.no_preg2), confint(fit.no_preg2)))
+round(exp(cbind(coef(fit.no_preg2), confint(fit.no_preg2))),3)
+
+#fit previous births2
+fit.prev_birth2 <- glm(privateinfo.compositeL2~prev.births, data = vagexam, family = "binomial")
+summary(fit.prev_birth2)
+exp(cbind(coef(fit.prev_birth2), confint(fit.prev_birth2)))
+round(exp(cbind(coef(fit.prev_birth2), confint(fit.prev_birth2))),3)
+
+#fit mode of delivey2
+fit.mod_del2 <- glm(privateinfo.compositeL2~mod.del, data = vagexam, family = "binomial")
+summary(fit.mod_del2)
+exp(cbind(coef(fit.mod_del2), confint(fit.mod_del2)))
+round(exp(cbind(coef(fit.mod_del2), confint(fit.mod_del2))),3)
+
+#fit Time of admission day/night2
+fit.night_day2 <- glm(privateinfo.compositeL2~day.nightcat, data = vagexam, family = "binomial")
+summary(fit.night_day2)
+exp(cbind(coef(fit.night_day2), confint(fit.night_day2)))
+round(exp(cbind(coef(fit.night_day2), confint(fit.night_day2))),3)
+
+#fit duration of labour2
+fit.duration2 <- glm(privateinfo.compositeL2~duration.cat4h, data = vagexam, family = "binomial")
+summary(fit.duration2)
+exp(cbind(coef(fit.duration2), confint(fit.duration2)))
+round(exp(cbind(coef(fit.duration2), confint(fit.duration2))),3)
+
+
+
+#Bivariate logistic analysis****MISTREATMENT 3)*****
+#fit age3
+fit.age3 <- glm(private.compositeL3~agecat, data = vagexam, family = "binomial")
+summary(fit.age3)
+exp(cbind(coef(fit.age3), confint(fit.age3)))
+round(exp(cbind(coef(fit.age3), confint(fit.age3))),3)
+
+
+#fit marital status3
+fit.marital3 <- glm(private.compositeL3~maritalcat.f, data = vagexam, family = "binomial")
+summary(fit.marital3)
+exp(cbind(coef(fit.marital3), confint(fit.marital3)))
+round(exp(cbind(coef(fit.marital3), confint(fit.marital3))),3)
+
+
+#fit Education3
+fit.education3 <- glm(private.compositeL3~educcatt, data = vagexam, family = "binomial")
+summary(fit.education3)
+exp(cbind(coef(fit.education3), confint(fit.education3)))
+round(exp(cbind(coef(fit.education3), confint(fit.education3))),3)
+
+#fit No of pregnancy3
+fit.no_preg3 <- glm(private.compositeL3~no.preg, data = vagexam, family = "binomial")
+summary(fit.no_preg3)
+exp(cbind(coef(fit.no_preg3), confint(fit.no_preg3)))
+round(exp(cbind(coef(fit.no_preg3), confint(fit.no_preg3))),3)
+
+#fit previous births3
+fit.prev_birth3 <- glm(private.compositeL3~prev.births, data = vagexam, family = "binomial")
+summary(fit.prev_birth3)
+exp(cbind(coef(fit.prev_birth3), confint(fit.prev_birth3)))
+round(exp(cbind(coef(fit.prev_birth3), confint(fit.prev_birth3))),3)
+
+#fit mode of delivey3
+fit.mod_del3 <- glm(private.compositeL3~mod.del, data = vagexam, family = "binomial")
+summary(fit.mod_del3)
+exp(cbind(coef(fit.mod_del3), confint(fit.mod_del3)))
+round(exp(cbind(coef(fit.mod_del3), confint(fit.mod_del3))),3)
+
+#fit Time of admission day/night3
+fit.night_day3 <- glm(private.compositeL3~day.nightcat, data = vagexam, family = "binomial")
+summary(fit.night_day3)
+exp(cbind(coef(fit.night_day3), confint(fit.night_day3)))
+round(exp(cbind(coef(fit.night_day3), confint(fit.night_day3))),3)
+
+#fit duration of labour3
+fit.duration3 <- glm(private.compositeL3~duration.cat4h, data = vagexam, family = "binomial")
+summary(fit.duration3)
+exp(cbind(coef(fit.duration3), confint(fit.duration3)))
+round(exp(cbind(coef(fit.duration3), confint(fit.duration3))),3)
+
+install.packages("tidyverse")
+library(tidyverse)
+#Descriptives Country and socio-demographics
+#GHANA MISTREATEMTN LEVEL 1
+summary(vagexam$country.cat)
+ghana <- vagexam%>%
+  filter(country=="GHA")
+summary(ghana$compositeL1)
+prop.table(table(ghana$compositeL1))
+#maternal age
+table(ghana$agecat, ghana$compositeL1)  
+round(prop.table(table(ghana$agecat, ghana$compositeL1),2),3)
+#marital status
+table(ghana$maritalcat.f, ghana$compositeL1)  
+round(prop.table(table(ghana$maritalcat.f, ghana$compositeL1),2),3)
+
+#Education
+table(ghana$educcatt, ghana$compositeL1)  
+round(prop.table(table(ghana$educcatt, ghana$compositeL1),2),3)
+
+#No of pregnancies
+table(ghana$no.preg, ghana$compositeL1)  
+round(prop.table(table(ghana$no.preg, ghana$compositeL1),2),3)
+
+#No of previous births
+table(ghana$prev.births, ghana$compositeL1)  
+round(prop.table(table(ghana$prev.births, ghana$compositeL1),2),3)
+
+#mode of delivery
+table(ghana$mod.del, ghana$compositeL1)  
+round(prop.table(table(ghana$mod.del, ghana$compositeL1),2),3)
+
+#Time of admission
+table(ghana$day.nightcat, ghana$compositeL1)  
+round(prop.table(table(ghana$day.nightcat, ghana$compositeL1),2),3)
+
+#Duration of labour
+table(ghana$duration.cat4h, ghana$compositeL1)  
+round(prop.table(table(ghana$duration.cat4h, ghana$compositeL1),2),3)
+
+
+  
+#Descriptives Country and socio-demographics
+#GHANA MISTREATMENT LEVEL 2
+summary(vagexam$country.cat)
+ghana <- vagexam%>%
+  filter(country=="GHA")
+summary(ghana$privateinfo.compositeL2)
+prop.table(table(ghana$privateinfo.compositeL2))
+
+summary(ghana$private.compositeL3)
+prop.table(table(ghana$private.compositeL3))
+
+#maternal age
+table(ghana$agecat, ghana$compositeL1)  
+round(prop.table(table(ghana$agecat, ghana$compositeL1),2),3)
+#marital status
+table(ghana$maritalcat.f, ghana$compositeL1)  
+round(prop.table(table(ghana$maritalcat.f, ghana$compositeL1),2),3)
+
+#Education
+table(ghana$educcatt, ghana$compositeL1)  
+round(prop.table(table(ghana$educcatt, ghana$compositeL1),2),3)
+
+#No of pregnancies
+table(ghana$no.preg, ghana$compositeL1)  
+round(prop.table(table(ghana$no.preg, ghana$compositeL1),2),3)
+
+#No of previous births
+table(ghana$prev.births, ghana$compositeL1)  
+round(prop.table(table(ghana$prev.births, ghana$compositeL1),2),3)
+
+#mode of delivery
+table(ghana$mod.del, ghana$compositeL1)  
+round(prop.table(table(ghana$mod.del, ghana$compositeL1),2),3)
+
+#Time of admission
+table(ghana$day.nightcat, ghana$compositeL1)  
+round(prop.table(table(ghana$day.nightcat, ghana$compositeL1),2),3)
+
+#Duration of labour
+table(ghana$duration.cat4h, ghana$compositeL1)  
+round(prop.table(table(ghana$duration.cat4h, ghana$compositeL1),2),3)
+
+vagexam%>%
+  mutate()
+
+#25-March-2020
+#**********dESCRIPTIVES of mistreatment by country**********
+#Mistreatment 1
+table(vagexam$compositeL1)
+prop.table(table(vagexam$compositeL1))
+round(prop.table(table(vagexam$compositeL1)),3)
+
+table(vagexam$country.cat, vagexam$compositeL1)
+prop.table(table(vagexam$country.cat, vagexam$compositeL1))
+round(prop.table(table(vagexam$country.cat, vagexam$compositeL1),1),3)
+
+#mistreatment 2
+table(vagexam$privateinfo.compositeL2)
+prop.table(table(vagexam$privateinfo.compositeL2))
+round(prop.table(table(vagexam$privateinfo.compositeL2)),3)
+
+table(vagexam$country.cat, vagexam$privateinfo.compositeL2)
+prop.table(table(vagexam$country.cat, vagexam$privateinfo.compositeL2))
+round(prop.table(table(vagexam$country.cat, vagexam$privateinfo.compositeL2),1),3)
+
+#mistreatment 2
+table(vagexam$private.compositeL3)
+prop.table(table(vagexam$private.compositeL3))
+round(prop.table(table(vagexam$private.compositeL3)),3)
+
+table(vagexam$country.cat, vagexam$private.compositeL3)
+prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),1)
+round(prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),1),3)
+round(prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),2),3)
+table(vagexam$country.cat)
+
+
+
+#include missing and other
+#**********dESCRIPTIVES of mistreatment by country**********
+#Mistreatment 1
+table(vagexam$compositeL1)
+prop.table(table(vagexam$compositeL1))
+round(prop.table(table(vagexam$compositeL1)),3)
+
+table(vagexam$country.cat, vagexam$compositeL1)
+prop.table(table(vagexam$country.cat, vagexam$compositeL1))
+round(prop.table(table(vagexam$country.cat, vagexam$compositeL1),1),3)
+
+#mistreatment 2
+table(vagexam$privateinfo.compositeL2)
+prop.table(table(vagexam$privateinfo.compositeL2))
+round(prop.table(table(vagexam$privateinfo.compositeL2)),3)
+
+table(vagexam$country.cat, vagexam$privateinfo.compositeL2)
+prop.table(table(vagexam$country.cat, vagexam$privateinfo.compositeL2))
+round(prop.table(table(vagexam$country.cat, vagexam$privateinfo.compositeL2),1),3)
+
+#mistreatment 2
+table(vagexam$private.compositeL3)
+prop.table(table(vagexam$private.compositeL3))
+round(prop.table(table(vagexam$private.compositeL3)),3)
+
+table(vagexam$country.cat, vagexam$private.compositeL3)
+prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),1)
+round(prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),1),3)
+round(prop.table(table(vagexam$country.cat, vagexam$private.compositeL3),2),3)
+table(vagexam$country.cat)
+#median duration
+median(vagexam$duration.h, na.rm = T)
+vagexam %>%
+  summarize(median(duration.h, na.rm = T))
+
+vagexam %>%
+  group_by(country.cat)%>%
+  summarize(median(duration.habs, na.rm = T))
+
+vagexam %>%
+  group_by(country.cat)%>%
+  summarize(mean(duration.habs, na.rm = T))
+view(vagexam$duration.h)
+
+vagexam %>%
+  group_by(country.cat, mod.del)%>%
+  summarize(median(duration.habs, na.rm = T))
+
+vagexam %>%
+  group_by(country.cat, mod.del)%>%
+  summarize(mean(duration.habs, na.rm = T))
+
+view(vagexam$duration.h)
+
+#Median calculation
+df$value[is.na(df$value)] <- median(df$value, na.rm=TRUE)
+vagexam$duration.h[is.na(vagexam$duration.h)] <- median(vagexam$duration.h, na.rm = T)
+
+ggplot(vagexam, aes(x=mod.del, y=duration.habs)) +
+         geom_bar()
+ggplot(vagexam, aes(x=mod.del, y=duration.habs)) +
+  geom_boxplot()
+qplot(mod.del, duration.habs, data = vagexam)
+ls()
+search()
+Call.graphics(C_palette2, .Call(C_palette2, NULL))
+
+
+vagexam %>%
+  summarize(sum(is.na(agecat)))
+vagexam %>%
+  summarize(sum(is.na(compositeL1)))
+vagexam %>%
+  summarize(sum(is.na(private.compositeL3)))
+vagexam %>%
+  summarize(sum(is.na(privateinfo.compositeL2)))
+
+glimpse(vagexam)
+
+par(mfrow=c(1,3))
+ggplot(vagexam, aes(x = obs_age, fill = compositeL1)) +
+  geom_density(alpha = 0.9) + theme_bw() +
+  theme(legend.position = c(0.8, 0.8))
+ggplot(vagexam, aes(x = obs_age, fill = privateinfo.compositeL2)) +
+  geom_density(alpha = 0.9) + theme_bw() +
+  theme(legend.position = c(0.8, 0.8))
+ggplot(vagexam, aes(x = obs_age, fill = private.compositeL3)) +
+  geom_density(alpha = 0.9) + theme_bw() +
+  theme(legend.position = c(0.8, 0.8))
+iri
+
+ggplot(data = vagexam, aes(x=duration.habs, col=compositeL1)+geom_freqpoly(bin=100)
+mode(vagexam$duration.habs)
+vagexam%>%
+  summarise(mean(duration.habs, na.rm=TRUE))
+
+vagexam%>%
+  summarise(median(duration.habs, na.rm=TRUE))
+
+ggplot(data = vagexam, aes(x=factor(compositeL1), y=duration.habs))+geom_boxplot()
+
+ggplot(data = vagexam, aes(x=compositeL1, y=duration.habs, fill=compositeL1))+geom_boxplot()
+
+ggplot(data = vagexam, aes(x=obs_age, y=duration.mabs, col=compositeL1))+geom_smooth(se=T)
+ggplot(data = vagexam, aes(x=obs_age, y=duration.mabs, col=compositeL1))+geom_smooth(se=F)
+
+ggplot(data = vagexam, aes(x=obs_age, y=duration.mabs, col=compositeL1))+geom_point() +geom_smooth(method = "lm", se=F)
+
+vagexam%>%
+
+
+
+is.numeric(vagexam$obs_age)
+
+is.numeric(vagexam$duration.habs)
+
+
+ggplot(mtcars, aes(x="",y=wt, fill=am)) +
+  geom_bar(stat = "identity") +
+  coord_polar("y", start = 0)
+
+ggplot(vagexam, aes(x="", y=obs_age, fill=compositeL1))+
+  geom_bar(stat = "identity") +
+  
+
+ggplot(vagexam, aes(x="", y=obs_age, fill=compositeL1))+
+  geom_bar(stat = "identity") +
+  coord_polar("y", start = 0)
+
+
+
+
+
