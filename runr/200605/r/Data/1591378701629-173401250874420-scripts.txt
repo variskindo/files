@@ -1,0 +1,22 @@
+# Saved at 6/5/2020 19:35:07 pm<span title="6/5/2020 19:35:07 pm">Yeah</span>
+#Data=../r/data.csv
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 6/5/2020 19:38:20 pm<span title="6/5/2020 19:38:20 pm">Coke vs Pepsi</span>
+#Data=../r/190317/runr-info-367025446-coke.xls
+#Sheet=1
+print(obs) #display the data
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go
