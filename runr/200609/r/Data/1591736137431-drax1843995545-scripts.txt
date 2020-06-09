@@ -1,0 +1,7 @@
+# Saved at 2/8/2019 12:09:52 pm
+Plumero<- floor(runif(16,10,40))
+Umas<- gl(4,4,16, labels = c("Uma 1","Uma 2","Uma 3","Uma 4"))
+Total<- c(520,576,480,560)
+dfp<- data.frame(Umas,Plumero)
+Casos<- tapply(Plumero,Umas,sum)
+Prevalencia<- round(((Casos/Total)*100),1)
