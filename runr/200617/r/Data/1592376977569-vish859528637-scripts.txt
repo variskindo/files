@@ -1,0 +1,53 @@
+# Saved at 6/17/2020 12:26:16 pm<span title="6/17/2020 12:26:16 pm">Logistic model</span>
+
+
+
+id <- "0B5W8CO0Gb2GGVjRILTdWZkpJU1E" # Google file ID taken from above
+dat=read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id),header=TRUE,sep=',')
+head(dat)
+str(dat)
+admit <- as.factor(dat$admit)
+rank <- as.factor(dat$rank)
+
+
+
+
+#two way factorising
+xtabs(~admit+rank,data=dat)
+
+
+
+
+#partitiong data- 80%train 20%test
+set.seed(1234)
+split <- sample(2,nrow(dat),replace=TRUE,prob=c(0.8,0.2))
+train <- dat[split==1,]
+test <- dat[split==2,]
+
+
+
+
+#model fitting
+modl <- glm(admit~.-gre,data=train,family="binomial")
+summary(modl)
+
+
+
+
+# Prediction
+p1 <- predict(modl, train, type = 'response')
+library(ROCR)
+ROCRpred=prediction(p1,train$admit)
+ROCRperf <- performance(ROCRpred,"tpr","fpr")
+plot(ROCRperf,colourize = TRUE,print.cutoffs.at=seq(0,1,by=0.1))
+head(p1)
+head(train)
+
+
+
+
+# Misclassification error - train data
+pred1 <- ifelse(p1>0.6, 1, 0)
+tab1 <- table(Predicted = pred1, Actual = train$admit)
+tab1
+1 - sum(diag(tab1))/sum(tab1)
