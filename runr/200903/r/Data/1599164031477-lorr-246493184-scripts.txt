@@ -1,0 +1,5 @@
+# Saved at 9/3/2020 22:13:50 pm<span title="9/3/2020 22:13:50 pm">My first R script</span>
+y<-c(12,15,18,22,34,46,48,50)
+mean(y)
+median(y)
+summary(y)
