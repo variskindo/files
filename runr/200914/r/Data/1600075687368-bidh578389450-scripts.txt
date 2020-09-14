@@ -1,0 +1,65 @@
+# Saved at 1/24/2020 18:59:15 pm<span title="1/24/2020 18:59:15 pm">Graph of abs(x)^3+abs(y)^3=1</span>
+x=seq(-2,2,by=0.0001)
+y1=(1-abs(x)^3)^(1/3)
+y2=-(1-abs(x)^3)^(1/3)
+
+y=cbind(y1,y2)
+matplot(x,y,type="l")# Saved at 1/25/2020 9:26:37 am<span title="1/25/2020 9:26:37 am">Regression line</span>
+x=c(4,5,6,4,3,8,6,7,6,5,8,4,5,7,5,7)
+y=c(7,5,6,3,9,7,4,2,9,5,7,3,8,6,9,5)
+b=cov(x,y)/(sd(x)*sd(x))
+plot(x,y)
+z=mean(y)-b*(mean(x)-x)
+lines(x,z,type="l",col="red")# Saved at 1/25/2020 11:10:59 am<span title="1/25/2020 11:10:59 am">Regression from both sides</span>
+x=c(4,5,6,4,3,8,6,7,6,5,8,4,5,7,5,7)
+y=c(7,5,6,3,9,7,4,2,9,5,7,3,8,6,9,5)
+b=cov(x,y)/(sd(x)*sd(x))
+plot(x,y)
+z=mean(y)-b*(mean(x)-x)
+lines(x,z,type="l",col="red")
+b2=cov(x,y)/(sd(y)*sd(y))
+z2=mean(y)-(mean(x)-x)/b2
+lines(x,z2,type="l",col="green")
+# Saved at 1/25/2020 11:15:28 am<span title="1/25/2020 11:15:28 am">Graph</span>
+x=seq(-1,1,by=0.0001)
+y1=(1-abs(x)^3)^(1/3)
+y2=-(1-abs(x)^3)^(1/3)
+
+y=cbind(y1,y2)
+matplot(x,y,type="l")# Saved at 1/26/2020 11:14:30 am<span title="1/26/2020 11:14:30 am">Curve</span>
+x1=seq(0,pi,by=0.0001)
+x2=seq(pi,2*pi,by=0.0001)
+x=cbind(x1,x2)
+y1=((pi/2)^2-(x1-pi/2)^2)^(1/2)
+y2=-((pi/2)^2-(x2-3*pi/2)^2)^(1/2)
+y=cbind(y1,y2)
+matplot(x,y,type="l")
+# Saved at 1/26/2020 15:42:56 pm<span title="1/26/2020 15:42:56 pm">Area shade</span>
+x=seq(0,1,by=0.0001)
+a=curve(x^2,0,1)
+polygon(c(0,a$x,1),c(0,a$y,0),col="pink")# Saved at 1/26/2020 22:50:35 pm<span title="1/26/2020 22:50:35 pm">Curve superimpose</span>
+x1=seq(0,pi,by=0.0001)
+x2=seq(pi,2*pi,by=0.0001)
+x=cbind(x1,x2)
+y1=((pi/2)^2-(x1-pi/2)^2)^(1/2)
+y2=-((pi/2)^2-(x2-3*pi/2)^2)^(1/2)
+y=cbind(y1,y2)
+matplot(x,y,type="l")
+v=seq(0,2*pi,by=0.0001)
+z=sin(x)
+lines(v,z, type="l",col="green")# Saved at 1/26/2020 23:16:14 pm<span title="1/26/2020 23:16:14 pm">Area colored</span>
+x1=seq(0,pi,by=0.0001)
+x2=seq(pi,2*pi,by=0.0001)
+x=cbind(x1,x2)
+y1=((pi/2)^2-(x1-pi/2)^2)^(1/2)
+y2=-((pi/2)^2-(x2-3*pi/2)^2)^(1/2)
+y=cbind(y1,y2)
+matplot(x,y,type="l")
+v=seq(0,2*pi,by=0.0001)
+z=sin(x)
+lines(x,z,type="l",col="green")
+polygon(c(x,rev(x)),c(z,rev(y)),col="pink")
+# Saved at 9/14/2020 14:58:07 pm<span title="9/14/2020 14:58:07 pm">Normal Random number generation</span>
+x=rnorm(1000000,0,1);
+mean(x)
+var(x)
