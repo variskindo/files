@@ -1,0 +1,426 @@
+# Saved at 3/22/2019 16:06:22 pm
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this codevFFg&Rs# Saved at 7/5/2019 8:47:50 am<span title="7/5/2019 8:47:50 am">Test</span>
+library(caret)
+print("Nave Bayes")
+df <- read.table("fraud.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:15000, 2500), ] # select 2500 cases only
+df$Class = as.factor(df$Class)
+set.seed(888)
+trainControl <- trainControl(method="cv", number=5)
+fit.nb <- train(Class ~ V1 + V2, data=df, method="nb", metric="Accuracy", trControl=trainControl)
+print(fit.nb) # summarize fit# Saved at 8/24/2019 11:45:07 am<span title="8/24/2019 11:45:07 am">ECL Report</span>
+plot(iris)
+varisk.createPdfReport()
+varisk.createPdfReport()
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,200,200' # using specified width and height
+s <- '1,32,2,C:\Apps\wwwroot\php\files\vcr\img\about.jpg,Y' # using original width and height
+csvFileName <- "fileNameNoExt.csv"
+varisk.saveLines(csvFileName, s)
+varisk.createExcelReport(csvFileName=csvFileName)# Saved at 9/4/2019 5:58:16 am<span title="9/4/2019 5:58:16 am">iphone</span>
+str(obs) # structure of our data
+x <- rnorm(1000)
+str(x)
+print( test )
+#go
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#go# Saved at 9/5/2019 16:36:58 pm<span title="9/5/2019 16:36:58 pm">VaRisk ECL</span>
+varisk.sendMobilePush("Report", "New Report has been emailed.")
+varisk.sendEmail(emailTo="bk.yudiaatmaja@gmail.com", subject="R", message="This is a test")
+script <- "var d = '2019-09-05';var t = '16:15:';\n"
+script <- paste0(script, "variskExecJs('variskOpenMenu(`vcr_borrowers_menu.html`, `Borrowers`)', d, t + '00');\n") #123
+script <- paste0(script, "variskExecJs('variskOpenExMenu(`/var/var.html?airb=1`, `Advanced IRB Approach`)', d, t + '05');\n") #123
+script <- paste0(script, "var s='selectFlowchartNode(`Scenario Discrete Probabilities`);runModel();';\n") #123
+script <- paste0(script, "variskExecJs('variskOpenModel(`macro-scenarios`, `IFRS 9 - Macroeconomic Scenarios`, true, `' + s + '`)', d, t + '10');") #123
+varisk.createJs(script)# Saved at 11/14/2019 7:35:05 am<span title="11/14/2019 7:35:05 am">ECL Bank DKI</span>
+#data <- varisk.readObj('demo-ecl-dki-models-1.rda', prefix=FALSE)
+
+df <- varisk.readCsv("Data/dki/psak71/mev1.csv")
+mac <- df
+ts <- ts(mac, start=c(2014,4), frequency=12) # monthly data
+#fit <- forecast::tslm(odr ~ gdp + uer, data=ts)
+#summary(fit)
+n <- nrow(mac)
+odr <- as.matrix(mac[5:n, 'odr'])
+int1 <- as.matrix(mac[4:(n-1), 'int'])
+int2 <- as.matrix(mac[3:(n-2), 'int'])
+cpi1 <- as.matrix(mac[4:(n-1), 'cpi'])
+cpi2 <- as.matrix(mac[3:(n-2), 'cpi'])
+gdp4 <- as.matrix(mac[1:(n-4), 'gdp'])
+int <- as.matrix(mac[5:n, 'int'])
+idr <- as.matrix(mac[5:n, 'idr'])
+cpi <- as.matrix(mac[5:n, 'cpi'])
+oil <- as.matrix(mac[5:n, 'oil'])
+df <- as.data.frame(cbind(odr, gdp4, int1, int2, cpi1, cpi2, int, idr, cpi, oil))
+colnames(df) <- c('odr', 'gdp4', 'int1', 'int2', 'cpi1', 'cpi2', 'int', 'idr', 'cpi', 'oil')
+
+#' ### Pencarian model regresi terbaik
+#+
+fit <- varisk.findBestTslm(df, ts.start=c(2014,4), ts.frequency=12)
+#' <b>Nama variabel: </b><code style="padding:0 4px">
+{{paste(colnames(df), collapse=", ")}}
+#' </code><br><b>Banyaknya kombinasi regresi yang mungkin: </b><code style="padding:0 4px">
+{{fit[[1]]}}
+#' </code><br><b>Model regresi terbaik </b><code style="padding:0 4px">
+{{fit[[2]]}}
+#' </code>
+#+
+summary(fit[[3]])
+
+
+#mac <- as.data.frame(macv.values)
+#names(mac) <- c("Date", "odr", "gdp", "int", "idr", "cpi", "oil")
+#mac
+
+#varisk.tweetCreateToken()
+#hashtag <- "#HandmaidsTale"
+#tweets <- variskTweetSearch(hashtag, n=2000)
+#unique(tweets$screen_name)
+#users <- variskTweetSearchUsers(hashtag, nUsers=20)
+
+#cnn <- get_timeline("detik", n = 3200)
+#ts_plot(cnn, "hours")
+
+#data <- varisk.readObj('demo-ecl-credit-card-data.rda', prefix=FALSE) # revolvers
+#data <- varisk.readObj('demo-anti-fraud-data.rda', prefix=FALSE)
+
+#R=1 memberitahu sistem agar running R bukan Python
+#Server=2
+# Saved at 3/26/2020 9:32:13 am<span title="3/26/2020 9:32:13 am">Option Pricing Using ANN</span>
+#Generate dataset
+spot <- 15000
+steps <- 5
+iter <- 10
+sim <- matrix(0, nrow=steps, ncol=iter)
+for (i in 1:iter) {
+  sim[,i] <- sde::GBM(x=spot, N=steps, r=0.05, sigma=0.15, T=1)[1:steps]
+}
+sample <- as.vector(sim)
+n <- length(sample)
+data <- c()
+data$spot <- sample
+data$strike <- sample * runif(n, min=1, max=1.15)
+data$time <- runif(n=n, min=1/365, max=1)
+data$vol <- runif(n=n, min=0.1, max=0.2)
+data$rd <-runif(n=n, min=0.04, max=0.08)
+data$rf <-runif(n=n, min=0.00, max=0.01)
+data$price <- varisk.BlackScholes("p", "c", spot, data$strike, data$time, 
+  data$rd, data$rd - data$rf, data$vol)
+data <- as.data.frame(data)
+
+matplot(sim, main="Geometric Brownian Motion", xlab="Days", ylab="Spot", type="l")
+
+#Split dataset
+library(dplyr)
+split <- rsample::initial_split(data, prop = .7, strata='price')
+train <- rsample::training(split)
+test  <- rsample::testing(split)
+
+# Create & standardize feature sets
+# training features
+train_x <- train %>% dplyr::select(-price)
+mean    <- colMeans(train_x)
+std     <- apply(train_x, 2, sd)
+train_x <- scale(train_x, center = mean, scale = std)
+# testing features
+test_x <- test %>% dplyr::select(-price)
+test_x <- scale(test_x, center = mean, scale = std)
+# Create & transform response sets
+train_y <- log(train$price)
+test_y  <- log(test$price)
+
+library(keras)
+#MODEL 1
+model_1 <- keras_model_sequential() %>%
+  layer_dense(units =  200,activation = "relu", input_shape = ncol(train_x)) %>%
+  layer_dense(units = 130,activation = "relu") %>%
+  layer_dense(units = 50,activation = "relu") %>%
+  layer_dense(units = 1)  %>%
+  
+  # backpropagation
+  compile(
+    optimizer = "rmsprop",
+    loss = "mse",
+    metrics = c("mae")
+  )
+learn_1 <- model_1 %>% fit(
+  x = train_x,
+  y = train_y,
+  epochs = 45,
+  batch_size = 256,
+  validation_split = .2,
+  verbose = TRUE,
+)
+#MODEL 2
+model_2 <- keras_model_sequential() %>%
+  layer_dense(units =  200,activation = "relu", input_shape = ncol(train_x),kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.2) %>%
+  layer_dense(units = 130,activation = "relu",kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.2) %>%
+  layer_dense(units = 50,activation = "relu",kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.2) %>%
+  layer_dense(units = 1)  %>%
+  
+  compile(
+    optimizer = "rmsprop", #optimizer_adam(lr = 0.01) 
+    loss = "mse",
+    metrics = c("mae")
+  )
+learn_2 <- model_2 %>% fit(
+  x = train_x,
+  y = train_y,
+  epochs = 45,
+  batch_size = 256,
+  validation_split = .2,
+  verbose = TRUE,
+  callbacks = list(
+    #callback_early_stopping(patience = 10),
+    callback_reduce_lr_on_plateau(patience = 5))
+)
+
+#Storing Prediction
+result <- NULL
+result$true_value <- exp(test_y)
+result$predcted_values_model_1 <- model_1 %>% predict(test_x)
+result$predcted_values_model_2 <- model_2 %>% predict(test_x)
+result$predcted_values_model_1 <- exp(result$predcted_values_model_1)
+result$predcted_values_model_2 <- exp(result$predcted_values_model_2)
+result$Err_model_1 <- 100 * abs(result$true_value - result$predcted_values_model_1) / result$true_value
+result$Err_model_2 <- 100 * abs(result$true_value - result$predcted_values_model_2) / result$true_value
+result$K_S <- test$strike / test$spot
+v <- matrix(0, nrow=length(test_y), ncol=5)
+v[, 1] <- result$true_value
+v[, 2] <- result$predcted_values_model_1
+v[, 3] <- result$predcted_values_model_2
+v[, 4] <- result$Err_model_1
+v[, 5] <- result$Err_model_2
+colnames(v) <- c("True Value", "Model 1", "Model 2", "Error 1", "Error 2")
+#v <- format(v, nsmall=2, big.mark=",", scientific = FALSE)
+#v <- cell_spec(v, align="right")
+varisk.htmlTable(v)
+
+#plot(x=result$true_value, y=result$predcted_values_model_1, cex= 0.001, xlab='Actual', ylab='Predicted Model 1')
+#plot(x=result$true_value, y=result$predcted_values_model_2, cex= 0.001, xlab='Actual', ylab='Predicted Model 2')
+
+#plot(x=result$K_S, result$Err_model_1, xlab='K / S', ylab='% Error - Model 1|', cex=0.01)
+#plot(x=result$K_S, result$Err_model_2, xlab='K / S', ylab='% Error - Model 2|', cex=0.01)
+
+#data <- varisk.readObj('demo-sgf-stress-test-ecl-mev.rda', prefix=F) # loss data
+
+#Server=2
+# Saved at 6/14/2020 6:43:23 am<span title="6/14/2020 6:43:23 am">Create Drilldown Chart</span>
+mapCode.func <- function(level, item) {
+  if (level == 1 && as.numeric(item) < 10) return(paste0("0", item))
+  return(item)
+}
+
+main <- function(tableNames, fieldNames, sumFormulas, summaries, xlabels, ylabels, item.func=NULL) {
+
+colors <- c("008ee4", "6baa01", "f8bd19", "e44a00", "5d62b5", "29c3be", "f2726f")
+colors.n <- length(colors)
+
+drilldown.chart <- function(level, where, desc="1=1") {
+  map <- regexpr("MAP_CODE", fieldNames[level])[1] > 0
+  if (map) {
+     chart <- paste('"chart": {',
+       '"caption": "",',
+       '"subcaption": "Click on a histogram to drill-down",',
+       '"entityFillHoverColor": "#cccccc",',
+       '"numberPrefix": "",',
+       '"theme": "hulk-light"',
+     '}')
+     color_range <- paste('"color_range": {',
+       '"code": "#6baa01",',
+       '"startlabel": "Low",',
+       '"endlabel": "High",',
+       '"minvalue": "0",',
+       '"gradient": "1",',
+       '"color": [{',
+         '"code": "#f8bd19",',
+         '"displayvalue": "Average",',
+         '"maxvalue": 50',
+       '},{',
+         '"code": "#e44a00",',
+         '"maxvalue": 100',
+       '}]',
+     '}')
+  } else {
+     chart <- paste('"chart": {',
+       '"bgcolor": "FFFFFF",',
+       '"canvasborderalpha": "0",',
+       '"caption": "",',
+       '"divlinecolor": "CCCCCC",',
+       '"numberprefix": "",',
+       '"plotgradientcolor": "",',
+       '"showalternatehgridcolor": "0",',
+       '"showplotborder": "0",',
+       '"showvalues": "0",',
+       '"subcaption": "Click on a histogram to drill-down",',
+       '"xaxisname": "",',
+       '"yaxisname": ""',
+     '}')     
+  }
+  chart <- jsonlite::fromJSON(paste("{", chart, "}"))
+  json.list <- c()
+  json.list$chart <- chart$chart
+  caption <- summaries[level]
+  if (level > 1) {
+    if (missing(desc)) desc <- where
+    subcaption <- paste0("(", desc, ")")
+    subcaption <- gsub("1=1 AND ", "", subcaption) # remove '1=1 AND '
+    json.list$chart$subcaption <- subcaption
+  } else where <- "1=1"
+  json.list$chart$caption <- caption
+  json.list$timestamp <- as.numeric(Sys.time())*1000
+  if (!map) {
+    json.list$chart$xaxisname <- xlabels[level]
+    json.list$chart$yaxisname <- ylabels[level]
+  } else {
+    color_range <- jsonlite::fromJSON(paste("{", color_range, "}"))
+    json.list$color_range <- color_range$color_range
+    json.list$map <- "indonesia"
+    json.list$ratio <- 0.6
+  }
+
+  data <- c()
+  items <- varisk.selectSqlMarket(sqlCmd=paste(
+    "SELECT DISTINCT", fieldNames[level], "FROM", tableNames[level],
+    "WHERE", where))
+    
+  for (i in 1:nrow(items)) {
+    label <- ifelse(is.null(item.func), items[i,1], item.func(level, items[i,1]))
+    s <- paste("AND", strsplit(fieldNames[level], ",")[[1]][1], "=", paste0("'", label, "'"))
+    sqlCmd <- paste(
+      "SELECT", sumFormulas[level], "FROM", tableNames[level],
+      "WHERE", where, s)
+    v <- varisk.selectSqlMarket(sqlCmd=sqlCmd)
+#print(sqlCmd)
+#print(varisk.htmlTable(v))
+    if (map) {
+       if (level == length(fieldNames)) {
+         data <- rbind(data, c(id=label, value=v[1,1]))      
+       } else {
+         link <- paste0("link", sprintf("%02d", level), "-", sprintf("%02d", i))
+         data <- rbind(data, c(id=label,
+           link=paste0("newchart-xml-", link), value=v[1,1]))
+       }       
+    } else {
+       if (level == length(fieldNames)) {
+         data <- rbind(data, c(color=colors[i %% colors.n], label=label, value=v[1,1]))      
+       } else {
+         link <- paste0("link", sprintf("%02d", level), "-", sprintf("%02d", i))
+         data <- rbind(data, c(color=colors[i %% colors.n], label=label,
+           link=paste0("newchart-xml-", link), value=v[1,1]))
+       }
+    }
+  }
+  json.list$data <- as.data.frame(data)
+
+  if (level == length(fieldNames)) return(json.list)
+  
+  linked_data <- c()
+  linkeddata <- c()
+  for (i in 1:nrow(items)) {
+    label <- ifelse(is.null(item.func), items[i,1], item.func(level, items[i,1]))
+    s <- paste("AND", strsplit(fieldNames[level], ",")[[1]][1], "=", paste0("'", label, "'"))
+    if (ncol(items) == 1) t <- s
+    else {
+      t <- items[i,2]
+      t <- paste("AND", strsplit(fieldNames[level], ",")[[1]][1], "=", paste0("'", t, "'"))
+    }
+    l <- drilldown.chart(level+1, paste(where, s), paste(desc, t))
+    l <- jsonlite::toJSON(l, pretty = TRUE, auto_unbox = TRUE)
+    linkedchart <- jsonlite::fromJSON(paste('{"z":', l, "}"))
+    id <- paste0("link", sprintf("%02d", level), "-", sprintf("%02d", i))
+    if (level == 1) {
+      linked_data <- rbind(linked_data, c(id=id, linkedchart=linkedchart))
+    } else linkeddata <- rbind(linkeddata, c(id=id, linkedchart=linkedchart))
+  }
+  if (level == 1) {
+    json.list$linked_data <- as.data.frame(linked_data)
+  } else json.list$linkeddata <- as.data.frame(linkeddata)
+  return(json.list)
+}
+
+json.list <- drilldown.chart(1, "")
+json <- jsonlite::toJSON(json.list, pretty = TRUE, auto_unbox = TRUE)
+json <- gsub(pattern = '^\[', replacement = "", x = json)
+json <- gsub(pattern = '\]$', replacement = "", x = json)
+json <- gsub(pattern = 'color_range', replacement = "color-range", x = json)
+json <- gsub(pattern = 'linked_data', replacement = "linked-data", x = json)
+json <- gsub(pattern = 'linkedchart.z', replacement = "linkedchart", x = json)
+
+varisk <- "https://varisk-demo.firebaseio.com/dashboard/DEMO/test/total-request-drill-down/test.json"
+#r <- httr::PATCH(varisk, body=json)
+#httr::stop_for_status(r)
+#httr::content(r, "parsed", "application/json")
+#httr::content(r, "text")
+
+#varisk <- "https://varisk-demo.firebaseio.com/dashboard/irrbb/admin/total-request-drill-down.json"
+#raw_data <- RCurl::getURL(varisk)
+#df <- jsonlite::fromJSON(raw_data)
+
+#varisk <- "https://s3-ap-southeast-1.amazonaws.com/varisk.assets/js/resizable.js"
+#(raw_data <- RCurl::getURL(varisk))
+skip <- function() {
+fisDeals <- varisk.selectSqlMarket(sqlCmd=paste(
+  "SELECT SECURITY, ISSUER, CURRENCY_ID, AMOUNT=SUM(NOMINAL) FROM FIS_DEALS_VIEW", 
+  "GROUP BY SECURITY, ISSUER, CURRENCY_ID",
+  "ORDER BY SECURITY, ISSUER, CURRENCY_ID"))
+varisk.htmlTable(fisDeals)
+}
+
+}
+
+tableNames <- c("FIS_DEALS_VIEW", "FIS_DEALS_VIEW", "FIS_DEALS_VIEW")
+fieldNames <- c("CURRENCY_ID", "ISSUER", "SECURITY")
+sumFormulas <- c("COUNT=COUNT(*)", "AMOUNT=SUM(NOMINAL)", "AMOUNT=SUM(NOMINAL)")
+summaries <- c("Number of Bond Deals", "Bond Face Value", "Bond Face Value")
+xlabels <- c("Currency", "Issuer", "Security")
+ylabels <- c("Count", "Face Value", "Face Value")
+
+
+tableName <- "IRRBB_SUMMARY T LEFT JOIN ORG2_VIEW J ON J.ORG2_ID = T.ORG2_ID"
+tableNames <- c(tableName, tableName, tableName)
+fieldNames <- c("MAP_CODE", "ORG1", "ORG2")
+sumFormula <- "DEVE=SUM(DELTA_EVE)"
+sumFormulas <- c(sumFormula, sumFormula, sumFormula)
+Summary <- "Delta-EVE in IDR"
+summaries <- c(Summary, Summary, Summary)
+xlabels <- c("Province", "City", "County")
+ylabels <- c("Delta-EVE", "Delta-EVE", "Delta-EVE")
+
+main(tableNames, fieldNames, sumFormulas, summaries, xlabels, ylabels, mapCode.func)
+
+df <- varisk.selectSqlMarket(sqlCmd=paste(
+  "SELECT MAP_CODE, ORG1, ORG2, DEVE=SUM(DELTA_EVE) FROM IRRBB_SUMMARY T", 
+  "LEFT JOIN ORG2_VIEW J ON J.ORG2_ID = T.ORG2_ID",
+#  "WHERE MAP_CODE=4",
+  "GROUP BY MAP_CODE, ORG1, ORG2",
+  "ORDER BY MAP_CODE, ORG1, ORG2"))
+varisk.htmlTable(df)
+
+df <- varisk.selectSqlMarket(sqlCmd=paste(
+  "SELECT * FROM IRRBB_SUMMARY T", 
+  "INNER JOIN ORG2_VIEW J ON J.ORG2_ID = T.ORG2_ID",
+  "WHERE 1=1",
+  ""))
+varisk.htmlTable(df)
+
+df <- varisk.readCsv("190912/vcr-demo-Quarterly GDP1.csv")
+#summary(df)
+varisk.htmlTable(df)
+
+#Server=2
+# Saved at 9/18/2020 8:13:21 am<span title="9/18/2020 8:13:21 am">Test</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, 
