@@ -1,0 +1,9 @@
+# Saved at 10/4/2020 14:09:11 pm<span title="10/4/2020 14:09:11 pm">AP1_HerbigL</span>
+#Data=../r/201001/runr-herb805823412-HerbigL_project_1200605219.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
