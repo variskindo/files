@@ -1,0 +1,12 @@
+# Saved at 7/11/2020 0:19:56 am<span title="7/11/2020 0:19:56 am">Variance-example</span>
+heights<-c(50,47,52,46,45) 
+var(heights)
+var(heights)*(length(heights)-1)/length(heights)
+
+
+var.p=function (x){var(x)*(length(x)-1)/length(x)}
+
+
+var.p(heights)
+sqrt(var.p(heights))# Saved at 10/10/2020 13:58:55 pm<span title="10/10/2020 13:58:55 pm">Sample2</span>
+dnorm(100,m=100,s=15)
