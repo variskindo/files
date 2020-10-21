@@ -1,0 +1,15 @@
+# Saved at 10/21/2020 10:59:30 am<span title="10/21/2020 10:59:30 am">Dominion Random Card Picker</span>
+Randomizer <- function() {
+   Cards<- c("Moat", "Dismantle", "Envoy", 
+   "Black Market", "Adventurer", "Bureaucrat", 
+  "Cellar", "Chancellor", "Chapel", 
+  "Council Room", "Feast", "Festival", 
+  "Laboratory", "Library", "Market", 
+  "Militia", "Mine", "Money Lender", 
+  "Remodel", "Smithy", "Spy", "Thief", 
+  "Throne Room", "Village", "Witch", 
+  "Woodcutter", "Workshop", "Gardens")
+  Playing_cards <- sample(Cards, 10)
+  Playing_cards#Random Samples and Permutations #Print an aareg object
+}#Function Definition
+Randomizer()
