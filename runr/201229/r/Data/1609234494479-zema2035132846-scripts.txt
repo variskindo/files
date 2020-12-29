@@ -1,0 +1,5 @@
+# Saved at 12/29/2020 6:34:53 am<span title="12/29/2020 6:34:53 am">Tst ggplot2</span>
+library("ggplot2")
+x=c(1,2,3,4)
+y=c(2,5,12,67)
+qplot(x,y)
