@@ -1,0 +1,5 @@
+# Saved at 1/27/2021 11:40:00 am<span title="1/27/2021 11:40:00 am">Fuckup</span>
+Least_favorite_subject<-c(60,35,55,15,25,10)
+barplot(Least_favorite_subject, names.arg=c( "Math", "Chemistry", "Physics", "English", "Music", "Philosophy")# Saved at 1/27/2021 11:40:18 am<span title="1/27/2021 11:40:18 am">Test</span>
+Least_favorite_subject<-c(60,35,55,15,25,10)
+barplot(Least_favorite_subject, names.arg=c( "Math", "Chemistry", "Physics", "English", "Music", "Philosophy")
