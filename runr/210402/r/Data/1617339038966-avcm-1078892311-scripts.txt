@@ -1,0 +1,126 @@
+# Saved at 5/25/2020 14:18:20 pm
+p<-.5647
+q<-.4353
+s1<-1246
+s2<- 566
+s3<-945
+n<-5000000
+k<-1000
+p1<-s1/(s1+s2+s3)
+p2<-s2/(s1+s2+s3)
+p3<-s3/(s1+s2+s3)
+sample_size_1<-s1
+sample_size_2<-s2
+sample_size_3<-s3
+pop_size<-n
+
+#Definitions
+#p1=portion of group s1 in total sample
+#p2=portion of group s2 in total sample
+#p3=portion of group s3 in total sample
+
+#c11=actual number of  group s1 members that are of type 1
+#c12=actual number of  group s2 members that are of type 1
+#c13=actual number of  group s3 members that are of type 1
+#c21=actual number of  group s1 members that are of type 2
+#c22=actual number of  group s2 members that are of type 2
+#c23=actual number of  group s3 members that are of type 2
+
+
+#e11=expected number of  s1 members of type 1
+#e12=expected number of s2 members of type 1
+#e13=expected number of  s3 members of type 1
+#e21=expected number of  s1 members of type 2
+#e22=expected number of  s2 members of type 2
+#e23=expected number of  s3 members of type 1
+
+#The R code below creates a population of size n where p% of the people are assigned a  1  
+#and q=(1-p)% are assigned a  0 . 
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+sample_means <- rep(NA, k)
+
+sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+c11<-sum(sample_1)
+c12<-sum(sample_2)
+c13<-sum(sample_3)
+c21<-(sample_size_1-sum(sample_1))
+c22<-(sample_size_2-sum(sample_2))
+c23<-(sample_size_3-sum(sample_3))
+e11<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square<-((e11-c11)^2)/e11+((e21-c21)^2)/e21+((e12-c12)^2)/e12+((e22-c22)^2)/e22+((e13-c13)^2)/e13+((e23-c23)^2)/e23
+
+
+# Take k samples of size s1, s2 and s3 without replacement from our population.
+for(i in 1:k){
+ sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+
+c11[i]<-sum(sample_1)
+c12[i]<-sum(sample_2)
+c13[i]<-sum(sample_3)
+
+c21[i]<-(sample_size_1-sum(sample_1))
+c22[i]<-(sample_size_2-sum(sample_2))
+c23[i]<-(sample_size_3-sum(sample_3))
+e11[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square[i]<-((e11[i]-c11[i])^2)/e11[i]+((e21[i]-c21[i])^2)/e21[i]+((e12[i]-c12[i])^2)/e12[i]+((e22[i]-c22[i])^2)/e22[i]+((e13[i]-c13[i])^2)/e13[i]+((e23[i]-c23[i])^2)/e23[i]
+   }
+print("Sample chi square values")
+chi_square
+hist(chi_square, freq=FALSE,breaks=c(0,1,2,4,5,10,20,30,40), main= Density_hist_of_Chi-squared_values )
+#curve(dchisq(x, df = 2), col= green  , from = 0, to = 40, add=TRUE)
+# Saved at 4/2/2021 0:50:38 am<span title="4/2/2021 0:50:38 am">save</span>
+#We create a population of voters of size n, where p% are in support and q=(1-p)% are against #some issue.  We want to take k samples of size s(surveys of size s) and then 
+#look at a frequency histograms of our sample means and a density(i.e. probability) histogram #for our sample z-scores. For each sample, the sample mean is taken as the proportion of #voters  that support the issue.
+ #In our population 1="Support" and 0="Against".
+p=.35
+q=.65
+n=18000000
+k=1000
+s=40
+sample_size<-s
+pop_size<-n
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+se<-sd(population)/(sqrt( sample_size))
+mean<-mean(population)
+#se
+print("mean")
+mean
+print("standard deviation")
+sqrt(p*q)
+# Take samples of size s without replacement.
+sample<-sample(population, sample_size)
+sample_mean<-sum(sample)/sample_size
+sample_zscore<-(sample_mean-mean)/(se)
+sample_sum<- sum(sample)
+
+
+sample_means <- rep(NA, k)
+
+for(i in 1:k){
+ sample<-sample(population, sample_size)
+   sample_means[i] <- sum(sample)/sample_size
+sample_zscore[i]<-((sum(sample)/sample_size)-mean)/(se)
+sample_sum[i] <- sum(sample)
+   }
+print("Sample sums")
+sample_sum
+print("Sample means")
+sample_means
+print("Sample z-scores")
+sample_zscore
