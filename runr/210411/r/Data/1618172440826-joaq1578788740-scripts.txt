@@ -1,0 +1,4 @@
+# Saved at 4/11/2021 16:20:40 pm<span title="4/11/2021 16:20:40 pm">script_001</span>
+# this id scrip_0
+getwd()
+search()
