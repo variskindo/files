@@ -1,0 +1,33 @@
+# Saved at 12/11/2020 7:44:36 am
+# Saved at 11/21/2020 4:40:49 am
+# Saved at 11/20/2020 0:55:24 am
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+T=T
+ctrl(num)
+lock%head
++please
+=call
+&deport
+
+# Saved at 12/8/2020 13:43:28 pm
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+(redeem) 
+frinx
+$d
+@t
+-xo
+[BASICS]
+&race
+&back
+-null
+-nick-neck-nack
+(sleep)
+
