@@ -1,0 +1,6 @@
+# Saved at 5/7/2021 12:16:24 pm<span title="5/7/2021 12:16:24 pm">Import</span>
+#(i) To import file grades.csv
+library(readr)
+library(tidyverse)
+grades1<- subset(grades, select = c(quiz1,gpa,final))
+head(grades1)
