@@ -1,0 +1,17 @@
+# Saved at 6/8/2021 17:29:21 pm<span title="6/8/2021 17:29:21 pm">Adp visualization</span>
+install.packages("ggplot2") #Install Packages from Repositories or Local Fi
+library(ggplot2)
+# data(diamonds)
+# w<-ggplot(diamonds,aes(clarity,fill=cut))
+# w+geom_bar(aes(desc=cut))
+# df<-data.frame(x=1:10, y=1:10)
+# f<-ggplot(df,aes(x=x,y=y))
+# f+geom_line(linetype="dotdash")
+
+# df=data.frame(x=rnorm(5000),y=rnorm(5000))
+# h=ggplot(df,aes(x,y))
+# h+geom_point(color="blue",alpha=0.1)
+
+data(mtcars)
+p<-ggplot(mtcars,aes(wt,mpg))
+p+geom_point(aes(shape=factor(cyl)),color="blue",size=4)
