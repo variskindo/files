@@ -1,0 +1,2 @@
+# Saved at 8/17/2021 20:36:11 pm<span title="8/17/2021 20:36:11 pm">FIRST</span>
+m <- glm(dm ~ 1, family=binomial (link=logit))summary(m)
