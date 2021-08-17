@@ -1,0 +1,266 @@
+[=Lang=]R Scripts, img/logo.png
+
+	[=Menu1=]Data Manipulation, Examples to manipulate data
+  
+		[=Menu2=]Read Data, Examples to read and show data summary
+[=Script=]
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+head(df, 5)
+names(df)
+summary(df)
+
+		[=Menu2=]Slicing Records, Examples to slice records
+[=Script=]
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+df[5, 3]
+df[5, ]
+df[, 3] # same as df[, 'PetalLength']
+df[5, 1:3] # same as df[5, c(1,2,3)]
+df[-(1:100), ] # exclude row 1 to row 100
+
+		[=Menu2=]Sorting Records, Examples to sort records
+[=Script=]
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+class(df[5, ])
+class(df[, 3])
+#selecting rows at random
+df[sample(1:20,8), ]
+#sorting records
+df[sort(df$SepalLength), ] #order to show the index
+
+		[=Menu2=]Filtering Data, Examples to filter data
+[=Script=]
+df<-read.table("iris.csv", sep=',', dec='.', header=T)
+df[df$SepalLength>median(df$SepalLength) & df$PetalLength>1.5, ]
+df[, sapply(df, is.factor)]
+#assignment
+df$SepalLength <- mean(df$PetalLength)
+df$SepalLength[df$SepalLength > 5] <- NA #replace to NA
+
+
+	[=Menu1=]Graph, Examples to show graphs
+
+		[=Menu2=]Normal Distribution
+[=Script=]
+str(obs) # structure of our data
+x <- rnorm(1000)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click "Run Script" to execute this code
+
+		[=Menu2=]Box & Whisker Plot
+[=Script=]
+# load packages
+library("ggpubr")
+df = iris
+summary(df)
+mean(df$Sepal.Length)
+median(df$Sepal.Length)
+range(df$Sepal.Length)
+quantile(df$Sepal.Length)
+sd(df$Sepal.Length)
+require(gridExtra) # par(mfrow=c(2,2)) not working with ggplot
+plot1 <- gghistogram(df, x = "Sepal.Length", bins = 9, add = "mean")
+plot2 <- ggboxplot(df, y = "Sepal.Length", width = 0.5)
+plot3 <- ggqqplot(df, x = "Sepal.Length")
+# Box plot colored by groups: Species
+plot4 <- ggboxplot(df, x = "Species", y = "Sepal.Length",
+   color = "Species", palette = c("#00AFBB", "#E7B800", "#FC4E07"))
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
+
+
+	[=Menu1=]Machine Learning, A gentle introduction
+  
+		[=Menu2=]Create Validation Dataset
+[=Script=]
+library(caret)
+df <- read.table("sample-ml.csv", sep=',', dec='.', header=T)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# dimensions of dataset
+dim(training)
+# list the levels for the class
+levels(training$Class)
+# summarize the class distribution
+percentage <- prop.table(table(training$Class)) * 100
+cbind(freq=table(training$Class), percentage=percentage)
+
+		[=Menu2=]Statistical Summary
+[=Script=]
+library(caret)
+df <- read.table("sample-ml.csv", sep=',', dec='.', header=T)
+# create a list of 80% of the rows in the original dataset we can use for training
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE) # select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+training <- df[validationIndex,]
+# summarize attribute distributions
+summary(training)
+
+		[=Menu2=]Build Models
+[=Script=]
+library(caret)
+df <- read.table("sample-ml.csv", sep=',', dec='.', header=T)
+df <- df[sample(1:500, 250), ] # select 250 cases only
+df$Class = as.factor(df$Class)
+# Split out validation dataset
+# create a list of 80% of the rows in the original dataset we can use for training set.seed(7)
+validationIndex <- createDataPartition(df$Class, p=0.80, list=FALSE)
+# select 20% of the data for validation
+validation <- df[-validationIndex,]
+# use the remaining 80% of data to training and testing the models
+dataset <- df[validationIndex,]
+# Run algorithms using 10-fold cross-validation
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Acuracy"
+# LDA
+set.seed(888)
+fit.lda <- train(Class~., data=dataset, method="lda", metric=metric, trControl=trainControl)
+# GLM
+set.seed(888)
+fit.glm <- train(Class~., data=dataset, method="glm", metric=metric, trControl=trainControl)
+# SVM
+set.seed(888)
+fit.svm <- train(Class~., data=dataset, method="svmRadial", metric=metric, trControl=trainControl)
+# CART
+set.seed(888)
+fit.cart <- train(Class~., data=dataset, method="rpart", metric=metric, trControl=trainControl)
+# KNN
+set.seed(888)
+fit.knn <- train(Class~., data=dataset, method="knn", metric=metric, trControl=trainControl)
+# RF
+set.seed(888)
+fit.rf <- train(Class~., data=dataset, method="rf", metric=metric, trControl=trainControl)
+# Compare algorithms
+results <- resamples(list(LM=fit.lda, GLM=fit.glm, SVM=fit.svm, CART=fit.cart, 
+   KNN=fit.knn, RF=fit.rf))
+summary(results)
+dotplot(results)
+# summarize Best Model
+print(fit.rf)
+
+[=Lang=]Python Scripts, https://rcommand.com/img/python-64.png
+
+	[=Menu1=]Data Manipulation, Examples to manipulate data
+  
+		[=Menu2=]Read Data, Examples to read and show data summary
+[=Script=]
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+#read data
+df = pandas.read_csv("iris.csv", header=0)
+#get data types, index, columns & values
+print(df.dtypes)
+print(df.index)
+print(df.columns)
+#print(df.values)
+#get first data, last data
+print(df.head())
+print(df.tail(3))
+#get summary
+print(df.describe())
+
+		[=Menu2=]Sorting Records, Examples to sort records
+[=Script=]
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+#read data
+df = pandas.read_csv("iris.csv", header=0)
+print(df.sort_values('SepalLength', ascending=False))
+#slicing records
+print(df.SepalLength)
+print(df['SepalLength'])
+print(df[2:4])
+print(df[['SepalLength', 'Species']])
+print(df.loc[:,['SepalLength', 'Species']])
+print(df.iloc[3:5, :2])
+print(df.iloc[:, 0:5])
+
+		[=Menu2=]Filtering Data, Examples to filter data
+[=Script=]
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+#read data
+df = pandas.read_csv("iris.csv", header=0)
+print(df[df.SepalLength > 0.5])
+print(df[df['Species'].isin(['Iris-setosa', 'Iris-virginica'])])
+
+	[=Menu1=]Machine Learning, A gentle introduction
+  
+		[=Menu2=]Create Validation Dataset
+[=Script=]
+from pandas import read_csv
+from sklearn.model_selection import train_test_split
+filename = 'sample-ml.csv'
+df = read_csv(filename)
+# Split-out validation dataset
+array = df.values
+X = array[:,0:len(df.columns)-1]
+Y = array[:,len(df.columns)-1]
+validation_size = 0.20
+seed = 888
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y,
+    test_size=validation_size, random_state=seed)
+print(X_train)
+print(Y_train)
+
+		[=Menu2=]Visualize Dataset - Multivariate Plots
+[=Script=]
+from pandas import read_csv
+from pandas.plotting import scatter_matrix
+filename = 'sample-ml.csv'
+df = read_csv(filename)
+# scatter plot matrix
+X = df.iloc[:, 0:round(len(df.columns)/3)]
+scatter_matrix(X)
+plt.show()
+
+		[=Menu2=]Build Models
+[=Script=]
+from pandas import read_csv
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+filename = 'sample-ml.csv'
+df = read_csv(filename)
+# Split-out validation dataset
+array = df.values
+X = array[:,0:len(df.columns)-1]
+Y = array[:,len(df.columns)-1]
+validation_size = 0.80
+seed = 888
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y,
+    test_size=validation_size, random_state=seed)
+# Spot-Check Algorithms
+models = []
+models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC(gamma='auto')))
+# evaluate each model in turn
+results = []
+names = []
+for name, model in models:
+	kfold = KFold(n_splits=10, random_state=888)
+	cv_results = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
+	results.append(cv_results)
+	names.append(name)
+	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+	print(msg)
+# Compare Algorithms
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(results)
+ax.set_xticklabels(names)
