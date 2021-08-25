@@ -1,0 +1,17 @@
+# Saved at 8/10/2021 17:56:12 pm<span title="8/10/2021 17:56:12 pm">P-Q1  questions 2-4</span>
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages)
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100))
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100), col="darkmagenta", main="Ages",xlab="nonuniform bin sizes",
+ylab="Density Histogram")
+# Saved at 8/23/2021 22:24:44 pm<span title="8/23/2021 22:24:44 pm">Module 2 PQ-2 #1 & #4</span>
+Weights<-c(110,115,115, 122,128,130,137,145,150,155, 170,187,192,198,205,210,210,215, 222,228,236,239)
+hist(Weights, breaks=c(100,110,130,145,170,200,240), col="blue",main="Weights", xlab="different bin sizes", ylab="Density of weights")
+
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit, main="Favorite fruit", horiz=TRUE, ylab="Type of Fruit", xlab="Number of People",names.arg=c("Apple","Orange", "Banna", "Kiwi","Blueberry", "Grape"), col=c("green","orange","yellow", "brown","blue", "red"))
+# Saved at 8/25/2021 13:36:04 pm<span title="8/25/2021 13:36:04 pm">Module 2 Lecture 3 Q4</span>
+leastfavoriteday<-c(50,5,25,7,1,2,10)
+barplot(leastfavoriteday, main="least favorite day of the week", horiz=TRUE, ylab="Days", xlab="Number of People",names.arg=c("monday","tuesday","wednesday","thursday","friday","saturday","sunday"), col=c("black","yellow","gray","pink","lightblue","green","white"))
