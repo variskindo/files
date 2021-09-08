@@ -1,0 +1,7 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 9/7/2021 17:12:12 pm<span title="9/7/2021 17:12:12 pm">"A-1 Histogram_Example"</span>
+Ages<-c(22,25,36,36,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91).
+Hist Ages breaks= c(20,25,35,50,60,65,70,85,90,100), col= "dark magenta", main "Ages_Jennie_ Baca_Kalaher", x-lab= as "nonuniform bin sizes",y- lab= "Density of histogram")
+
+ 
