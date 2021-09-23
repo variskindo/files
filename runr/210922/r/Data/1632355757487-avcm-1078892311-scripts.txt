@@ -1,0 +1,27 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 9/22/2021 17:09:17 pm<span title="9/22/2021 17:09:17 pm">A5_Template_Model_1</span>
+
+#Lets get R to read the women's dataset from P-Q4. 
+#Below you will see how we must enter our data so R can read it.
+women<- data.frame("VisitsPerWeek"=c(45,40,40,80,90),
+ "Age" = c(34,29,21,42,52), "Friends" = c(100,80,60,150,200)) 
+ 
+#str(women)   #This  gives a description of the dataset women
+Friends<-women$Friends 
+Age<-women$Age 
+#The women$Friends   tells R to look at "Friends" = c(100,80,60,150,200) in our women dataset. 
+#Friends[2] # This gives the second component of the Friends vector which is 80.
+#Age<women$Age
+VisitsPerWeek<-women$VisitsPerWeek
+
+# Model 1
+#We now create a linear model to see how well age predicts number of facebook friends.
+M1= lm(Friends~Age,data=women) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(Age,Friends, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted number of facebook friends for a 37- year-old women.")  
+predict(M1,data.frame(Age=37))
