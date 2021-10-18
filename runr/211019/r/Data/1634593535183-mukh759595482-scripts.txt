@@ -1,0 +1,5 @@
+# Saved at 10/18/2021 23:19:05 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="10/18/2021 23:19:05 pm">Hrs data</span>
+#Data=../r/211017/runr-mukh759595482-data.xlsx
+#Sheet=1
+asset = lntotass
+hist(asset)
