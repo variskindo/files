@@ -1,0 +1,13 @@
+# Saved at 10/23/2021 7:29:54 am<span title="10/23/2021 7:29:54 am">Indah Rachmawati_21413241043_B</span>
+#Data=../r/211022/runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2.0.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+mean(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+median(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+skew(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+sd(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
