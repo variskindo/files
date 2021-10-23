@@ -1,0 +1,102 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 10/23/2021 13:04:48 pm<span title="10/23/2021 13:04:48 pm">A9_CLT-Simulation_Jennie_Baca_Kalaher</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+#We create a population of voters of size n, where p% are in support and q=(1-p)% are against #some issue.  We want to take k samples of size s(surveys of size s) and then 
+#look at a frequency histograms of our sample means and a density(i.e. probability) histogram #for our sample z-scores. For each sample, the sample mean is taken as the proportion of #voters  that support the issue.
+ #In our population 1="Support" and 0="Against".
+p<-.6
+q<-.4
+n<-2500000
+k<-300
+s<-40
+sample_size<-s
+pop_size<-n
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+se<-sd(population)/(sqrt( sample_size))
+mean<-mean(population)
+#se
+print("mean")
+mean
+print("standard deviation")
+sqrt(p*q)
+# Take samples of size s without replacement.
+sample<-sample(population, sample_size)
+sample_mean<-sum(sample)/sample_size
+sample_zscore<-(sample_mean-mean)/(se)
+sample_sum<- sum(sample)
+
+
+sample_means <- rep(NA, k)
+
+for(i in 1:k){
+ sample<-sample(population, sample_size)
+   sample_means[i] <- sum(sample)/sample_size
+sample_zscore[i]<-((sum(sample)/sample_size)-mean)/(se)
+sample_sum[i] <- sum(sample)
+   }
+print("Sample sums")
+sample_sum
+print("Sample means")
+sample_means
+print("Sample z-scores")
+sample_zscore
+
+hist(sample_means)
+hist(sample_zscore, freq=FALSE)
+
+curve(dnorm(x, mean=0, sd=1), 
+      col="darkblue", add=TRUE)
+
+
+
+# Saved at 10/23/2021 13:55:02 pm<span title="10/23/2021 13:55:02 pm">**"A9_CLT_Simulation_Jennie_Baca_Kalaher</span>
+#We create a population of voters of size n, where p% are in support and q=(1-p)% are against #some issue.  We want to take k samples of size s(surveys of size s) and then 
+#look at a frequency histograms of our sample means and a density(i.e. probability) histogram #for our sample z-scores. For each sample, the sample mean is taken as the proportion of #voters  that support the issue.
+ #In our population 1="Support" and 0="Against".
+p=.35
+q=.65
+n=18000000
+k=1000
+s=40
+sample_size<-s
+pop_size<-n
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+se<-sd(population)/(sqrt( sample_size))
+mean<-mean(population)
+#se
+print("mean")
+mean
+print("standard deviation")
+sqrt(p*q)
+# Take samples of size s without replacement.
+sample<-sample(population, sample_size)
+sample_mean<-sum(sample)/sample_size
+sample_zscore<-(sample_mean-mean)/(se)
+sample_sum<- sum(sample)
+
+
+sample_means <- rep(NA, k)
+
+for(i in 1:k){
+ sample<-sample(population, sample_size)
+   sample_means[i] <- sum(sample)/sample_size
+sample_zscore[i]<-((sum(sample)/sample_size)-mean)/(se)
+sample_sum[i] <- sum(sample)
+   }
+print("Sample sums")
+sample_sum
+print("Sample means")
+sample_means
+print("Sample z-scores")
+sample_zscore
+
+hist(sample_means)
+hist(sample_zscore, freq=FALSE)
+
+curve(dnorm(x, mean=0, sd=1), 
+      col="darkblue", add=TRUE)
