@@ -1,0 +1,89 @@
+# Saved at 10/23/2021 7:29:54 am<span title="10/23/2021 7:29:54 am">Indah Rachmawati_21413241043_B</span>
+#Data=../r/211022/runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2.0.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+mean(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+median(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+skew(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+sd(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)# Saved at 10/23/2021 7:35:15 am<span title="10/23/2021 7:35:15 am">Indah Rachmawati_21413241043_B</span>
+#Data=../r/211022/runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2.0.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+mean(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+median(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+skew(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)
+sd(runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2)# Saved at 10/23/2021 8:10:36 am<span title="10/23/2021 8:10:36 am">Indah Rachmawati_21413241043_B</span>
+#Data=../r/211022/runr-inda962406478-F00010885-WVS_Wave_7_Indonesia_ExcelTxt_v2.0.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+setwd("C:/Users/asus/OneDrive/Documents/statistika")
+
+# import data 
+library(haven)
+WVS<-read_dta("WVS_7_IDN.dta")
+View(WVS)
+
+## inspeksi data
+dim(WVS)
+View(WVS)
+names(WVS)
+head(WVS,N=2)
+tail(WVS,N=3)
+str(WVS)
+
+#Membuat data frame 
+
+library(tidyverse)
+        
+WVS <- WVS%>%
+  select(G_TOWNSIZE, G_TOWNSIZE2, H_URBRURAL, Q46, Q47, Q48, Q49,
+         Q57, Q58, Q59, Q60, Q61, Q62, Q63, Q112, Q260, Q262, Q273) %>%
+  
+  rename("townsize"="G_TOWNSIZE",
+         "townsize2"="G_TOWNSIZE2",
+         "urbrural"="H_URBRURAL",
+         "happy"="Q46",
+         "health"="Q47",
+         "freedom"="Q48",
+         "lifesat"="Q49",
+         "trust"="Q57",
+         "trfam"="Q58",
+         "trng"="Q59",
+         "trknow"="Q60",
+         "trmeet"="Q61",
+         "trareg"="Q62",
+         "tranat"="Q63",
+         "corrupt"="Q112",
+         "gender"="Q260",
+         "age"="Q262",
+         "marital"="Q273")
+## inspeksi data (2)- setelah pemilihan variabel 
+
+dim(WVS)
+View(WVS)
+names(WVS)
+head(WVS)
+tail(WVS)
+str(WVS)
+
+
+## INSPEKSI DATA (3)- LEBIH DALAM MEMAHAMI VARIABEL
+
+install.packages("labelled")
+library(labelled)
+look_for()
