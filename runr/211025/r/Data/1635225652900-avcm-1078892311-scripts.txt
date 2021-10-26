@@ -1,0 +1,53 @@
+# Saved at 10/25/2021 22:20:52 pm<span title="10/25/2021 22:20:52 pm">Q9_Jennie_Baca_Kalaher</span>
+In our population of 25000000 people, Suppose.65% are in support and 34%are against some 
+
+issue.We will take 1=Support and 0=Against.Suppose that 100 people from our population 
+
+were surveyed and asked whether they supported the issue. Suppose further that 20 surveys of 
+
+100 people were conducted. The set below shows the results of each survey where each 
+
+number in the set represents the number of people in each survey who support the issue.
+
+data<-c(69,61,72,70,62,59,62,59,63,67.54,60,71,52,68,59,60,71,73,63)
+
+p<-35
+
+q<-100
+
+n<-100
+
+sd<-sqrt(p*q)
+
+se<-sd/sqrt(n)
+
+x1<-69/100; x2<-61/100; x3<-72/100; x4<-70/100; x5<-62/100; x6<-59/100; x7<-62/100;
+
+x8<-59/100; x10<-67/100; x11<-54/100; x12<-60/100; x13<-71/100; x14<-52/100; x15<-68/100;
+
+x16<-59/100; x17<-60/100; x18<-71/100; x19<-73/100; x20<-63/100.
+
+Sample____means <-c(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20.
+
+#Print<-("Sample___ Means")
+
+Sample____ Means
+
+z1<-(x1-p)/se; z2<-(x2-p)/se; z3<-(x3-p)/se; z4<-(x4-p)/se; z5<-(x5-p)/se; z6<-(x6-p)/se;
+
+z7<-(x7-p)/se; z8<-(x8-p)/se;  z9<-(x9-p)/se; z10<-(x10-p)/se; z11<-(x11-p)/se;
+
+z12<-(x12-p)/se; z13<-(x13-p)/se; z14<-(x14-p)/se; z15<-(x15-p)/se; z16<-(x16-p)/se;
+
+z17<-(x17-p)/se; z18<-(x18-p)/se; z19<-(x19-p)/se; z20<-(x20-p)/se.
+
+Sample z scores<-c(z1,z2,z3,z4,z5,z6,z7,z8,z9,z10,z11,z12,z13,z14,z15,z16,z17,z18,z19,z20)
+
+
+#Print<-("Sample___ z-Scores")
+
+Sample___ z-Scores
+
+Hist (Sample___means, breaks=c(.5, .55, .60, .65, .70, .75))
+
+Hist(Sample___z-Scores, freq=FALSE, breaks=c(-3, -2.5, -2.25, -2, -1, -5, 0, 5, 1, 2, 2, 5, 3))
