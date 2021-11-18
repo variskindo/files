@@ -1,0 +1,140 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 11/17/2021 16:11:32 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="11/17/2021 16:11:32 pm">A12</span>
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+boxplot(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+~Weights_Of_NFL_Players$Team,main="Weights by NFL team", xlab = "NFL teams", 
+
+ylab = "Weight",col = c("blue","red","green", "yellow", brown "))
+
+points(means, col="black", pch=18)
+
+aov_NFL_teams<- aov(Weights_Of_NFL_Players$Team<-read.csw(url(Myurl))
+
+Weights_Of_NFL_Players$Team
+
+summary(aov_NFL_teams) # here you see the results for our ANOVA test
+
+ 
+# Saved at 11/17/2021 16:23:09 pm<span title="11/17/2021 16:23:09 pm">A12</span>
+
+
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ug-4tWOLHnEuXSTGtY0d3pZY1HPT5C1MvPaTFbC0SLizRdc1PncD3v3Jx3v-41BJ_sdA9p2L7ZdB/pub?output=csv"
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+ 
+# Saved at 11/17/2021 16:39:03 pm<span title="11/17/2021 16:39:03 pm">A12</span>
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+boxplot(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+~Weights_Of_NFL_Players$Team,main="Weights by NFL team", xlab = "NFL teams", 
+
+ylab = "Weight",col = c("blue","red","green", "yellow", brown "))
+
+points(means, col="black", pch=18)
+
+aov_NFL_teams<- aov(Weights_Of_NFL_Players$Team<-read.csw(url(Myurl))
+
+Weights_Of_NFL_Players$Team
+
+summary(aov_NFL_teams) # here you see the results for our ANOVA test
+
+ 
+# Saved at 11/17/2021 16:48:05 pm<span title="11/17/2021 16:48:05 pm">A12</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ug-4tWOLHnEuXSTGtY0d3pZY1HPT5C1MvPaTFbC0SLizRdc1PncD3v3Jx3v-41BJ_sdA9p2L7ZdB/pub?output=csv"
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+boxplot(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+~Weights_Of_NFL_Players$Team,main="Weights by NFL team", xlab = "NFL teams", 
+
+ylab = "Weight",col = c("blue","red","green", "yellow", "brown "))
+
+points(means, col="black", pch=18)
+
+aov_NFL_teams<- aov(Weights_Of_NFL_Players$Team<-read.csw(url(Myurl))
+
+Weights_Of_NFL_Players$Team
+
+summary(aov_NFL_teams) # here you see the results for our ANOVA test
+
+ 
+
+
+# Saved at 11/17/2021 22:57:32 pm<span title="11/17/2021 22:57:32 pm">G12</span>
+
+G1_Placebo<-c(210,240,270,270,300,230,250,190,200,230)
+G2_50mg<-c(220,230,200,200,190,180,210,190,210,200)
+G3_100mg<-c(200,250,280,230,220,180,250,240,210,220)
+G1=G1_Placebo
+G2=G2_50mg 
+G3=G3_100mg
+my_data<- data.frame("Groups"=c
+("G1","G1","G1","G1","G1","G1","G1","G1","G1","G1",
+
+"G2","G2","G2","G2","G2","G2","G2","G2","G2","G2",
+
+"G3","G3","G3","G3","G3","G3","G3","G3","G3","G3"),
+
+ "Test_results" = c("G1_Placebo","G2_50mg","G3_100mg")) 
+
+
+res.aov<- aov(Test_results ~ Groups, data = my_data)
+
+# Summary of the analysis
+
+summary(res.aov)
+
+boxplot(my_data$Test_results-my_data$Groups,main= Cholesterol levels by group after 30 
+
+days of treatment , col=( G1 boxplot red ,  G2 boxplot blue , G3 boxplot yellow )
+
+means<tapply(my_data$Test_results,my_data$Groups,mean))
+
+points(means, col= black , pch=18)
+
+
+
+
+
+
+my_data
