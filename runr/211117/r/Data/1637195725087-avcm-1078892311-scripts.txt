@@ -1,0 +1,45 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 11/17/2021 16:11:32 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="11/17/2021 16:11:32 pm">A12</span>
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+boxplot(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+~Weights_Of_NFL_Players$Team,main="Weights by NFL team", xlab = "NFL teams", 
+
+ylab = "Weight",col = c("blue","red","green", "yellow", brown "))
+
+points(means, col="black", pch=18)
+
+aov_NFL_teams<- aov(Weights_Of_NFL_Players$Team<-read.csw(url(Myurl))
+
+Weights_Of_NFL_Players$Team
+
+summary(aov_NFL_teams) # here you see the results for our ANOVA test
+
+ 
+# Saved at 11/17/2021 16:23:09 pm<span title="11/17/2021 16:23:09 pm">A12</span>
+
+
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ug-4tWOLHnEuXSTGtY0d3pZY1HPT5C1MvPaTFbC0SLizRdc1PncD3v3Jx3v-41BJ_sdA9p2L7ZdB/pub?output=csv"
+
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players
+
+means<-tapply(Weights_Of_NFL_Players$<-read.csv(url(Myurl))
+
+Weights_Of_NFL_Players$Team,mean)
+
+ # This gives us the mean weight for each team sample
+
+ 
