@@ -1,0 +1,9 @@
+# Saved at 11/29/2021 21:11:47 pm<span title="11/29/2021 21:11:47 pm">Comparaison tests statistiques</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+require("tidyverse")
+require("ggpubr")
+require("rstatix")
