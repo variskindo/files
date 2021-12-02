@@ -1,0 +1,578 @@
+# Saved at 8/10/2021 17:56:12 pm<span title="8/10/2021 17:56:12 pm">P-Q1  questions 2-4</span>
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages)
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100))
+Ages<-c(22,25,36,36,38,38,45,46,46,48,52,55,55,55,58,61,67,68,72,91)
+hist(Ages, breaks=c(20,25,35,50,60,65,70,85,90,100), col="darkmagenta", main="Ages",xlab="nonuniform bin sizes",
+ylab="Density Histogram")# Saved at 8/23/2021 22:24:44 pm<span title="8/23/2021 22:24:44 pm">Module 2 PQ-2 #1 &amp; #4</span>
+Weights<-c(110,115,115, 122,128,130,137,145,150,155, 170,187,192,198,205,210,210,215, 222,228,236,239)
+hist(Weights, breaks=c(100,110,130,145,170,200,240), col="blue",main="Weights", xlab="different bin sizes", ylab="Density of weights")
+
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit, main="Favorite fruit", horiz=TRUE, ylab="Type of Fruit", xlab="Number of People",names.arg=c("Apple","Orange", "Banna", "Kiwi","Blueberry", "Grape"), col=c("green","orange","yellow", "brown","blue", "red"))# Saved at 8/25/2021 13:36:04 pm<span title="8/25/2021 13:36:04 pm">Module 2 Lecture 3 Q4</span>
+leastfavoriteday<-c(50,5,25,7,1,2,10)
+barplot(leastfavoriteday, main="least favorite day of the week", horiz=TRUE, ylab="Days", xlab="Number of People",names.arg=c("monday","tuesday","wednesday","thursday","friday","saturday","sunday"), col=c("black","yellow","gray","pink","lightblue","green","white"))# Saved at 8/25/2021 19:31:36 pm<span title="8/25/2021 19:31:36 pm">Module 3 notes (boxplot script example)</span>
+M<-c(6,1,3,4,7,8,3,5,6,8)
+D<-c(0,1,7,10,10,12,15,20,60)
+boxplot(D, M, main="boxplot example", xlab="change me x", ylab="change me y", names=c("Boxplot for D", "Boxplot for M"),
+col=c("blue","red"), border="brown", horizontal=TRUE)# Saved at 9/16/2021 19:17:55 pm<span title="9/16/2021 19:17:55 pm">M5 linear &amp; multi-linear regression model</span>
+men_data<-data.frame("VisitsPerWeek"=c(30,15,25),"Age" = c(18,22,46),"Friends" = c(25,40,60))
+str(men_data)#This  gives a description of our  dataset
+Friends<-men_data$Friends #The men_data$Friends  tells R to look at "Friends" = c(25,40,60) in our women dataset. 
+Friends[2] #This gives the second component of the Friends vector which is 40
+Age<-men_data$Age
+VisitsPerWeek<-men_data$VisitsPerWeek
+M1= lm(Friends~VisitsPerWeek, data=men_data)
+summary(M1) #Review the results of our linear regression model.
+plot(VisitsPerWeek ,Friends, pch = 16, col = "blue") #creates a scatter plot
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals) # plots the residuals
+print("Predicted number of facebook friends for a man who visits Facebook 40 times a week.")  
+predict(M1,data.frame(VisitsPerWeek=40))# Saved at 9/20/2021 14:04:06 pm<span title="9/20/2021 14:04:06 pm">M5 A5</span>
+Scores<- data.frame("T1"=c(78,67,92,85,69,56),
+ "T2" = c(86,65,89,85,75,62), "F" = c(82,72,90,82,72,60)) 
+ 
+#str(scores)   #This  gives a description of the dataset scores
+T1<-Scores$T1 
+T2<-Scores$T2 
+F<-Scores$F
+
+# Model 1
+#We now create a linear model to see how well T1 scores predict final exam scores.
+M1= lm(F~T1,data=Scores) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(T1,F, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predict the final exam score of a student who received a score of 74% on the first test.")  
+predict(M1,data.frame(T1=74))# Saved at 9/20/2021 22:19:45 pm<span title="9/20/2021 22:19:45 pm">M5Q1</span>
+volume<- data.frame("girth_inches"=c(8.6,10.5,11.4,14,16.3),
+ "height_inches" = c(65,72,76,78,77), "volume_ft3" = c(10.3,16.4,21.4,35.5,42.6)) 
+ 
+#str(volume)   #This gives a description of the dataset volume
+girth_inches<-volume$girth_inches 
+height_inches<-volume$height_inches 
+volume_ft3<-volume$volume_ft3
+
+# Model 1
+#We now create a linear model to see how well volume data predicts the volume of a black cherry tree based on its girth
+M1= lm(volume_ft3~girth_inches,data=volume) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(girth_inches, volume_ft3, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predict the volume of a black cherry tree that has a girth of 18.2 inches")  
+predict(M1,data.frame(girth_inches=18.2))# Saved at 9/20/2021 22:20:27 pm<span title="9/20/2021 22:20:27 pm">M5 Q2 (rcode for predicting an F=a*A_value+b*B_value+c)</span>
+volume<- data.frame("girth_inches"=c(8.6,10.5,11.4,14,16.3),
+ "height_inches" = c(65,72,76,78,77), "volume_ft3" = c(10.3,16.4,21.4,35.5,42.6)) 
+ 
+#str(volume)   #This gives a description of the dataset volume
+girth_inches<-volume$girth_inches 
+height_inches<-volume$height_inches 
+volume_ft3<-volume$volume_ft3
+
+# Model 1
+#We now create a linear model to see how well volume data predicts the volume of a black cherry tree based on its girth
+M1= lm(volume_ft3~girth_inches+height_inches,data=volume) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M1$residuals) #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predict the volume of a black cherry tree that has a girth of 18.2 inches and a height of 72 inches")  
+predict(M1,data.frame(girth_inches=18.2,height_inches=72))# Saved at 9/23/2021 8:59:48 am<span title="9/23/2021 8:59:48 am">M5 QUIZ 5 code</span>
+male_baby<- data.frame("age_months"=c(0,3,9,12,18,24,30,36),
+ "weight_pounds" = c(7.3,14.1,19.6,21,24.4,28,30,32), "height_inches" = c(19.75,24,28.25,30,32.5,35,36,38)) 
+ 
+#str(male_baby)   #This gives a description of the dataset mb
+age_months<-male_baby$age_months 
+weight_pounds<-male_baby$weight_pounds 
+height_inches<-male_baby$height_inches
+
+# Model 1
+#We now create a linear model to see how well male baby data predicts the age of a male baby based on height and weight
+M1= lm(age_months~height_inches+weight_pounds,data=male_baby) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M1$residuals)# plots the residuals
+abline(M1) #Adds the regression line to our scatter plot
+print("Predict a male baby's age who weighs 26 pounds and is 34 inches tall.")  
+predict(M1,data.frame(weight_pounds=26,height_inches=34))# Saved at 9/26/2021 18:54:16 pm<span title="9/26/2021 18:54:16 pm">Module 6 A6</span>
+female_baby<- data.frame("age_months"=c(0,3,9,15,20,36),
+ "weight_pounds" = c(7.3,13.3,18.8,22,24.4,31.5), "length_inches" = c(19.4,23.6,27.6,30.6,32.6,37)) 
+ 
+#str(female_baby)   #This gives a description of the dataset female_baby
+age_months<-female_baby$age_months 
+weight_pounds<-female_baby$weight_pounds 
+length_inches<-female_baby$length_inches
+
+# Model 1
+#We now create a linear model to see how well female baby data predicts the age of a female baby based on their weight
+M1= lm(age_months~weight_pounds,data=female_baby) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M1$residuals)# plots the residuals
+print("predict a female baby's age based on their weight.")  
+predict(M1,data.frame(weight_pounds=20))
+
+# Model 2
+#We now create a linear model to see how well female baby data predicts the age of a female baby based on their length
+M2= lm(age_months~length_inches,data=female_baby) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 2")  
+summary(M2) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M2$residuals)# plots the residuals
+print("predicts a female baby's age based on length.")  
+predict(M2,data.frame(length_inches=28))
+
+# Model 3
+#We now create a linear model to see how well female baby data predicts the age of a female baby based on both their weight and length.
+M3= lm(age_months~weight_pounds+length_inches,data=female_baby) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 3")  
+summary(M3) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M3$residuals)# plots the residuals
+print("predict a female baby's age based on both their weight and length.")  
+predict(M3,data.frame(weight_pounds=20, length_inches=28))# Saved at 10/10/2021 15:02:54 pm<span title="10/10/2021 15:02:54 pm">M8 A8 analysis of FB survey</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS2u7GCB_E8wljlDDEqMdT9lgayNSnXuVXusPZU1XY1PGlZ2OEbAmUwKPJ1lytvswFfngt4oiY-lkK0/pub?output=csv"
+Facebook_Survey<-read.csv(url(Myurl))
+head(Facebook_Survey)
+age<-Facebook_Survey$Age
+gender<-Facebook_Survey$Gender
+visits<-Facebook_Survey$VisitsPerWeek
+friends<-Facebook_Survey$Friends
+facebook<-Facebook_Survey$Facebook
+average_user_visits=sum(visits)/sum(facebook)
+average_user_age=sum(age)/sum(facebook)
+average_users=mean(facebook)
+average_user_friends=sum(friends)/sum(facebook)
+men<-length(gender)-sum(gender)
+women<-sum(gender)
+
+print("Number of people in survey")
+print(men+women)
+print("Number of men in survey")
+print(men)
+print("Number of women in survey")
+print(women)
+print(" Average number of visits per week")
+print(average_user_visits)
+print(" Average age of people in survey")
+print(average_user_age)
+print(" Percent of people in survey who use Facebook")
+print(average_users*100)
+print(" Average number of Facebook friends of Facebook users in survey")
+#average_user_friends
+print(average_user_friends)
+
+
+#Facebook users who are men
+
+# values to be removed
+x<-c(0)
+y<-c(1)
+
+# positions where facebook has zeros or gender is 1
+Positions= which(facebook %in% x | gender %in% y)
+men_user_visits<- visits[-Positions]
+#men_user_visits
+men_user_age<-age[-Positions]
+men_user_friends<-friends[-Positions]
+#men_user_friends
+print("Number of men in the survey who have a facebook account")
+men_facebook<-length(age[-Positions])
+men_facebook
+print("Number of men in the survey who do not have a facebook account")
+men_no_facebook<-men-men_facebook
+men_no_facebook
+
+#print(" Ages of men who have Facebook")
+#print(men_user_age)
+
+#Facebook users who are women
+
+# positions where Facebook has zeros or gender is 0
+Positions= which(facebook %in% x | gender %in% x)
+women_user_visits<- visits[-Positions]
+#women_user_visits
+women_user_age<-age[-Positions]
+women_user_friends<-friends[-Positions]
+print("Number of women in the survey who have a facebook account")
+women_facebook<-length(age[-Positions])
+women_facebook
+print("Number of women in the survey who do not have a facebook account")
+women_no_facebook<-women-women_facebook
+women_no_facebook
+#print(" Ages of women who have Facebook")
+#print(women_user_age)
+
+#Facebook Survey Age Histogram by sex
+
+# print the two histograms side-by-side
+par(mfrow=c(1,2))
+w<-hist(women_user_age, main="Women Facebook users by age",col="chocolate")
+
+
+#text(w$mids,w$counts,labels=w$counts, adj=c(0.5, -0.5))
+
+m<-hist(men_user_age, main="Men Facebook users by age",col="darkmagenta",cex.main=.9)
+
+text(m$mids,m$counts,labels=m$counts, adj=c(0.5, -0.5))
+
+#boxplots
+
+boxplot(men_user_age,women_user_age,main="Facebook users age by sex",
+names=c("Men's ages", "Women's ages"), col=c("orange","red"))
+
+boxplot(men_user_friends,women_user_friends,main="Number of Facebook friends by sex",
+names=c("Men friends", "Women friends"), col=c("orange","red"))
+
+boxplot(men_user_visits,women_user_visits,main="Facebook users visits per week by sex",
+names=c(" Men visits", "Women visits"), col=c("orange","red"))
+
+
+
+# Bar graph of facebook users by sex
+women_no_facebook<-women-women_facebook
+women_no_facebook
+women_data<-c(women_facebook, women_no_facebook)
+men_data<-c(men_facebook, men_no_facebook)
+
+par(mfrow=c(1,2))
+barplot(women_data, main="Women Facebook users vs nonusers",xlab="Green=Facebook and Red=No Facebook", ylab="Number of women",
+, col=c("green", "red"), names.arg=c("User", "Nonuser"))
+barplot(men_data, main="Men Facebook users vs nonusers",xlab="Green=Facebook and Red=No Facebook", ylab="Number of men",
+, col=c("green", "red"), names.arg=c("User", "Nonuser"))
+
+
+
+# Multilinear regression of women facebook users
+
+#Lets get R to read the women's user data. 
+women<- data.frame("VisitsPerWeek"=women_user_visits,
+ "Age" = women_user_age, "Friends" =women_user_friends) 
+ 
+str(women)   #This  gives a description of the dataset women
+
+Friends<-women$Friends  
+Age<-women$Age
+VisitsPerWeek<-women$VisitsPerWeek
+
+
+#Model 1
+#We will create a multilinear model to see how well age and VisitsPerWeek predicts number of  facebook friends.
+M1= lm(Friends~Age+VisitsPerWeek,data=women) #Creates the multilinear regression model
+
+print("Summary of Model 1")  
+summary(M1) #Reviews the results of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values..
+plot(M1$residuals)
+
+#We use the predict() function below to make predictions  
+print("Predicted number of facebook friends for a 37- year-old woman how visits facebook 80 times a week.")  
+predict(M1,data.frame(Age=37, VisitsPerWeek=80))
+ 
+
+# Multilinear regression of men facebook users
+
+#Lets get R to read the mens user data. 
+men<- data.frame("VisitsPerWeek"=men_user_visits,
+ "Age" = men_user_age, "Friends" =men_user_friends) 
+ 
+str(men)   #This  gives a description of the dataset men
+
+Friends<-men$Friends  
+Age<-men$Age
+VisitsPerWeek<-men$VisitsPerWeek
+
+
+#Model 2
+#We will create a multilinear model to see how well age and VisitsPerWeek predicts number of  facebook friends.
+M2= lm(Friends~Age+VisitsPerWeek,data=men) #Creates the multilinear regression model
+
+print("Summary of Model 2")  
+summary(M2) #Reviews the results of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values..
+plot(M2$residuals)
+
+#We use the predict() function below to make predictions  
+print("Predicted number of facebook friends for a 37- year-old man who visits facebook 80 times a week.")  
+predict(M2,data.frame(Age=37, VisitsPerWeek=80)) 
+# Saved at 10/15/2021 18:09:15 pm<span title="10/15/2021 18:09:15 pm">M9A9 code</span>
+#We create a population of voters of size n, where p% are in support and q=(1-p)% are against #some issue.  We want to take k samples of size s(surveys of size s) and then 
+#look at a frequency histograms of our sample means and a density(i.e. probability) histogram #for our sample z-scores. For each sample, the sample mean is taken as the proportion of #voters  that support the issue.
+ #In our population 1="Support" and 0="Against".
+p=.35
+q=.65
+n=18000000
+k=1000
+s=40
+sample_size<-s
+pop_size<-n
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+se<-sd(population)/(sqrt( sample_size))
+mean<-mean(population)
+#se
+print("mean")
+mean
+print("standard deviation")
+sqrt(p*q)
+# Take samples of size s without replacement.
+sample<-sample(population, sample_size)
+sample_mean<-sum(sample)/sample_size
+sample_zscore<-(sample_mean-mean)/(se)
+sample_sum<- sum(sample)
+
+
+sample_means <- rep(NA, k)
+
+for(i in 1:k){
+ sample<-sample(population, sample_size)
+   sample_means[i] <- sum(sample)/sample_size
+sample_zscore[i]<-((sum(sample)/sample_size)-mean)/(se)
+sample_sum[i] <- sum(sample)
+   }
+print("Sample sums")
+sample_sum
+print("Sample means")
+sample_means
+print("Sample z-scores")
+sample_zscore
+
+hist(sample_means)
+hist(sample_zscore, freq=FALSE)
+
+curve(dnorm(x, mean=0, sd=1), 
+      col="darkblue", add=TRUE)
+# Saved at 10/23/2021 14:32:16 pm<span title="10/23/2021 14:32:16 pm">M10 Corona Virus dataset</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQKj8RfB3BAmmArvIReZhhguysrR_UKYIIz5entqFijjhch_jqFWZtuC3J7VC5gbEkLzeTaSopwSdWM/pub?output=csv"
+
+Coronavirus_Data<-read.csv(url(Myurl))
+#Coronavirus_Data
+Total_Cases_by_Country<-Coronavirus_Data$Total.Cases
+Total_Deaths_by_Country<-Coronavirus_Data$Total.Deaths
+Countries_with_Coronavirus<-Coronavirus_Data$Country..Other
+#Coronavirus_Data
+Serious_Cases_by_Country<-Coronavirus_Data$Serious..Critical
+Daily_Deaths_by_Country<-Coronavirus_Data$New.Deaths
+head(Coronavirus_Data)
+
+#Remove commas from numbers
+Total_Cases_by_Country<-(as.numeric(gsub(",", "", Total_Cases_by_Country, fixed = TRUE)))
+Total_Deaths_by_Country<-(as.numeric(gsub(",", "", Total_Deaths_by_Country, fixed = TRUE)))
+Serious_Cases_by_Country<-(as.numeric(gsub(",", "",Serious_Cases_by_Country, fixed = TRUE)))
+Daily_Deaths_by_Country<-(as.numeric(gsub(",", "", Daily_Deaths_by_Country, fixed = TRUE)))
+
+
+
+#Replace NA with zeros
+ Total_Deaths_by_Country[is.na(Total_Deaths_by_Country)]<-0
+Serious_Cases_by_Country[is.na(Serious_Cases_by_Country)]<-0
+Daily_Deaths_by_Country[is.na(Daily_Deaths_by_Country)]<-0
+
+Daily_Deaths_by_Country
+
+# Regression model
+
+#Lets get R to read the cleaned Coronavirus data. 
+Cleaned_data<- data.frame("DD"=Daily_Deaths_by_Country,
+ "SC" =Serious_Cases_by_Country, "TD"=Total_Deaths_by_Country) 
+ 
+str(Cleaned_data)   #This  gives a description of the dataset Cleaned_data
+
+Daily_Deaths<-Cleaned_data$DD  
+Serious_Cases<-Cleaned_data$SC
+Total_Deaths<-Cleaned_data$TD
+
+#Model 1
+#We will create a linear model to see how well the number of people in critical condition from Coronavirus in a country predict the daily deaths in that country.
+
+M1= lm(Daily_Deaths ~Serious_Cases,data=Cleaned_data ) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(Serious_Cases,  Daily_Deaths, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted number of daily Coronavirus deaths for a country that currently has 3,500 people in critical condition.")  
+predict(M1,data.frame(Serious_Cases=3500))# Saved at 11/4/2021 13:51:16 pm<span title="11/4/2021 13:51:16 pm">M11Q1</span>
+Sample<-c(25000, 30000, 55000, 90000,120000,12000,9000,65000,46000,40000, 45000,50000,18000,24000,10000,35000,39000,50000,55000,100000,25000,50000,35000,60000,78000,60000,38000,20000,20000,43000) 
+boxplot(Sample,main="Salaries of 30 randomly chosen  people in Lancaster",col="blue")
+print("Number in our sample")
+length(Sample)
+print("Mean of our sample")
+mean(Sample)
+print("Standard deviation of our sample")
+sd(Sample)
+t.test( Sample, alternative = c("two.sided"), mu = 42000,,conf.level =.985)# Saved at 11/4/2021 14:57:01 pm<span title="11/4/2021 14:57:01 pm">M11Q2</span>
+preTreatGroup1 <- c(15,18,12,10,17,18,19, 20,12,16,15,18,20,14,14,16,19,13,12,11,12, 18,18,14,15,16,17,13,14,15)
+preTreatGroup2 <- c(15,18,12,10,17,18,19, 20,12,16,15,18,20,14,14,16,19,13,12,11,12, 18,18,14,15,16,17,13,14,15)
+postTreat_Group1_With_Placebo<- c(14,18,12,11,17,18,19, 20,12,16,15,18,20,14,14,16,19,13,10,15,12, 18,18,14,15,16,17,13,14,15)
+postTreat_Group2_With_Drug <- c(10,12,14,16,12,14,16,16,14,12,10,10,12,14,16,17,14,15,10,12,12,14,15,14,12, 15,18,16,19,13)
+boxplot(preTreatGroup1, preTreatGroup2, postTreat_Group1_With_Placebo, postTreat_Group2_With_Drug, main="Depression levels before and after one month of treatment", names=c("preTreatGroup1", "TreatGroup2", "Group1_With_Placebo", "Group2_With_Drug"), col=c("orange", "green", "yellow", "red"))
+print("Number in our preTreatGroup1")
+length(preTreatGroup1)
+print("Number in our preTreatGroup2")
+length(preTreatGroup2)
+print("Number in our postTreat_Group1_With_Placebo")
+length(postTreat_Group1_With_Placebo)
+print("Number in our postTreat_Group2_With_Drug ")
+length(postTreat_Group2_With_Drug )
+print("Mean of preTreatGroup1")
+mean(preTreatGroup1)
+print("Mean of preTreatGroup2")
+mean(preTreatGroup2)
+print("Mean of postTreat_Group1_With_Placebo")
+mean(postTreat_Group1_With_Placebo)
+print("Number in our postTreat_Group2_With_Drug")
+mean(postTreat_Group2_With_Drug)
+print("Standard Deviation of preTreatGroup1")
+sd(preTreatGroup1)
+print("Standard Deviation of preTreatGroup2")
+sd(preTreatGroup2)
+print("Standard Deviation of postTreat_Group1_With_Placebo")
+sd(postTreat_Group1_With_Placebo)
+print("Standard Deviation of postTreat_Group2_With_Drug")
+sd(postTreat_Group2_With_Drug)
+t.test(preTreatGroup1, postTreat_Group1_With_Placebo, alternative = c("two.sided"), paired = c(FALSE), var.equal = c(TRUE),conf.level =.95)
+t.test( preTreatGroup2,postTreat_Group2_With_Drug, alternative = c("two.sided"), paired = c(FALSE), var.equal = c(TRUE),conf.level =.95)
+# Saved at 11/4/2021 15:10:21 pm<span title="11/4/2021 15:10:21 pm">M11A11</span>
+preTreat <-c( 150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+
+postTreat <-c( 140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130, 135,140,140,145,145,145,150,140)
+boxplot(preTreat, postTreat,main="Blood pressure before and after treatment",
+names=c("preTreat", "postTreat"), col=c("orange","red"))
+print("Number in our sample")
+length(preTreat)
+print("Standard deviation of our before treatment group.")
+sd(preTreat)
+print("Standard deviation of our after treatment group")
+sd(postTreat)
+print("Mean of our before treatment group")
+mean(preTreat)
+print("Mean of our after treatment group")
+mean(postTreat)
+
+t.test(preTreat,postTreat,  alternative = "two.sided", paired = TRUE, conf.level =.99) 
+# Saved at 11/9/2021 12:35:54 pm<span title="11/9/2021 12:35:54 pm">M11Quiz</span>
+#R code:
+NE_heights<-c( 73.5, 68.5, 70, 63, 64, 65, 64, 70,  71, 61.25, 79, 73, 69, 66, 69.5, 68,
+ 74, 74, 72.5, 69, 67, 73, 66.5, 70.5, 64, 67, 71, 74, 72, 65)
+ CA_heights <- c( 72, 73.5, 74, 75, 66, 78, 70, 73, 74, 68, 71, 68, 67, 66, 73, 72, 82, 71, 64, 72, 65, 66, 69, 83, 67, 72, 71, 65, 74, 73)
+boxplot(NE_heights,CA_heights, main="Mens heights California vs Nebraska" , names=c("NE heights","CA heights"), col=c("red", "orange"))
+print("Number in our NE heights sample")
+length(NE_heights)
+print("Standard deviation and mean of NE heights")
+sd(NE_heights)
+mean(NE_heights)
+print("Number in our CA heights sample")
+length(CA_heights)
+print("Standard deviation and mean of CA heights")
+sd(CA_heights)
+mean(CA_heights)
+t.test(NE_heights, CA_heights,
+       alternative = "two.sided",
+        paired =  FALSE, var.equal =TRUE,conf.level =.95)
+# Saved at 11/15/2021 12:59:10 pm<span title="11/15/2021 12:59:10 pm">M12A12</span>
+Myurl<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQaOhHhcwDwJooxfee7iebO9yvGecKdH2g6HmH1D8-5JohLKs3USFQkGy7SVFfg81zppFqK1oMWPHec/pub?output=csv"
+Weights_Of_NFL_Players<-read.csv(url(Myurl))
+Weights_Of_NFL_Players
+means<- tapply(Weights_Of_NFL_Players$Weights, Weights_Of_NFL_Players$Team, mean)
+ # This gives us the mean weight for each team sample
+boxplot(Weights_Of_NFL_Players$Weights~Weights_Of_NFL_Players$Team,main="Weights by NFL team", xlab = "NFL teams", ylab = "Weight",col = c("blue", "red", "green","yellow","brown"))
+ points(means, col="black", pch=18)
+aov_NFL_teams<- aov(Weights_Of_NFL_Players$Weights~Weights_Of_NFL_Players$Team)
+ summary(aov_NFL_teams) # here you see the results for our ANOVA test
+# Saved at 11/21/2021 20:56:17 pm<span title="11/21/2021 20:56:17 pm">M13A13 Chi squared test sim</span>
+p<-.5647
+q<-.4353
+s1<-1246
+s2<-566
+s3<-945
+n<-5000000
+k<-1000
+p1<-s1/(s1+s2+s3)
+p2<-s2/(s1+s2+s3)
+p3<-s3/(s1+s2+s3)
+sample_size_1<-s1
+sample_size_2<-s2
+sample_size_3<-s3
+pop_size<-n
+
+#Definitions
+#p1=portion of group s1 in total sample
+#p2=portion of group s2 in total sample
+#p3=portion of group s3 in total sample
+
+#c11=actual number of  group s1 members that are of type 1
+#c12=actual number of  group s2 members that are of type 1
+#c13=actual number of  group s3 members that are of type 1
+#c21=actual number of  group s1 members that are of type 2
+#c22=actual number of  group s2 members that are of type 2
+#c23=actual number of  group s3 members that are of type 2
+
+
+#e11=expected number of  s1 members of type 1
+#e12=expected number of s2 members of type 1
+#e13=expected number of  s3 members of type 1
+#e21=expected number of  s1 members of type 2
+#e22=expected number of  s2 members of type 2
+#e23=expected number of  s3 members of type 1
+
+#The R code below creates a population of size n where p% of the people are assigned a "1" 
+#and q=(1-p)% are assigned a "0". 
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+sample_means <- rep(NA, k)
+
+sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+c11<-sum(sample_1)
+c12<-sum(sample_2)
+c13<-sum(sample_3)
+c21<-(sample_size_1-sum(sample_1))
+c22<-(sample_size_2-sum(sample_2))
+c23<-(sample_size_3-sum(sample_3))
+e11<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square<-((e11-c11)^2)/e11+((e21-c21)^2)/e21+((e12-c12)^2)/e12+((e22-c22)^2)/e22+((e13-c13)^2)/e13+((e23-c23)^2)/e23
+
+
+# Take k samples of size s1, s2 and s3 without replacement from our population.
+for(i in 1:k){
+ sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+
+c11[i]<-sum(sample_1)
+c12[i]<-sum(sample_2)
+c13[i]<-sum(sample_3)
+
+c21[i]<-(sample_size_1-sum(sample_1))
+c22[i]<-(sample_size_2-sum(sample_2))
+c23[i]<-(sample_size_3-sum(sample_3))
+e11[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square[i]<-((e11[i]-c11[i])^2)/e11[i]+((e21[i]-c21[i])^2)/e21[i]+((e12[i]-c12[i])^2)/e12[i]+((e22[i]-c22[i])^2)/e22[i]+((e13[i]-c13[i])^2)/e13[i]+((e23[i]-c23[i])^2)/e23[i]
+   }
+print("Sample chi square values")
+chi_square
+hist(chi_square, freq=FALSE,breaks=c(0,1,2,4,5,10,20,30,40), main="Density_hist_of_Chi-squared_values")
+#curve(dchisq(x, df = 2), col="green" , from = 0, to = 40, add=TRUE)
+# Saved at 12/2/2021 13:34:28 pm<span title="12/2/2021 13:34:28 pm">M13Quiz</span>
+#Here is the R code template for running a Chi-squared test:
+
+M <- as.table(rbind(c(207,282,300), c(150,250,350)))
+dimnames(M) <- list(Mothers = c("CA_Mothers","KS_Mothers"),
+                    Breast_fed_level = c("none","3 months or less","more than 3 months"))
+chisq.test(M)  # Prints test summary
+chisq.test(M)$observed   # observed counts (same as M)
+chisq.test(M)$expected   # expected counts assuming null is true.
