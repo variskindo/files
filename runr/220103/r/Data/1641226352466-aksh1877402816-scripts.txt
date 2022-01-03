@@ -1,0 +1,62 @@
+# Saved at 11/19/2020 7:03:17 am<span title="11/19/2020 7:03:17 am">Birds</span>
+#Data=../r/201111/runr-aksh1877402816-birdextinct.csv.xlsx
+#Sheet=1
+print(obs) #display the data
+bird=obs
+print(bird$area.km.sq)
+library(MASS)
+y=bird$area.km.sq..
+x1=bird$species.at.risk
+x2=bird$X..Species.extinct
+
+# Calculating proportion that went extinct
+x=x2/x1
+model=lm(y~x)
+
+#Obtain the estimates of parameter and checking of significance of individual regression coefficients and checking of overall significance of the model
+summary(model)
+
+# Residual analysis of the model
+# 1.Outlier detection using Residual v/s Leverage Plot
+# 2.Detection of heteroscedasticity using Restricted v/s Leverage Plot
+# 3.Checking of normality assumption using Q-Q plot 
+plot(model)
+
+#Check for heteroscedasticity using Breusch Pagan Test
+library(lmtest)
+bptest(model)
+
+#Check for normality using Shapiro-Wilk test
+shapiro.test(y)
+
+# The assumption of normality is not satisfied. Thus, we will use log transformation.
+ynew=log(y)
+
+# Fitting of new model
+model.1=lm(ynew~x)
+
+#Obtain the estimates of parameter and checking of significance of individual regression coefficients and checking of overall significance of the new model
+summary(model.1)
+
+# Residual analysis of the model
+# 1.Outlier detection using Residual v/s Leverage Plot
+# 2.Detection of heteroscedasticity using Residual v/s Leverage Plot
+# 3.Checking of normality assumption using Q-Q plot 
+plot(model.1)
+#Check for heteroscedasticity using Breusch Pagan Test
+library(lmtest)
+bptest(model.1)
+
+#Check for normality using Shapiro-Wilk test
+shapiro.test(ynew)# Saved at 1/3/2022 21:42:32 pm<span title="1/3/2022 21:42:32 pm">Practical</span>
+#Data=../r/220103/runr-aksh1877402816-Datasetfordataviz.xlsx
+#Sheet=1
+print(obs) #display the data
+
+data = obs
+data$Gender
+mp = barplot(Edata$export,names.arg = Edata$year,col = 4,xlab = "Year",ylab = "Export",ylim = c(0,60000))
+text(mp,Edata$export,labels = Edata$export,adj = c(0.5,-0.5),cex = 0.5)
+
+plot(Edata$year,Edata$export,type="o",main="year wise exports in india",xlab="year",ylab="values of exports",col=c('red'),col.main=c('purple'))
+text(year,Edata$export,labels = Edata$export,adj = c(-0.5,-0.5),cex = 0.5)
