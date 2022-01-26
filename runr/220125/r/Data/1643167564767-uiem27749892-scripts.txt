@@ -1,0 +1,19 @@
+# Saved at 1/25/2022 21:26:04 pm<span title="1/25/2022 21:26:04 pm">Tarea2</span>
+getwd()
+
+
+setwd("/storage/emulated/0/Download")
+
+#################################################################
+
+### 1. LECTURA DE DATOS
+
+## 1.1 Edad a la que murieron los reyes de Inglaterra
+# scan: sirve para leer datos que son una sola columna
+# Usar ts: para guardar los datos como un objeto de series de tiempo
+
+#kings <- scan("https://robjhyndman.com/tsdldata/misc/kings.dat",skip=3)
+kings<-read.table("kings.dat",skip=3 )
+#kings
+#kingstimeseries <- ts(kings)
+#kingstimeseries
