@@ -1,0 +1,267 @@
+# Saved at 1/25/2022 21:26:04 pm<span title="1/25/2022 21:26:04 pm">Tarea2</span>
+getwd()
+
+
+setwd("/storage/emulated/0/Download")
+
+#################################################################
+
+### 1. LECTURA DE DATOS
+
+## 1.1 Edad a la que murieron los reyes de Inglaterra
+# scan: sirve para leer datos que son una sola columna
+# Usar ts: para guardar los datos como un objeto de series de tiempo
+
+#kings <- scan("https://robjhyndman.com/tsdldata/misc/kings.dat",skip=3)
+kings<-read.table("kings.dat",skip=3 )
+#kings
+#kingstimeseries <- ts(kings)
+#kingstimeseries# Saved at 1/25/2022 21:58:42 pm<span title="1/25/2022 21:58:42 pm">Tarea1</span>
+#setwd(":/storage/emulated/0/Download")
+#####################################################
+
+### 1. LECTURA DE DATOS
+
+## 1.1 Edad a la que murieron los reyes de Inglaterra
+# scan: sirve para leer datos que son una sola columna
+# Usar ts: para guardar los datos como un objeto de series de tiempo
+
+kings <- scan("https://robjhyndman.com/tsdldata/misc/kings.dat",skip=3)
+#kings<-read.table("kings.txt",skip=3)
+#kings
+#kingstimeseries <- ts(kings)
+#kingstimeseries# Saved at 1/25/2022 22:14:03 pm<span title="1/25/2022 22:14:03 pm">TareaEjemplo</span>
+#################################################################
+# https://rstudio-pubs-static.s3.amazonaws.com/84226_ad792383c050483bbae4676bc76a4038.html
+# En esta sesion vamos a aprender:
+# 1. LECTURA DE DATOS: kings, births y souvenir
+# 2. GRAFICA DE DATOS
+# 3. SUAVIZAMINETO DE LA SERIE PARA REDUCIR RUIDO
+# 4. DESCOMPOSICION ADITIVA DE UNA SERIE SI TIENE: tendencia, estacionalidad y aleatoriedad
+# 5. RECONSTRUCCION DE UNA SERIE EN FUNCION DE SUS COMPONENTES
+# 6. GRAFICA DE SERIE ORIGINAL Y RECONSTRUIDA
+# 7. DESASTOCIONALIZAR LA SERIE
+# 8. REMOCION DE TENDENCIA
+# 9. REMOCION DE TENDENCIA Y ALEATORIEDAD
+# 10. DESCOMPOSICION CON MODELO MULTIPLICATIVO
+# 11. Graficas novedosas
+#################################################################
+
+### 1. LECTURA DE DATOS
+
+## 1.1 Edad a la que murieron los reyes de Inglaterra
+# scan: sirve para leer datos que son una sola columna
+# Usar ts: para guardar los datos como un objeto de series de tiempo
+
+kings <- scan("https://robjhyndman.com/tsdldata/misc/kings.dat",skip=3)
+#kings<-read.table("kings.txt",skip=3 )
+kings
+kingstimeseries <- ts(kings)
+kingstimeseries
+
+## 1.2 Nacimiento en Nueva York a partir de ENERO DE 1946
+# frequency: se refiere al numero de datos por ao
+# frecuency=12 datos mensuales, frequency:4 para cuatrimestres
+# frequency=12, start=c(1946,1)  
+# Se refiere a datos mensuales que inicia en ENERO DE 1946
+# Si fueran datos mensuales de marzo de 1946: start=c(1946,2) 
+births <- scan("https://robjhyndman.com/tsdldata/data/nybirths.dat")
+#births<-read.table("nbirths.txt")
+birthstimeseries <- ts(births, frequency=12, start=c(1946,1))
+birthstimeseries
+
+## 1.3 Ventas de una tienda de souvernir en Australia de enero de 1987
+# souvenir <- scan("https://robjhyndman.com/tsdldata/data/fancy.dat")
+souvenir<-read.table("fancy.txt")
+souvenirtimeseries <- ts(souvenir, frequency=12, start=c(1987,1))
+souvenirtimeseries
+
+### 2. GRAFICA DE SERIES
+
+plot.ts(kingstimeseries)
+
+
+## A continuacion la instruccion de grafica
+plot.ts(kingstimeseries)    # Un modelo aditivo se podra ajustar debido a que la varianza es aprox constante 
+plot.ts(birthstimeseries)   # Presenta tendencia y estacionalidad constante: modelo aditivo 
+plot.ts(souvenirtimeseries) # Presenta tendencia y estacionalidad creciente: modelo multiplicativo
+
+logsouvenirtimeseries <- log(souvenirtimeseries) # La estacionalidad se ha estabilizado: modelo aditivo
+windows()
+plot.ts(logsouvenirtimeseries)
+
+### 3. SUAVIZAMINETO DE LA SERIE PARA REDUCIR RUIDO 
+# Aqui la serie no presenta estacionalidad, unicamente tendencia y ruido
+
+
+# Instalar y cargar: TTR
+# SMA(r) es un metodo de suavizamiento de promedios moviles
+# de oreden r
+library("TTR")
+ 
+# Vamos a aplicar un suavizamiento de promedios moviles
+# de orden 3 a los datos de las edades de los reyes
+# ya que no se observa estacionalidad
+
+kingstimeseriesSMA3 <- SMA(kingstimeseries,n=3)
+windows()
+plot.ts(kingstimeseriesSMA3)
+
+# Como se puede apreciar aun existe una buena cantidad de
+# fluctuacion aleatoria y por lo tanto, aun no se 
+# alcanza a apreciar a la tendencia.
+# Por lo tanto se aplicar? un suavizamiento de 8 terminos
+
+kingstimeseriesSMA8 <- SMA(kingstimeseries,n=8)
+windows()
+plot.ts(kingstimeseriesSMA8)
+
+# Ahora si se puede ver mas claramente el componente de tendencia 
+# Se observa que la edad de fallecimiento dimminuye de los 55
+# a los 38 aos durante el reinado de los primeros 20 reyes.
+# Posteriormente se incrementa hasta a los 73 aos para los
+# ultimos 40 reyes.
+
+### 4. DESCOMPOSICION ADITIVA DE UNA SERIE SI TIENE: tendencia, estacionalidad y aleatoriedad
+
+# Aqui la serie presenta estacionalidad, tendencia y ruido
+# El proposito es estimar los tres componentes
+# Para esto vamos a usar la funcion: decompose()
+# Y el modelo aditivo
+
+# Vamos a ilustrar esto con la serie de naciomientos de NY,
+# ya que presenta tendencia, estacionalidad y fluctuaci?n aleatoria.
+# La estacionalidad luce "constante", esto implica un modelo aditivo
+
+windows()
+plot.ts(birthstimeseries)
+
+# Descomposicion de una serie con METODO ADITIVO
+# Y[t] = T[t] + S[t] + e[t]
+
+birthstimeseriescomponents <- decompose(birthstimeseries)
+
+# Grafica de los componentes:
+windows()
+plot(birthstimeseriescomponents)
+# Observamos que el componente de tendencia presenta
+# un pequeo decrecimiento de aproximadamente de 24 nacimientos en promedio en 1947
+# para posteriormente experimentar un crecimiento de hasta poco mas de 27 en 1959
+
+
+### 5. RECONSTRUCCION DE UNA SERIE EN FUNCION DE SUS COMPONENTES
+
+# Componentes generados:
+birthstimeseriescomponents$x          # Datos originales
+birthstimeseriescomponents$seasonal   # valores estimados de estacionalidad
+birthstimeseriescomponents$trend      # valores estimados de tendencia
+birthstimeseriescomponents$random     # valores estimados de aleatoriedad
+
+# Ahora vamos a reconstruir la sere
+births_est<-birthstimeseriescomponents$seasonal+
+birthstimeseriescomponents$trend +
+birthstimeseriescomponents$random 
+b_est_ts<-ts(births_est, frequency=12, start=c(1946,1))
+
+windows()
+plot.ts(b_est_ts)
+
+# Grafica de x: serie original v.s. y: estimaci?nn con modelo aditivo
+windows()
+plot.ts(birthstimeseries,b_est_ts)
+
+?
+# Se juntan ambas series: original y estimacion
+xx<-cbind(birthstimeseries,births_est)
+xx
+
+### 6. GRAFICA DE SERIE ORIGINAL Y RECONSTRUIDA
+
+# Se grafican ambas series 
+#plot.ts(xx,plot.type = c("multiple", "single"), col="green")
+windows()
+plot.ts(xx)
+
+
+### 7. DESASTOCIONALIZAR LA SERIE
+
+### AJUSTE POR ESTACIONALIDAD
+# Ahora vamos a restar a la serie original el componente 
+# estacional para ver mejor el componente de tendencia:
+
+birthstimeseriesseasonallyadjusted <- birthstimeseries - birthstimeseriescomponents$seasonal
+windows()
+plot(birthstimeseriesseasonallyadjusted)
+# Observamos que se ha removido el componente estacional
+# S?lo ha quedado la tendencia y la aleatoriedad de la serie original
+
+
+### 8. REMOCION DE TENDENCIA
+
+# AJUSTE POR TENDENCIA
+# A la serie original le vamos a quitar la tendencia
+# para dejar el componente estacional y el aleatorio
+birth_trendadjusted <- birthstimeseries - birthstimeseriescomponents$trend
+windows()
+plot(birth_trendadjusted)
+
+
+
+### 9. REMOCION DE TENDENCIA Y ALEATORIEDAD
+
+# AJUSTE POR TENDENCIA Y FACTOR ALEATORIO
+birth_trend_random_adjusted <- birthstimeseries - 
+(birthstimeseriescomponents$trend + birthstimeseriescomponents$random)
+windows()
+plot(birth_trend_random_adjusted )
+
+# 10. DESCOMPOSICION CON MODELO MULTIPLICATIVO
+# Y[t] = T[t] * S[t] * e[t]
+
+births_mult_components <- decompose(birthstimeseries, 
+type = c("multiplicative"))
+
+births_mult_components$x
+births_mult_components$seasonal
+births_mult_components$trend
+births_mult_components$random
+births_mult_components$figure
+births_mult_components$type
+
+birthsseasonal<-births_mult_components$x/births_mult_components$seasonal
+windows()
+plot(birthsseasonal)
+
+birthtrend<-births_mult_components$x/births_mult_components$trend
+windows()
+plot(birthtrend)
+
+birttrend_random<-births_mult_components$x/(birthsseasonal*birthtrend)
+windows()
+plot(birttrend_random)
+
+
+
+
+### 11. Comparacin entre aos (normal), Identificacion de tendencias (cycle), box plots (box) y todos juntos
+library(TSstudio)
+library(ggplot2)
+# Visualize time series object by it periodicity,
+# currently support time series with daily, monthly 
+# and quarterly frequency
+
+ts_seasonal(birthstimeseries,type="normal") # Comparacion entre aos
+ts_seasonal(birthstimeseries,type="cycle") # Para detectar ciclos o tendencias
+ts_seasonal(birthstimeseries,type="box")   # Box plots por mes
+ts_seasonal(birthstimeseries,type="all")   # Todos en una grfica
+
+windows()
+hist(birthstimeseries)
+
+mean(birthstimeseries)
+var(birthstimeseries)
+sd(birthstimeseries)
+
+
+
+
