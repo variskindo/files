@@ -1,0 +1,7 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/26/2022 21:55:11 pm
+
+Fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"), main="Favorite Fruit_by_Elizabeth_Gonzalez",xlab="Number of people", ylab="Type of fruit",
+col=c("green","orange","yellow","brown","blue","red"))
