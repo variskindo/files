@@ -1,0 +1,13 @@
+# Saved at 3/14/2022 20:50:23 pm<span title="3/14/2022 20:50:23 pm">GrassData EEC2</span>
+# EEC Practical 2 : estimating abundance
+#Name: Busisiwe Mnguni
+#Date: 14/03/2022
+
+grassData <- read.csv(file = (grassData EEC.csv)
+grassCount <- grassData$Strip1 + grassData$Strip2 + grassData$Strip3
+
+photo <- grassData$PlotNo
+xcoord <- grassData$Xcoord
+ycoord <- grassData$Ycoord
+
+hist(grassCount)
