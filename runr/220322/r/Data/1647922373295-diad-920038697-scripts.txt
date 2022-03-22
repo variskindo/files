@@ -1,0 +1,20 @@
+# Saved at 3/22/2022 12:12:52 pm<span title="3/22/2022 12:12:52 pm">R(A)_DIADA</span>
+#defined variables 
+employees<-c(0,10,7,11,8,8,11,13,8,12,10,10,13,15,15,13,12,9,15,12,9,17,15,16,18,12,16,15,19,15)
+profit<-c(0,10,25,47,66,71,46,37,89,88,123,106,107,82,105,111,99,103,130,123,143,149,132,106,124,97,171,115,142,194)
+
+#generate scatter plot between variables
+plot(employees,profit,xlab="Number of Employees",ylab="Profit (in thousand peso)",main="Number of Employees and Profit")
+
+#correlation coeffecient and testvthe significance of linear relationship
+cor.test(employees,profit)
+
+#results of the ANOVA
+summary(lm(profit~employees))
+
+#establish the fitted model
+summary(lm(profit~employees-1))
+
+#plot the regression line
+plot(employees,profit,xlab="Number of Employees",ylab="Profit (in thousand peso)",main="Number of Employees and Profit Regression") 
+abline(lm(profit~employees),col="red")
