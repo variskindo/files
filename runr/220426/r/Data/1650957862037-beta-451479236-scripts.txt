@@ -1,0 +1,5 @@
+# Saved at 4/26/2022 12:54:21 pm<span title="4/26/2022 12:54:21 pm">Include file</span>
+#Data=../r/220426/runr-beta-451479236-deck.csv
+print(obs) #display the data
+data = obs
+#Server=1
