@@ -1,0 +1,103 @@
+# Saved at 4/27/2022 13:13:54 pm<span title="4/27/2022 13:13:54 pm">k</span>
+M <- as.table(rbind(c(7,1,3), c(12,3,4), c(87,18,84)))
+dimnames(M) <- list(Smoking_Level= c("Heavy", "Occasional", "Never"),Exercise_Level = c("Frequent","None", "Some"))
+chisq.test(M)  # Prints test summary
+chisq.test(M)$observed   # observed counts (same as M)
+chisq.test(M)$expected   # expected counts assuming null is true.
+# Saved at 5/2/2022 14:05:26 pm<span title="5/2/2022 14:05:26 pm">g</span>
+M <- as.table(rbind(c(60,54,60,41), c(80,45,70,30)))
+dimnames(M) <- list(Gender= c("Female", "Male"),
+                  Education Level= c("Highschool","Bachelors", "Masters","PhD"))
+chisq.test(M)  # Prints test summary
+chisq.test(M)$observed   # observed counts (same as M)
+chisq.test(M)$expected   # expected counts assuming null is true.
+
+# Saved at 5/2/2022 14:45:50 pm<span title="5/2/2022 14:45:50 pm">e</span>
+p<-.5647
+q<-.4353
+s1<-1246
+s2<- 566
+s3<-945
+n<-5000000
+k<-1000
+p1<-s1/(s1+s2+s3)
+p2<-s2/(s1+s2+s3)
+p3<-s3/(s1+s2+s3)
+sample_size_1<-s1
+sample_size_2<-s2
+sample_size_3<-s3
+pop_size<-n
+
+#Definitions
+#p1=portion of group s1 in total sample
+#p2=portion of group s2 in total sample
+#p3=portion of group s3 in total sample
+
+#c11=actual number of  group s1 members that are of type 1
+#c12=actual number of  group s2 members that are of type 1
+#c13=actual number of  group s3 members that are of type 1
+#c21=actual number of  group s1 members that are of type 2
+#c22=actual number of  group s2 members that are of type 2
+#c23=actual number of  group s3 members that are of type 2
+
+
+#e11=expected number of  s1 members of type 1
+#e12=expected number of s2 members of type 1
+#e13=expected number of  s3 members of type 1
+#e21=expected number of  s1 members of type 2
+#e22=expected number of  s2 members of type 2
+#e23=expected number of  s3 members of type 1
+
+#The R code below creates a population of size n where p% of the people are assigned a "1" 
+#and q=(1-p)% are assigned a "0". 
+population<-c(rep(1, p*(pop_size)), rep(0,q*(pop_size)))
+sample_means <- rep(NA, k)
+
+sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+c11<-sum(sample_1)
+c12<-sum(sample_2)
+c13<-sum(sample_3)
+c21<-(sample_size_1-sum(sample_1))
+c22<-(sample_size_2-sum(sample_2))
+c23<-(sample_size_3-sum(sample_3))
+e11<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square<-((e11-c11)^2)/e11+((e21-c21)^2)/e21+((e12-c12)^2)/e12+((e22-c22)^2)/e22+((e13-c13)^2)/e13+((e23-c23)^2)/e23
+
+
+# Take k samples of size s1, s2 and s3 without replacement from our population.
+for(i in 1:k){
+ sample_1<-sample(population, sample_size_1)
+sample_2<-sample(population, sample_size_2)
+sample_3<-sample(population, sample_size_3)
+
+c11[i]<-sum(sample_1)
+c12[i]<-sum(sample_2)
+c13[i]<-sum(sample_3)
+
+c21[i]<-(sample_size_1-sum(sample_1))
+c22[i]<-(sample_size_2-sum(sample_2))
+c23[i]<-(sample_size_3-sum(sample_3))
+e11[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p1
+e12[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p2
+e13[i]<-(sum(sample_1)+sum(sample_2)+sum(sample_3))*p3
+
+e21[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p1
+e22[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p2
+e23[i]<-((sample_size_1-sum(sample_1))+(sample_size_2-sum(sample_2))+(sample_size_3-sum(sample_3)))*p3
+chi_square[i]<-((e11[i]-c11[i])^2)/e11[i]+((e21[i]-c21[i])^2)/e21[i]+((e12[i]-c12[i])^2)/e12[i]+((e22[i]-c22[i])^2)/e22[i]+((e13[i]-c13[i])^2)/e13[i]+((e23[i]-c23[i])^2)/e23[i]
+   }
+print("Sample chi square values")
+chi_square
+hist(chi_square, freq=FALSE,breaks=c(0,1,2,4,5,10,20,30,40), main="Density_hist_of_Chi-squared_values")
+#curve(dchisq(x, df = 2), col="green" , from = 0, to = 40, add=TRUE)
+
+
+
