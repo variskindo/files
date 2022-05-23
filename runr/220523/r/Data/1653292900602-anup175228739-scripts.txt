@@ -1,0 +1,6 @@
+# Saved at 5/23/2022 13:46:40 pm<span title="5/23/2022 13:46:40 pm">Gtex</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
