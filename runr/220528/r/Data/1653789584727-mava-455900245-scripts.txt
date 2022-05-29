@@ -1,0 +1,12 @@
+# Saved at 5/28/2022 22:47:52 pm<span title="5/28/2022 22:47:52 pm">Pirulo</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+# Saved at 5/28/2022 22:59:44 pm<span title="5/28/2022 22:59:44 pm">Gggh</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
