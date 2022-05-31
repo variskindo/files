@@ -1,0 +1,68 @@
+# Saved at 5/28/2022 22:47:52 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="5/28/2022 22:47:52 pm">Pirulo</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+# Saved at 5/28/2022 22:59:44 pm<span title="5/28/2022 22:59:44 pm">Gggh</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+# Saved at 5/28/2022 23:08:36 pm<span title="5/28/2022 23:08:36 pm">Test1</span>
+n=5
+mediaMuestral=function(n)
+{muestra=rnorm(n,269,0.15)
+media=mean(muestra)
+return(media)}
+mediaMuestral(5)
+muchasmedias=replicate(1000,mediaMuestral(5))
+hx=hist(muchasmedias,breaks=50)
+# Saved at 5/30/2022 17:55:15 pm<span title="5/30/2022 17:55:15 pm">Test2</span>
+n=5
+mediaMuestral=function(n)
+{muestra=rnorm(n,269,0.15)
+media1=mean(muestra)
+media=media1-269
+return(media)}
+mediaMuestral(5)
+muchasmedias=replicate(1000,mediaMuestral(5))
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(abs(hx$breaks)<0.11,3,2))# Saved at 5/30/2022 19:51:06 pm<span title="5/30/2022 19:51:06 pm">Definitivo</span>
+n=5
+mediaMuestral=function(n)
+{muestra=rnorm(n,269,0.15)
+media1=mean(muestra)
+media2=media1-269
+media=media2/0.067
+return(media)}
+mediaMuestral(5)
+muchasmedias=replicate(1000,mediaMuestral(5))
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(abs(hx$breaks)<1.645,3,2))# Saved at 5/31/2022 11:55:45 am<span title="5/31/2022 11:55:45 am">Prueba</span>
+n=5
+mediaMuestral=function(n)
+{muestra=rnorm(n,269,0.15)
+media1=mean(muestra)
+media=media1-269
+return(media)}
+mediaMuestral(5)
+muchasmedias=replicate(1000,mediaMuestral(5))
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(abs(hx$breaks)<0.11,3,2))
+intervalos=cut(muchasmedias,breaks=50)
+FA=table(intervalos)
+FA# Saved at 5/31/2022 12:13:02 pm<span title="5/31/2022 12:13:02 pm">Def2</span>
+n=5
+mediaMuestral=function(n)
+{muestra=rnorm(n,269,0.15)
+media1=mean(muestra)
+media2=media1-269
+media=media2/0.067
+return(media)}
+mediaMuestral(5)
+muchasmedias=replicate(1000,mediaMuestral(5))
+intervalos=cut(muchasmedias,breaks=50)
+FA=table(intervalos) #
+FA
