@@ -1,0 +1,3 @@
+# Saved at 6/26/2022 22:22:00 pm<span title="6/26/2022 22:22:00 pm">gffyhg</span>
+
+install.packages("dslabs")
