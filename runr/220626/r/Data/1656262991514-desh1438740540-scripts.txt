@@ -1,0 +1,6 @@
+# Saved at 6/26/2022 22:22:00 pm<span title="6/26/2022 22:22:00 pm">gffyhg</span>
+
+install.packages("dslabs")# Saved at 6/26/2022 22:33:10 pm<span title="6/26/2022 22:33:10 pm">start</span>
+install.packages("dslabs" , dependencies = TRUE )
+install.packages("tidyverse")
+installed.packages()
