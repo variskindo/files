@@ -1,0 +1,37 @@
+N,Estado Civil,Grau de Instrução,No. de Filhos,Salário,Região de Procedência,Idade
+1,Solteiro,Ensino Fundamental,NA,4,Interior,315
+2,Casado,Ensino Fundamental,1,4.56,Capital,394
+3,Casado,Ensino Fundamental,2,5.25,Capital,437
+4,Solteiro,Ensino Médio,NA,5.73,Outra,250
+5,Solteiro,Ensino Fundamental,NA,6.26,Outra,487
+6,Casado,Ensino Fundamental,0,6.66,Interior,336
+7,Solteiro,Ensino Fundamental,NA,6.86,Interior,492
+8,Solteiro,Ensino Fundamental,NA,7.39,Capital,520
+9,Casado,Ensino Médio,1,7.59,Capital,418
+10,Solteiro,Ensino Médio,NA,7.44,Outra,282
+11,Casado,Ensino Médio,2,8.12,Interior,402
+12,Solteiro,Ensino Fundamental,NA,8.46,Capital,335
+13,Solteiro,Ensino Médio,NA,8.74,Outra,449
+14,Casado,Ensino Fundamental,3,8.95,Outra,530
+15,Casado,Ensino Médio,0,9.13,Interior,365
+16,Solteiro,Ensino Médio,NA,9.35,Outra,464
+17,Casado,Ensino Médio,1,9.77,Capital,379
+18,Casado,Ensino Fundamental,2,9.8,Outra,475
+19,Solteiro,Superior,NA,10.53,Interior,308
+20,Solteiro,Ensino Médio,NA,10.76,Interior,448
+21,Casado,Ensino Médio,1,11.06,Outra,369
+22,Solteiro,Ensino Médio,NA,11.59,Capital,410
+23,Solteiro,Ensino Fundamental,NA,12,Outra,492
+24,Casado,Superior,0,12.79,Outra,313
+25,Casado,Ensino Médio,2,13.23,Interior,389
+26,Casado,Ensino Médio,2,13.6,Outra,420
+27,Solteiro,Ensino Fundamental,NA,13.85,Outra,559
+28,Casado,Ensino Médio,0,14.69,Interior,356
+29,Casado,Ensino Médio,5,14.71,Interior,486
+30,Casado,Ensino Médio,2,15.99,Capital,430
+31,Solteiro,Superior,NA,16.22,Outra,377
+32,Casado,Ensino Médio,1,16.61,Interior,436
+33,Casado,Superior,3,17.26,Capital,523
+34,Solteiro,Superior,NA,18.75,Capital,403
+35,Casado,Ensino Médio,2,19.4,Capital,587
+36,Casado,Superior,3,23.3,Interior,506
