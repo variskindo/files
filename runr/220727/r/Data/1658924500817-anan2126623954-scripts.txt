@@ -1,0 +1,47 @@
+# Saved at 7/27/2022 17:51:40 pm<span title="7/27/2022 17:51:40 pm">R data analysis Ananya </span>
+
+# assay data analysis
+
+# Data
+conc= seq(0,100,by=10)
+conc
+od=c(0,0.05,0.08,0.11,0.15,0.2,0.26,0.32,0.42,0.5,0.6)
+od
+
+# add data to data frame
+gl_assay <-  data.frame(conc,od) 
+gl_assay
+
+#visualise the data to see patterns
+plot(gl_assay,type="b",main="Calibration curve",
+     sub="Glucose assay by DNSA method",
+     xlab="Cocentration in mg/ml", ylab="OD at 420 nm",
+     bty="l")
+
+# fit linear model 
+mod= lm(od~conc,gl_assay)
+
+# see summary of model
+summary(mod)
+
+# add regression line to plot
+abline(mod,col="red",lty="dashed")
+
+# add text annotatin to plot
+text(x=60,y=0.6,paste("OD=",round(mod$coefficients[2],3),
+                      "*conc +" ,round(mod$coefficients[1],3)),cex=0.7)
+
+text(x=60,0.55,paste("Adjust. R sqaured=",
+                    round(summary(mod)$adj.r.squared,3)),cex=0.7)
+
+text(x=50,0.50,paste("p-value=",
+                     round(pf(summary(mod)$fstatistic[1],summary(mod)$fstatistic[2],summary(mod)$fstatistic[3],lower.tail=FALSE),2)),cex=0.7)
+
+#Predict vaues of test samples 
+newdata= data.frame(conc=c(28, 45, 57))
+
+newdata$pred= predict(mod,newdata)
+
+# Add predicted points to plot
+points(newdata$conc,newdata$pred,col="blue",pch=3)
+points(newdata$conc,newdata$pred,col="blue",cex=3)
