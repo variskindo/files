@@ -1,0 +1,39 @@
+# Saved at 7/30/2022 21:58:02 pm<span title="7/30/2022 21:58:02 pm">Code by Sir</span>
+# Height of 35 female M.Sc.students is recorded. 
+# And it is follows
+
+# This is a vector of height
+height <- c(148,159,178,159,158,165,171,160,151,173,
+            165,167,163,156,155,155,163,172,160,164,
+            163,166,154,164,164,163,172,151,158,163,
+            159,156,154,173,161)
+
+
+summary(height) # gives summary of the vector
+
+plot(height) # this is scatter plot, shows scatter of observations
+
+hist(height) # histogram: shows frequency of observations
+
+plot(density(height))# density plot: shows density of observations
+
+boxplot(height) # shows five point summary- from lower whisker: minimum, 1st quantile, median , third quantile and maximum. The lonely point is outlier
+
+# all the plots above show distribution of observations in vector
+
+
+# Manually calculating descriptive statistics
+
+mean(height)# calculate mean
+
+median(height) # calculate median
+
+sd(height )# calculate standard deviation 
+
+var(height)# calculate variance
+
+max(height) # find maximum value
+
+min(height) # find maximum value
+
+range(height) # finds range
