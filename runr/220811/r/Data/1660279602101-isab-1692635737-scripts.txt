@@ -1,0 +1,30 @@
+# Saved at 8/11/2022 23:18:34 pm<span title="8/11/2022 23:18:34 pm">Tarea 01 Clase 2022</span>
+num = 1774
+#res = num % 2
+coc = num / 2
+coc
+# Saved at 8/11/2022 23:41:46 pm<span title="8/11/2022 23:41:46 pm">Tarea 01 Clase 2022</span>
+num = 1774
+res = num %% 2
+coc = floor( num / 2 );
+valor = c(res);
+
+while ( coc != 0 ) {
+   num = coc;
+   valor = c(valor, (num %% 2));
+   coc = floor( num / 2)
+}
+
+valor# Saved at 8/11/2022 23:46:41 pm<span title="8/11/2022 23:46:41 pm">Ok</span>
+num = 1774
+res = num %% 2
+coc = floor( num / 2 );
+valor = c(res);
+
+while ( coc != 0 ) {
+   num = coc;
+   valor = c(valor, (num %% 2));
+   coc = floor( num / 2)
+}
+
+rev(valor)
