@@ -1,0 +1,5 @@
+# Saved at 8/11/2022 23:18:34 pm<span title="8/11/2022 23:18:34 pm">Tarea 01 Clase 2022</span>
+num = 1774
+#res = num % 2
+coc = num / 2
+coc
