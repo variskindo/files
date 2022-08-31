@@ -1,0 +1,5 @@
+# Saved at 8/30/2022 20:16:35 pm<span title="8/30/2022 20:16:35 pm">a2</span>
+Barplot (Favorite Fruit, main="Favorite_Fruit_by_Aniya_Mason",horiz=TRUE,xlab="number of people", ylab="Type of Fruit", names.arg= c("Apple", "Orange", "Banana", "Kiwi", "Blueberry", "Grape", col=c( "Green", "Orange", "Yellow", "Brown", "Blue", "Red")))
+
+
+# Please click 'Run Script' to execute this code
