@@ -1,0 +1,5 @@
+# Saved at 9/1/2022 14:05:09 pm<span title="9/1/2022 14:05:09 pm">L4Q4</span>
+M<-c(1,2,10,30,31,35,40,40,45,45,50,52,54,55,80,100,120)
+S<-c(1,1,30,50,55,55,60,62,65,66,68,69,70,80,95,101)
+boxplot(M,S, main="Side-by-side Boxplots", names=c ("Boxplot for M", "Boxplot for S"),
+col=c("purple", "blue"),horiz= TRUE)
