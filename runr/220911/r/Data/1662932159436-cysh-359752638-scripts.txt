@@ -1,0 +1,96 @@
+# Saved at 9/11/2022 18:31:40 pm
+
+
+
+nenana <- read.csv(file="nenana.csv")
+names(nenana)[c(1,2)] <- c("Year", "DayYear")
+attach(nenana)
+
+
+ice <- lm(DayYear ~ Year)
+
+
+plot(Year, DayYear)
+abline(ice,col='red')
+
+
+(info <- summary(ice))
+
+
+hist(ice$residuals)
+
+
+par(mfrow=c(2,2))
+plot(ice)
+par(mfrow=c(1,1))
+
+
+ci <- info$coefficients[2,1]+qt(0.975,ice$df.residual)*c(-1,1)*info$coefficients[2,2]
+ci
+-ci*24
+# Saved at 9/11/2022 18:35:59 pm<span title="9/11/2022 18:35:59 pm">sampledist</span>
+#Exemplo das pesquisas
+samp <- rbinom(10000,808,0.45)/808
+
+
+hist(samp,breaks=seq(.37,.53,0.004))
+
+
+# Exemplo dos dados
+dados <- function(n,M=10000,overlay=FALSE){
+ samp<-colMeans(matrix(sample(1:6,M*n,replace=TRUE),nrow=n))
+ if(n==1) word<-"dado" else word<-"dados"
+ hist(samp,breaks=1/(2*n)+((n-1):(6*n))/n,prob=TRUE,
+   main=paste(n,word),xlab=paste("Mdia -",word),ylab="Frequncia relativa")
+ s <- sqrt(5*var(1:6)/6)
+ if(overlay) curve(dnorm(x,mean=3.5,sd=s/sqrt(n)),col="red",lwd=2,add=TRUE,yaxt="n")
+}
+
+
+dados(1)
+dados(2)
+dados(3)
+dados(5)
+dados(20)
+dados(1,overlay=TRUE)
+dados(2,overlay=TRUE)
+dados(3,overlay=TRUE)
+dados(5,overlay=TRUE)
+dados(20,overlay=TRUE)
+
+
+par(mfrow=c(2,3))
+dados(1)
+dados(2)
+dados(3)
+dados(4)
+dados(5)
+dados(20)
+
+
+dados(1,overlay=TRUE)
+dados(2,overlay=TRUE)
+dados(3,overlay=TRUE)
+dados(4,overlay=TRUE)
+dados(5,overlay=TRUE)
+dados(20,overlay=TRUE)
+par(mfrow=c(1,1))
+
+
+# Exemplo bastante assimtrico
+samp <- rlnorm(1000,10,1)
+
+
+hist(samp,breaks=seq(0,max(samp)+20000,by=20000))
+hist(log(samp))
+
+
+medias <- rep(0,10000)
+
+
+for(i in 1:10000)
+ medias[i]<-mean(sample(samp,100))
+
+
+hist(medias,prob=TRUE)
+curve(dnorm(x,mean=mean(medias),sd=sd(medias)),col="red",lwd=2,add=TRUE,yaxt="n")
