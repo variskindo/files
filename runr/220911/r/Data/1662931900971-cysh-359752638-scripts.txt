@@ -1,0 +1,30 @@
+# Saved at 9/11/2022 18:31:40 pm
+
+
+
+nenana <- read.csv(file="nenana.csv")
+names(nenana)[c(1,2)] <- c("Year", "DayYear")
+attach(nenana)
+
+
+ice <- lm(DayYear ~ Year)
+
+
+plot(Year, DayYear)
+abline(ice,col='red')
+
+
+(info <- summary(ice))
+
+
+hist(ice$residuals)
+
+
+par(mfrow=c(2,2))
+plot(ice)
+par(mfrow=c(1,1))
+
+
+ci <- info$coefficients[2,1]+qt(0.975,ice$df.residual)*c(-1,1)*info$coefficients[2,2]
+ci
+-ci*24
