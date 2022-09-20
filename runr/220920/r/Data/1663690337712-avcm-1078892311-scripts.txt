@@ -1,0 +1,34 @@
+# Saved at 9/20/2022 1:13:56 am<span title="9/20/2022 1:13:56 am">A5</span>
+#Below you will see how we must enter our data so R can read it.
+Scores<- data.frame("T1"=c(78,67,92,85,69,56),
+"T2" = c(86,65,89,85,75,62), "F" = c(82,72,90,82,72,60)) 
+#str(scores)   #This  gives a description of the dataset scores
+T1<-Scores$T1
+T2<-Scores$T2
+F<-Scores$F
+# Model 1
+#We now create a linear model to see how well T1 scores predicts final exam scores.
+M1= lm(F~T1,data=Scores) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(T1,F, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted  final exam score of a student who received a score of 74% on the first test.")  
+predict(M1,data.frame(T1=74))# Saved at 9/20/2022 9:12:17 am<span title="9/20/2022 9:12:17 am">Solution 1 7</span>
+cherry_tree<-data.frame("girth_inches"=c(8.6,10.5,11.4,14,16.3), "height_inches"=c(65,72,76,78,77), "volume_ft"=c(10.3,16.4,21.4,35.5,42.6))
+
+#str(cherry_tree) #this gives a description of the datatset cherry_tree
+girth_inches<-cherry_tree$girth_inches
+height_inches<-cherry_tree$height_inches
+volume_ft<-cherry_tree$volume_ft
+
+#Model 16#we now create a linear model to see how well girth_inches predicts volume_ft
+M1=lm(volume_ft~girth_inches ,date=cherry_tree) # use the "lm" function to create our linear regression model
+print("Summary of Model 1")
+summary(M1)# this gives a summary of the main features of our linear regression model which includes RSE, equation of regression line, R^2 and adj(R^2)values 
+plot(girth_inches, volume_ft,pch=16, col="blue")#creates a scatter plot
+abline(M1)#Adds the regression line to our scatter plot 
+plot(M1$residuals)#plots the residuals 
+print("Predicted volume of a black cherry tree that has a girth of 18.2 inches")
+predict(M1,data.frame(girth_inches=18.2))
