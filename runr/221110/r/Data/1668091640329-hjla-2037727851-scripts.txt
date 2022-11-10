@@ -1,0 +1,1095 @@
+# Saved at 12/12/2018 12:22:24 pm
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+dim(1:3)# Saved at 5/15/2022 18:23:58 pm<span title="5/15/2022 18:23:58 pm">My-r.exampl.r</span>
+## r.exampl.r
+pca = function(...,mineigen=1,factors=0,parallel=FALSE,samples=1000,sort=FALSE,
+               m=3,digits=4,fscores=FALSE,cor.matrix=NULL,n=NA)
+{
+  # Principal components "factor" analysis with varimax and promax rotation
+  # including correlation matrix of factors, optional sorting of loadings, and
+  # specification of promax power (m, default = 3 as recommended by many
+  # statistical packages; higher values simplify loadings at the cost of addit-
+  # ional correlation between factors). Criterium for the number of components
+  # (factors) is either the minium eigenvalue (mineigen, default=1), the
+  # parallel analysis criterion (random eigenvalues), or simply the number of
+  # factors specified.
+  #
+  # If "raw" data (not a correlation matrix) and the additional argument
+  # fscores=TRUE are used, the output will contain matrices of factor scores
+  # of the varimax and promax rotated solutions (regression method).
+  #
+  # Data can be in forms of vectors (variables) (listwise deletion of missing
+  # values will be applied), a complete data frame, or a matrix of correlation
+  # coefficients (the matrix has to be specified using the argument cor.matrix).
+  # If a correlation matrix is used the number of cases (listwise deletion of
+  # missing values) has to be specified if parallel analysis criteria are to be
+  # used.
+  #
+  # The argument sample (default = 1000) specifies the number of samples used
+  # to calculate random eigenvalues as parallel analysis criteria to determine
+  # the number of components to retain. Higher values produce more reliable
+  # random eigenvalues but may increase the run time of the function consider-
+  # ably.
+
+  RanEigen=function(items=x,cases=y,sample=z)
+  {
+    EV = matrix(NA,sample,items)
+    for ( i in 1:sample )
+    {
+      X=matrix(rnorm(cases*items),nrow=cases,byrow=FALSE)
+      S=crossprod(X-rep(1,cases) %*% t(colMeans(X)))
+      t=1/sqrt(diag(S))*diag(items)
+      EV[i,]=eigen(t%*%S%*%t,only.values=TRUE)$values
+    }
+    REigV=(cbind(1:items,colMeans(EV)))
+    REigV[,2]=as.numeric(formatC(REigV[,2],
+                         format="f",digits=7,flag=" ",width=10))
+    colnames(REigV)=c(' ','Eigenvalue')
+    rownames(REigV)=rep('',items)
+  #  write.table(REigV[,2],"REigV.dat",sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
+  #  print(REigV)
+    return(REigV)
+  }
+
+  sort.loadings = function(ld)
+  {
+    f = dim(ld)[2]
+    loadmax=abs(ld[,1:f])==apply(abs(ld[,1:f]),1,max)
+    FL = as.list(colnames(ld)[1:f])
+    for (i in 1:f)
+    {
+      FL[[i]]=ld[loadmax[,i]==TRUE,]
+      if (length(dim(FL[[i]])) > 0)
+      {
+        FL[[i]]=FL[[i]][order(abs(FL[[i]][,i]),decreasing=TRUE),]
+      }
+      if (i == 1)
+      {
+         erg=FL[[1]]
+      }
+      else
+      {
+        erg=rbind(erg,FL[[i]])
+        if (i == 2)
+        {
+          if (length(dim(FL[[1]])) == 0)
+          {
+             rownames(erg)[1] = rownames(ld)[which(loadmax[,1]==TRUE)]
+          }
+        }
+        if (i > 1)
+        {
+          if (length(dim(FL[[i]])) == 0)
+           {
+             rownames(erg)[dim(erg)[1]] = rownames(ld)[which(loadmax[,i]==TRUE)]
+          }
+        }
+      }
+    }
+    erg
+  }
+
+  if (length(cor.matrix) > 0)
+  {
+    X = cor.matrix
+    eig=eigen(X)
+    if (is.na(n) & (parallel==TRUE))
+    {
+      cat("Warning: Because number of cases has not been specified,\n")
+      cat("         parallel analysis criteria to determine the\n")
+      cat("         number of factors couldn't be used!\n\n")
+      parallel = FALSE
+    }
+    if (fscores == TRUE)
+    {
+      cat("Warning: Correlation matrix is specified for input.\n")
+      cat("         Factor scores can only be computed with raw data.\n\n")
+    }
+  }
+  else
+  {
+    X = data.frame(...)
+    X = X[complete.cases(X),]
+    eig = eigen(cor(X))
+    n = nrow(X)
+  }
+  p = ncol(X)
+  EigVal = eig$values
+  EigVec = eig$vectors
+  if ((factors == 0) & (parallel==TRUE))
+  {
+    REigV = RanEigen(p,n,samples)
+    factors = sum(EigVal >= REigV[,2])
+    eigenvalues=cbind("random eigenvalue"=round(REigV[,2],4),
+                      eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  else
+  {
+    if (factors == 0)
+    {
+      factors = max(c(sum(EigVal >= mineigen),1))
+    }
+    eigenvalues=cbind(eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  rownames(eigenvalues)=paste(rep('Factor',p),1:p,sep='')
+  A = (EigVec %*% diag(sqrt(EigVal)))[,1:factors]
+  if (length(cor.matrix) == 0)
+  {
+    B = solve(cor(X)) %*% A
+    FS = (sqrt(n/(n-1))*scale(X)) %*% B
+#    FS = t(sqrt(n/(n-1))/sd(scale(X) %*% A)*t(scale(X) %*% A))
+  }
+  A = cbind(A)
+  rownames(A) = colnames(X)
+  if (factors > 1)
+  {
+    colnames(A)=paste('Factor',1:factors,sep='')
+    colnames(FS)=colnames(A)
+    vm=varimax(A)
+    Sign = sign(colSums(vm$loadings))
+    Sign[which(Sign==0)]=1
+    vm$loadings = t(Sign*t(vm$loadings))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% vm$loadings
+      VM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(VM.FS)=colnames(vm$loadings)
+    }
+    ssvm = diag(t(vm$loadings[]) %*% vm$loadings[])
+    ssvm = rbind(ssvm,ssvm/dim(vm$loadings[])[1])
+    ssvm = rbind(ssvm,cumsum(ssvm[2,]))
+    rownames(ssvm)=c('SS loadings','Proportion Var','Cumulative Var')
+    pm = promax(A,m=m) # m=3 is default in many programs
+    Sign = sign(colSums(pm$loadings))
+    Sign[which(Sign==0)]=1
+    pm$loadings = t(Sign*t(pm$loadings))
+    sspm = diag(t(pm$loadings[]) %*% pm$loadings[])
+    sspm = rbind(sspm,sspm/dim(pm$loadings[])[1])
+    sspm = rbind(sspm,cumsum(sspm[2,]))
+    rownames(sspm)=c('SS loadings','Proportion Var','Cumulative Var')
+    PA = vm$rotmat %*% pm$rotmat
+    phi = solve(t(PA) %*% PA)
+    phi = Sign*t(Sign*phi)
+    pmst = pm$loadings %*% phi
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% pmst
+      PM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(PM.FS)=colnames(pm$loadings)
+    }
+    colnames(phi)=colnames(pm$loadings)
+    rownames(phi)=colnames(pm$loadings)
+    if (sort==TRUE)
+    {
+      A = sort.loadings(A)
+      vmld = sort.loadings(vm$loadings[])
+      pmld = sort.loadings(pm$loadings[])
+      pmst = sort.loadings(pmst)
+    }
+    else
+    {
+      vmld = vm$loadings[]
+      pmld = pm$loadings[]
+    }
+    Sign = sign(colSums(A))
+    Sign[which(Sign==0)]=1
+    A = t(Sign*t(A))
+    A = cbind(A,Communality=rowSums(A**2))
+    FS = t(Sign*t(FS))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 unrotated.scores=round(FS,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 varimax.scores = round(VM.FS,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits),
+                 promax.scores = round(PM.FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits))
+    }
+  }
+  else
+  {
+    colnames(A)='Factor1'
+    Sign = sign(sum(A))
+    Sign[which(Sign==0)]=1
+    A = Sign*A
+    res=list(eigenvalues=cbind(eigenvalue=round(EigVal,digits)),
+             loadings=cbind(factor1=A))
+    ss = diag(t(res$loadings[]) %*% res$loadings[])
+    ss = rbind(ss,ss/dim(res$loadings[])[1])
+    ss = rbind(ss,cumsum(ss[2,]))
+    rownames(ss)=c('SS loadings','Proportion Var','Cumulative Var')
+    if (sort==TRUE)
+    {
+       vmld=cbind(sign(res$loadings[order(abs(res$loadings),decreasing=TRUE)])*
+                  sort(abs(res$loadings[1:dim(res$loadings)[1],]),dec=TRUE))
+       colnames(vmld)="Factor1"
+    }
+    else
+    {
+       vmld=res$loadings[]
+    }
+    vmld = cbind(vmld,Communality=rowSums(vmld**2))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      FS = cbind(Sign*FS)
+      colnames(FS)='Factor1'
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits),
+                 scores=round(FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits))
+    }
+  }
+  erg
+}
+
+#   EXAMPLES (de-comment the respective command lines):
+#
+#   Analyze all variables of a data frame (criterium for number of factors is a
+#   minimum eigenvalue of 1.0 (default):
+#
+# pca(USArrests)
+#
+#   The same analysis, specifying a two-factors solution (default promax power =
+#   3) and a sorting of the loadings:
+#
+pca(USArrests,factors=2,sort=TRUE)
+#
+#   Using the parallel analysis criterion (random eigenvalues):
+#
+# pca(USArrests,parallel=TRUE,sort=TRUE)
+#
+#   Using correlation matrix as input; criterium of the number of factors is
+#   minimum eigenvalue = 1.0:
+#
+# pca(cor.matrix=cor(USArrests),sort=TRUE)
+#
+#   WRONG: the same as above but with parallel analysis criterion. The problem
+#   is that the number of cases is not specified although a correlation matrix
+#   is used as input:
+#
+# pca(cor.matrix=cor(USArrests),parallel=TRUE,sort=TRUE)
+#
+#   Here a correct version with number of cases specified:
+#
+# pca(cor.matrix=cor(USArrests),n=50,parallel=TRUE,sort=TRUE)
+#
+#   Using separate vectors as input, specifiying a two factors solution, a sort-
+#   ing of loadings, and a promax power of 2.5 (don't forget to detach the
+#   attached data frame after the analysis):
+#
+# attach(USArrests)
+# pca(Murder,Rape,Assault,UrbanPop,factors=2,m=2.5,sort=TRUE)
+# detach(USArrests)# Saved at 11/9/2022 15:20:50 pm<span title="11/9/2022 15:20:50 pm">Eigenwerte bestimmen</span>
+## r.exampl.r
+pca = function(...,mineigen=1,factors=0,parallel=FALSE,samples=1000,sort=FALSE,
+               m=3,digits=4,fscores=FALSE,cor.matrix=NULL,n=NA)
+{
+  # Principal components "factor" analysis with varimax and promax rotation
+  # including correlation matrix of factors, optional sorting of loadings, and
+  # specification of promax power (m, default = 3 as recommended by many
+  # statistical packages; higher values simplify loadings at the cost of addit-
+  # ional correlation between factors). Criterium for the number of components
+  # (factors) is either the minium eigenvalue (mineigen, default=1), the
+  # parallel analysis criterion (random eigenvalues), or simply the number of
+  # factors specified.
+  #
+  # If "raw" data (not a correlation matrix) and the additional argument
+  # fscores=TRUE are used, the output will contain matrices of factor scores
+  # of the varimax and promax rotated solutions (regression method).
+  #
+  # Data can be in forms of vectors (variables) (listwise deletion of missing
+  # values will be applied), a complete data frame, or a matrix of correlation
+  # coefficients (the matrix has to be specified using the argument cor.matrix).
+  # If a correlation matrix is used the number of cases (listwise deletion of
+  # missing values) has to be specified if parallel analysis criteria are to be
+  # used.
+  #
+  # The argument sample (default = 1000) specifies the number of samples used
+  # to calculate random eigenvalues as parallel analysis criteria to determine
+  # the number of components to retain. Higher values produce more reliable
+  # random eigenvalues but may increase the run time of the function consider-
+  # ably.
+
+  RanEigen=function(items=x,cases=y,sample=z)
+  {
+    EV = matrix(NA,sample,items)
+    for ( i in 1:sample )
+    {
+      X=matrix(rnorm(cases*items),nrow=cases,byrow=FALSE)
+      S=crossprod(X-rep(1,cases) %*% t(colMeans(X)))
+      t=1/sqrt(diag(S))*diag(items)
+      EV[i,]=eigen(t%*%S%*%t,only.values=TRUE)$values
+    }
+    REigV=(cbind(1:items,colMeans(EV)))
+    REigV[,2]=as.numeric(formatC(REigV[,2],
+                         format="f",digits=7,flag=" ",width=10))
+    colnames(REigV)=c(' ','Eigenvalue')
+    rownames(REigV)=rep('',items)
+  #  write.table(REigV[,2],"REigV.dat",sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
+  #  print(REigV)
+    return(REigV)
+  }
+
+  sort.loadings = function(ld)
+  {
+    f = dim(ld)[2]
+    loadmax=abs(ld[,1:f])==apply(abs(ld[,1:f]),1,max)
+    FL = as.list(colnames(ld)[1:f])
+    for (i in 1:f)
+    {
+      FL[[i]]=ld[loadmax[,i]==TRUE,]
+      if (length(dim(FL[[i]])) > 0)
+      {
+        FL[[i]]=FL[[i]][order(abs(FL[[i]][,i]),decreasing=TRUE),]
+      }
+      if (i == 1)
+      {
+         erg=FL[[1]]
+      }
+      else
+      {
+        erg=rbind(erg,FL[[i]])
+        if (i == 2)
+        {
+          if (length(dim(FL[[1]])) == 0)
+          {
+             rownames(erg)[1] = rownames(ld)[which(loadmax[,1]==TRUE)]
+          }
+        }
+        if (i > 1)
+        {
+          if (length(dim(FL[[i]])) == 0)
+           {
+             rownames(erg)[dim(erg)[1]] = rownames(ld)[which(loadmax[,i]==TRUE)]
+          }
+        }
+      }
+    }
+    erg
+  }
+
+  if (length(cor.matrix) > 0)
+  {
+    X = cor.matrix
+    eig=eigen(X)
+    if (is.na(n) & (parallel==TRUE))
+    {
+      cat("Warning: Because number of cases has not been specified,\n")
+      cat("         parallel analysis criteria to determine the\n")
+      cat("         number of factors couldn't be used!\n\n")
+      parallel = FALSE
+    }
+    if (fscores == TRUE)
+    {
+      cat("Warning: Correlation matrix is specified for input.\n")
+      cat("         Factor scores can only be computed with raw data.\n\n")
+    }
+  }
+  else
+  {
+    X = data.frame(...)
+    X = X[complete.cases(X),]
+    eig = eigen(cor(X))
+    n = nrow(X)
+  }
+  p = ncol(X)
+  EigVal = eig$values
+  EigVec = eig$vectors
+  if ((factors == 0) & (parallel==TRUE))
+  {
+    REigV = RanEigen(p,n,samples)
+    factors = sum(EigVal >= REigV[,2])
+    eigenvalues=cbind("random eigenvalue"=round(REigV[,2],4),
+                      eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  else
+  {
+    if (factors == 0)
+    {
+      factors = max(c(sum(EigVal >= mineigen),1))
+    }
+    eigenvalues=cbind(eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  rownames(eigenvalues)=paste(rep('Factor',p),1:p,sep='')
+  A = (EigVec %*% diag(sqrt(EigVal)))[,1:factors]
+  if (length(cor.matrix) == 0)
+  {
+    B = solve(cor(X)) %*% A
+    FS = (sqrt(n/(n-1))*scale(X)) %*% B
+#    FS = t(sqrt(n/(n-1))/sd(scale(X) %*% A)*t(scale(X) %*% A))
+  }
+  A = cbind(A)
+  rownames(A) = colnames(X)
+  if (factors > 1)
+  {
+    colnames(A)=paste('Factor',1:factors,sep='')
+    colnames(FS)=colnames(A)
+    vm=varimax(A)
+    Sign = sign(colSums(vm$loadings))
+    Sign[which(Sign==0)]=1
+    vm$loadings = t(Sign*t(vm$loadings))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% vm$loadings
+      VM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(VM.FS)=colnames(vm$loadings)
+    }
+    ssvm = diag(t(vm$loadings[]) %*% vm$loadings[])
+    ssvm = rbind(ssvm,ssvm/dim(vm$loadings[])[1])
+    ssvm = rbind(ssvm,cumsum(ssvm[2,]))
+    rownames(ssvm)=c('SS loadings','Proportion Var','Cumulative Var')
+    pm = promax(A,m=m) # m=3 is default in many programs
+    Sign = sign(colSums(pm$loadings))
+    Sign[which(Sign==0)]=1
+    pm$loadings = t(Sign*t(pm$loadings))
+    sspm = diag(t(pm$loadings[]) %*% pm$loadings[])
+    sspm = rbind(sspm,sspm/dim(pm$loadings[])[1])
+    sspm = rbind(sspm,cumsum(sspm[2,]))
+    rownames(sspm)=c('SS loadings','Proportion Var','Cumulative Var')
+    PA = vm$rotmat %*% pm$rotmat
+    phi = solve(t(PA) %*% PA)
+    phi = Sign*t(Sign*phi)
+    pmst = pm$loadings %*% phi
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% pmst
+      PM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(PM.FS)=colnames(pm$loadings)
+    }
+    colnames(phi)=colnames(pm$loadings)
+    rownames(phi)=colnames(pm$loadings)
+    if (sort==TRUE)
+    {
+      A = sort.loadings(A)
+      vmld = sort.loadings(vm$loadings[])
+      pmld = sort.loadings(pm$loadings[])
+      pmst = sort.loadings(pmst)
+    }
+    else
+    {
+      vmld = vm$loadings[]
+      pmld = pm$loadings[]
+    }
+    Sign = sign(colSums(A))
+    Sign[which(Sign==0)]=1
+    A = t(Sign*t(A))
+    A = cbind(A,Communality=rowSums(A**2))
+    FS = t(Sign*t(FS))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 unrotated.scores=round(FS,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 varimax.scores = round(VM.FS,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits),
+                 promax.scores = round(PM.FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits))
+    }
+  }
+  else
+  {
+    colnames(A)='Factor1'
+    Sign = sign(sum(A))
+    Sign[which(Sign==0)]=1
+    A = Sign*A
+    res=list(eigenvalues=cbind(eigenvalue=round(EigVal,digits)),
+             loadings=cbind(factor1=A))
+    ss = diag(t(res$loadings[]) %*% res$loadings[])
+    ss = rbind(ss,ss/dim(res$loadings[])[1])
+    ss = rbind(ss,cumsum(ss[2,]))
+    rownames(ss)=c('SS loadings','Proportion Var','Cumulative Var')
+    if (sort==TRUE)
+    {
+       vmld=cbind(sign(res$loadings[order(abs(res$loadings),decreasing=TRUE)])*
+                  sort(abs(res$loadings[1:dim(res$loadings)[1],]),dec=TRUE))
+       colnames(vmld)="Factor1"
+    }
+    else
+    {
+       vmld=res$loadings[]
+    }
+    vmld = cbind(vmld,Communality=rowSums(vmld**2))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      FS = cbind(Sign*FS)
+      colnames(FS)='Factor1'
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits),
+                 scores=round(FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits))
+    }
+  }
+  erg
+}
+
+#   EXAMPLES (de-comment the respective command lines):
+#
+#   Analyze all variables of a data frame (criterium for number of factors is a
+#   minimum eigenvalue of 1.0 (default):
+#
+# pca(USArrests)
+#
+#   The same analysis, specifying a two-factors solution (default promax power =
+#   3) and a sorting of the loadings:
+#
+# pca(USArrests,factors=2,sort=TRUE)
+#
+#   Using the parallel analysis criterion (random eigenvalues):
+#
+# pca(USArrests,parallel=TRUE,sort=TRUE)
+#
+#   Using correlation matrix as input; criterium of the number of factors is
+#   minimum eigenvalue = 1.0:
+#
+# pca(cor.matrix=cor(USArrests),sort=TRUE)
+#
+#   WRONG: the same as above but with parallel analysis criterion. The problem
+#   is that the number of cases is not specified although a correlation matrix
+#   is used as input:
+#
+# pca(cor.matrix=cor(USArrests),parallel=TRUE,sort=TRUE)
+#
+#   Here a correct version with number of cases specified:
+#
+# pca(cor.matrix=cor(USArrests),n=50,parallel=TRUE,sort=TRUE)
+#
+#   Using separate vectors as input, specifiying a two factors solution, a sort-
+#   ing of loadings, and a promax power of 2.5 (don't forget to detach the
+#   attached data frame after the analysis):
+#
+ attach(USArrests)
+pca(Murder,Rape,Assault,UrbanPop,factors=2,m=2.5,sort=TRUE)
+detach(USArrests)
+
+head(USArrests)
+help(head)
+# Saved at 11/9/2022 15:36:43 pm<span title="11/9/2022 15:36:43 pm">Eigenwert kopiertes Beispiel. Eigner?</span>
+## r.exampl.r
+pca = function(...,mineigen=1,factors=0,parallel=FALSE,samples=1000,sort=FALSE,
+               m=3,digits=4,fscores=FALSE,cor.matrix=NULL,n=NA)
+{
+  # Principal components "factor" analysis with varimax and promax rotation
+  # including correlation matrix of factors, optional sorting of loadings, and
+  # specification of promax power (m, default = 3 as recommended by many
+  # statistical packages; higher values simplify loadings at the cost of addit-
+  # ional correlation between factors). Criterium for the number of components
+  # (factors) is either the minium eigenvalue (mineigen, default=1), the
+  # parallel analysis criterion (random eigenvalues), or simply the number of
+  # factors specified.
+  #
+  # If "raw" data (not a correlation matrix) and the additional argument
+  # fscores=TRUE are used, the output will contain matrices of factor scores
+  # of the varimax and promax rotated solutions (regression method).
+  #
+  # Data can be in forms of vectors (variables) (listwise deletion of missing
+  # values will be applied), a complete data frame, or a matrix of correlation
+  # coefficients (the matrix has to be specified using the argument cor.matrix).
+  # If a correlation matrix is used the number of cases (listwise deletion of
+  # missing values) has to be specified if parallel analysis criteria are to be
+  # used.
+  #
+  # The argument sample (default = 1000) specifies the number of samples used
+  # to calculate random eigenvalues as parallel analysis criteria to determine
+  # the number of components to retain. Higher values produce more reliable
+  # random eigenvalues but may increase the run time of the function consider-
+  # ably.
+
+  RanEigen=function(items=x,cases=y,sample=z)
+  {
+    EV = matrix(NA,sample,items)
+    for ( i in 1:sample )
+    {
+      X=matrix(rnorm(cases*items),nrow=cases,byrow=FALSE)
+      S=crossprod(X-rep(1,cases) %*% t(colMeans(X)))
+      t=1/sqrt(diag(S))*diag(items)
+      EV[i,]=eigen(t%*%S%*%t,only.values=TRUE)$values
+    }
+    REigV=(cbind(1:items,colMeans(EV)))
+    REigV[,2]=as.numeric(formatC(REigV[,2],
+                         format="f",digits=7,flag=" ",width=10))
+    colnames(REigV)=c(' ','Eigenvalue')
+    rownames(REigV)=rep('',items)
+  #  write.table(REigV[,2],"REigV.dat",sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
+  #  print(REigV)
+    return(REigV)
+  }
+
+  sort.loadings = function(ld)
+  {
+    f = dim(ld)[2]
+    loadmax=abs(ld[,1:f])==apply(abs(ld[,1:f]),1,max)
+    FL = as.list(colnames(ld)[1:f])
+    for (i in 1:f)
+    {
+      FL[[i]]=ld[loadmax[,i]==TRUE,]
+      if (length(dim(FL[[i]])) > 0)
+      {
+        FL[[i]]=FL[[i]][order(abs(FL[[i]][,i]),decreasing=TRUE),]
+      }
+      if (i == 1)
+      {
+         erg=FL[[1]]
+      }
+      else
+      {
+        erg=rbind(erg,FL[[i]])
+        if (i == 2)
+        {
+          if (length(dim(FL[[1]])) == 0)
+          {
+             rownames(erg)[1] = rownames(ld)[which(loadmax[,1]==TRUE)]
+          }
+        }
+        if (i > 1)
+        {
+          if (length(dim(FL[[i]])) == 0)
+           {
+             rownames(erg)[dim(erg)[1]] = rownames(ld)[which(loadmax[,i]==TRUE)]
+          }
+        }
+      }
+    }
+    erg
+  }
+
+  if (length(cor.matrix) > 0)
+  {
+    X = cor.matrix
+    eig=eigen(X)
+    if (is.na(n) & (parallel==TRUE))
+    {
+      cat("Warning: Because number of cases has not been specified,\n")
+      cat("         parallel analysis criteria to determine the\n")
+      cat("         number of factors couldn't be used!\n\n")
+      parallel = FALSE
+    }
+    if (fscores == TRUE)
+    {
+      cat("Warning: Correlation matrix is specified for input.\n")
+      cat("         Factor scores can only be computed with raw data.\n\n")
+    }
+  }
+  else
+  {
+    X = data.frame(...)
+    X = X[complete.cases(X),]
+    eig = eigen(cor(X))
+    n = nrow(X)
+  }
+  p = ncol(X)
+  EigVal = eig$values
+  EigVec = eig$vectors
+  if ((factors == 0) & (parallel==TRUE))
+  {
+    REigV = RanEigen(p,n,samples)
+    factors = sum(EigVal >= REigV[,2])
+    eigenvalues=cbind("random eigenvalue"=round(REigV[,2],4),
+                      eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  else
+  {
+    if (factors == 0)
+    {
+      factors = max(c(sum(EigVal >= mineigen),1))
+    }
+    eigenvalues=cbind(eigenvalue=round(EigVal,digits),
+                      "% var"=round(100*EigVal/p,digits),
+                      "cum % var"=round(100*cumsum(EigVal/p),digits))
+  }
+  rownames(eigenvalues)=paste(rep('Factor',p),1:p,sep='')
+  A = (EigVec %*% diag(sqrt(EigVal)))[,1:factors]
+  if (length(cor.matrix) == 0)
+  {
+    B = solve(cor(X)) %*% A
+    FS = (sqrt(n/(n-1))*scale(X)) %*% B
+#    FS = t(sqrt(n/(n-1))/sd(scale(X) %*% A)*t(scale(X) %*% A))
+  }
+  A = cbind(A)
+  rownames(A) = colnames(X)
+  if (factors > 1)
+  {
+    colnames(A)=paste('Factor',1:factors,sep='')
+    colnames(FS)=colnames(A)
+    vm=varimax(A)
+    Sign = sign(colSums(vm$loadings))
+    Sign[which(Sign==0)]=1
+    vm$loadings = t(Sign*t(vm$loadings))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% vm$loadings
+      VM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(VM.FS)=colnames(vm$loadings)
+    }
+    ssvm = diag(t(vm$loadings[]) %*% vm$loadings[])
+    ssvm = rbind(ssvm,ssvm/dim(vm$loadings[])[1])
+    ssvm = rbind(ssvm,cumsum(ssvm[2,]))
+    rownames(ssvm)=c('SS loadings','Proportion Var','Cumulative Var')
+    pm = promax(A,m=m) # m=3 is default in many programs
+    Sign = sign(colSums(pm$loadings))
+    Sign[which(Sign==0)]=1
+    pm$loadings = t(Sign*t(pm$loadings))
+    sspm = diag(t(pm$loadings[]) %*% pm$loadings[])
+    sspm = rbind(sspm,sspm/dim(pm$loadings[])[1])
+    sspm = rbind(sspm,cumsum(sspm[2,]))
+    rownames(sspm)=c('SS loadings','Proportion Var','Cumulative Var')
+    PA = vm$rotmat %*% pm$rotmat
+    phi = solve(t(PA) %*% PA)
+    phi = Sign*t(Sign*phi)
+    pmst = pm$loadings %*% phi
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      B = solve(cor(X)) %*% pmst
+      PM.FS = (sqrt(n/(n-1))*scale(X)) %*% B
+      colnames(PM.FS)=colnames(pm$loadings)
+    }
+    colnames(phi)=colnames(pm$loadings)
+    rownames(phi)=colnames(pm$loadings)
+    if (sort==TRUE)
+    {
+      A = sort.loadings(A)
+      vmld = sort.loadings(vm$loadings[])
+      pmld = sort.loadings(pm$loadings[])
+      pmst = sort.loadings(pmst)
+    }
+    else
+    {
+      vmld = vm$loadings[]
+      pmld = pm$loadings[]
+    }
+    Sign = sign(colSums(A))
+    Sign[which(Sign==0)]=1
+    A = t(Sign*t(A))
+    A = cbind(A,Communality=rowSums(A**2))
+    FS = t(Sign*t(FS))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 unrotated.scores=round(FS,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 varimax.scores = round(VM.FS,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits),
+                 promax.scores = round(PM.FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 unrotated.loadings=round(A,digits),
+                 varimax.SS = round(ssvm,digits),
+                 varimax.loadings=round(vmld,digits),
+                 promax.SS = round(sspm,digits),
+                 promax.loadings=round(pmld,digits),
+                 promax.structure=round(pmst,digits),
+                 corr.factors=round(phi,digits))
+    }
+  }
+  else
+  {
+    colnames(A)='Factor1'
+    Sign = sign(sum(A))
+    Sign[which(Sign==0)]=1
+    A = Sign*A
+    res=list(eigenvalues=cbind(eigenvalue=round(EigVal,digits)),
+             loadings=cbind(factor1=A))
+    ss = diag(t(res$loadings[]) %*% res$loadings[])
+    ss = rbind(ss,ss/dim(res$loadings[])[1])
+    ss = rbind(ss,cumsum(ss[2,]))
+    rownames(ss)=c('SS loadings','Proportion Var','Cumulative Var')
+    if (sort==TRUE)
+    {
+       vmld=cbind(sign(res$loadings[order(abs(res$loadings),decreasing=TRUE)])*
+                  sort(abs(res$loadings[1:dim(res$loadings)[1],]),dec=TRUE))
+       colnames(vmld)="Factor1"
+    }
+    else
+    {
+       vmld=res$loadings[]
+    }
+    vmld = cbind(vmld,Communality=rowSums(vmld**2))
+    if ((length(cor.matrix) == 0) & (fscores==TRUE))
+    {
+      FS = cbind(Sign*FS)
+      colnames(FS)='Factor1'
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits),
+                 scores=round(FS,digits))
+    }
+    else
+    {
+      erg = list(valid.n=n,p=p,
+                 eigenvalues=eigenvalues,
+                 SS = round(ss,digits),
+                 loadings=round(vmld,digits))
+    }
+  }
+  erg
+}
+
+#   EXAMPLES (de-comment the respective command lines):
+#
+#   Analyze all variables of a data frame (criterium for number of factors is a
+#   minimum eigenvalue of 1.0 (default):
+#
+# pca(USArrests)
+#
+#   The same analysis, specifying a two-factors solution (default promax power =
+#   3) and a sorting of the loadings:
+#
+# pca(USArrests,factors=2,sort=TRUE)
+#
+#   Using the parallel analysis criterion (random eigenvalues):
+#
+# pca(USArrests,parallel=TRUE,sort=TRUE)
+#
+#   Using correlation matrix as input; criterium of the number of factors is
+#   minimum eigenvalue = 1.0:
+#
+# pca(cor.matrix=cor(USArrests),sort=TRUE)
+#
+#   WRONG: the same as above but with parallel analysis criterion. The problem
+#   is that the number of cases is not specified although a correlation matrix
+#   is used as input:
+#
+# pca(cor.matrix=cor(USArrests),parallel=TRUE,sort=TRUE)
+#
+#   Here a correct version with number of cases specified:
+#
+# pca(cor.matrix=cor(USArrests),n=50,parallel=TRUE,sort=TRUE)
+#
+#   Using separate vectors as input, specifiying a two factors solution, a sort-
+#   ing of loadings, and a promax power of 2.5 (don't forget to detach the
+#   attached data frame after the analysis):
+#
+ attach(USArrests)
+pca(Murder,Rape,Assault,UrbanPop,factors=2,m=2.5,sort=TRUE)
+detach(USArrests)
+
+head(USArrests)
+help(head)
+# Saved at 11/10/2022 15:24:19 pm<span title="11/10/2022 15:24:19 pm">Own1.r</span>
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+dim(1:3)# Saved at 11/10/2022 15:38:48 pm<span title="11/10/2022 15:38:48 pm">Ex.data</span>
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+dim(1:3)# Saved at 11/10/2022 15:42:45 pm<span title="11/10/2022 15:42:45 pm">Ex.ata</span>
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+dim(1:3)
+library()# Saved at 11/10/2022 15:44:05 pm<span title="11/10/2022 15:44:05 pm">Ex.data</span>
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+head(zz)
+# Saved at 11/10/2022 15:47:20 pm<span title="11/10/2022 15:47:20 pm">Ex.data</span>
+for (i in 0:10) cat(i,": ",dbinom(i,10,0.2),pbinom(i,10,0.2),"\n",sep="  ")
+zz<-file("ex.data","w")
+cat("a1 a2 a3 a4","60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56",
+"61 61 61 58","51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44",
+"60 49 40 59","61 64 60 49","59 54 62 49","69 70 42 56","61 61 61 58",
+"51 48 65 49","49 41 48 52","46 59 46 58","41 42 43 44","40 40 40 40",
+"41 41 41 42","41 42 42 42","55 55 55 55","56 56 56 56","57 57 57 57",
+file=zz,sep="\n")
+close(zz)
+zz<-read.table("ex.data",header=TRUE)
+summary(zz)
+a1.v<-zz[,"a1"]
+summary(zz)
+a1.v<-zz[,"a1"]
+a2.v<-zz[,"a2"]
+a3.v<-zz[,"a3"]
+a4.v<-zz[,"a4"]
+y<-zz[,"a4"]
+print("-- covariances --")
+var(zz)
+F2<-lm(y~a1.v+a2.v+a3.v, data=zz)
+F2
+print("correlation")
+R<-cor(zz)
+R
+factanal(zz,factors=1)
+head(zz)
