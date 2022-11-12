@@ -1,0 +1,14 @@
+# Saved at 11/12/2022 12:58:51 pm<span title="11/12/2022 12:58:51 pm">Test S</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+
+
+getwd()
+
+dir("../..", pattern = "^[a-lr]", full.names = TRUE, ignore.case = TRUE)
+
+list.dirs(R.home("C:/Apps/wwwroot/php/files/r/Data"))
+#list.dirs(R.home("doc"), full.names = FALSE)
