@@ -1,0 +1,6 @@
+# Saved at 12/19/2022 10:38:32 am<span title="12/19/2022 10:38:32 am">Tan so, bang</span>
+spg=c(120,140,160,180,200)
+skh=c(5,26,37,26,6)
+x=rep(spg,skh)
+var(x)
+mean(x) 
