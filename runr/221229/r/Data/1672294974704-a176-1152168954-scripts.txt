@@ -1,0 +1,23 @@
+# Saved at 12/29/2022 14:22:54 pm<span title="12/29/2022 14:22:54 pm">Titanic</span>
+#Data=../r/221229/runr-a176-1152168954-titanicdata.csv
+#print(obs) #display the data
+obs$survived= as.factor(obs$survived)
+obs$pclass= as.factor(obs$pclass)
+obs$sex= as.factor(obs$sex)
+obs$embarked = as.factor(obs$embarked)
+summary(obs)
+library(ggplot2)
+ggplot(obs, aes(x=survived)) + theme_bw() + geom_bar(fill="#FE3276")+ labs(y="Passenger Count", x= "Titanic Survival")
+logit1 <- glm(survived~sex+pclass+age+embarked,family=binomial,data=obs)
+summary(logit1)
+logit2 <- glm(survived~sex,family=binomial,data=obs)
+summary(logit2)
+logit3 <- glm(survived~pclass,family=binomial,data=obs)
+summary(logit3)
+logit4 <- glm(survived~age,family=binomial,data=obs)
+summary(logit4)
+logit5 <- glm(survived~embarked,family=binomial,data=obs)
+summary(logit5)
+library(MASS)
+logitfinal <- stepAIC(logit1)
+summary(logitfinal)
