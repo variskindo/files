@@ -1,0 +1,6 @@
+# Saved at 1/11/2023 12:53:42 pm
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
