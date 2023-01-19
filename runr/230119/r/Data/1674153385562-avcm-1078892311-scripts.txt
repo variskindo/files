@@ -1,0 +1,5 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/19/2023 10:36:25 am<span title="1/19/2023 10:36:25 am">Q1 Test Score</span>
+Test_Scores<-c(45,50,66,66,70,72, 75,75,80, 81, 82,82,82,88,89,89,90,90,96,99)
+hist(Test_Scores)
