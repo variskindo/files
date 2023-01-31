@@ -1,0 +1,29 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/19/2023 10:36:25 am<span title="1/19/2023 10:36:25 am">Q1 Test Score</span>
+Test_Scores<-c(45,50,66,66,70,72, 75,75,80, 81, 82,82,82,88,89,89,90,90,96,99)
+hist(Test_Scores)
+# Saved at 1/20/2023 0:18:19 am<span title="1/20/2023 0:18:19 am"> Quiz 3 question 4</span>
+Scores<-c(45, 50, 66, 66, 70, 72, 75, 75, 80, 81, 82, 82, 82, 88, 89, 90,90, 96, 99) 
+breaks=c(40,50,70,85,100)
+col="yellow"
+main=Scores
+# Saved at 1/26/2023 22:10:27 pm<span title="1/26/2023 22:10:27 pm"> fav fruits</span>
+fav_fruit<-c(35,30,10,25,40,5)
+
+barplot(fav_fruit, horiz=TRUE,names.arg=c("Apple","Orange",
+"Bannana","Kiwi","Blueberry","Grape"),main ="Favorite
+Fruit _by_Jennifer_L_Morgan",xlab="Number of people",ylab="Type of Fruit",
+col=c("green","orange","yellow","brown" ,"blue" ,"red"))
+# Saved at 1/26/2023 23:01:59 pm<span title="1/26/2023 23:01:59 pm"> fav fruits</span>
+fav_fruit<-c(35,30,10,25,40,5)
+
+barplot(fav_fruit, horiz=TRUE,names.arg=c("Apple","Orange",
+"Bannana","Kiwi","Blueberry","Grape"),main ="Favorite
+Fruit _by_Jennifer_L_Morgan",xlab="Number of people",ylab="Type of Fruit",
+col=c("green","orange","yellow","brown" ,"blue" ,"red"))
+# Saved at 1/31/2023 1:04:54 am<span title="1/31/2023 1:04:54 am">boxplot</span>
+M<-c(6, 1, 3, 4, 7, 8, 3, 5,6 , 8) 
+S<-c(7, 1, 10, 12, 0, 10, 15, 20, 60)
+boxplot(M,S,main="Two Boxplots for Comparison_Jennifer_Lyn_Morgan",
+names=c("Boxplot M","Boxplot for S"), col=c("orange", "red"))
