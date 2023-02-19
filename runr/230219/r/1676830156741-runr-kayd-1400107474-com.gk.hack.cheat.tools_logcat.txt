@@ -1,0 +1,215 @@
+--------- beginning of main
+02-16 19:53:10.533  6736  6766 I ack.cheat.tool: Waiting for a blocking GC ClassLinker
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: Failed to auto initialize the Facebook SDK
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: A valid Facebook app id must be set in the AndroidManifest.xml or set by calling FacebookSdk.setApplicationId before initializing the sdk.
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at com.facebook.FacebookSdk.sdkInitialize(FacebookSdk.java:275)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at com.facebook.FacebookSdk.sdkInitialize(FacebookSdk.java:231)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at com.facebook.internal.FacebookInitProvider.onCreate(FacebookInitProvider.java:20)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2388)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2358)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread.installProvider(ActivityThread.java:7301)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread.installContentProviders(ActivityThread.java:6842)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6759)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread.access$1500(ActivityThread.java:244)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1963)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.os.Looper.loop(Looper.java:223)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at android.app.ActivityThread.main(ActivityThread.java:7720)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at java.lang.reflect.Method.invoke(Native Method)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:612)
+02-16 19:53:10.547  6736  6736 I FacebookInitProvider: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:997)
+02-16 19:53:10.549  6736  6748 E ack.cheat.tool: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:10.563  6736  6766 I ack.cheat.tool: WaitForGcToComplete blocked ClassLinker on ClassLinker for 29.905ms
+02-16 19:53:10.565  6736  6766 I DynamiteModule: Considering local module com.google.android.gms.measurement.dynamite:78 and remote module com.google.android.gms.measurement.dynamite:87
+02-16 19:53:10.565  6736  6766 I DynamiteModule: Selected remote version of com.google.android.gms.measurement.dynamite, version >= 87
+02-16 19:53:10.567  6736  6766 V DynamiteModule: Dynamite loader version >= 2, using loadModule2NoCrashUtils
+02-16 19:53:10.583  6736  6766 W System  : ClassLoader referenced unknown path: 
+02-16 19:53:10.727  6736  6779 I janus_test: facebook onInitialized: 
+02-16 19:53:10.729  6431  6449 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=88]
+02-16 19:53:10.731  6736  6736 D BlackBoxCore: getService: activity_manager, android.os.BinderProxy@9407771
+02-16 19:53:10.733  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=76]
+02-16 19:53:10.734  6736  6736 D BlackBoxCore: getService: job_manager, android.os.BinderProxy@ea90dd7
+02-16 19:53:10.735  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=84]
+02-16 19:53:10.736  6736  6736 D BlackBoxCore: getService: package_manager, android.os.BinderProxy@cafd4e2
+02-16 19:53:10.738  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=84]
+02-16 19:53:10.739  6736  6736 D BlackBoxCore: getService: storage_manager, android.os.BinderProxy@286b073
+02-16 19:53:10.741  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=80]
+02-16 19:53:10.742  6736  6736 D BlackBoxCore: getService: user_manager, android.os.BinderProxy@205a3a9
+02-16 19:53:10.744  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=84]
+02-16 19:53:10.745  6736  6736 D BlackBoxCore: getService: xposed_manager, android.os.BinderProxy@1fa5d2e
+02-16 19:53:10.747  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=84]
+02-16 19:53:10.748  6736  6736 D BlackBoxCore: getService: account_manager, android.os.BinderProxy@f91e0cf
+02-16 19:53:10.750  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=88]
+02-16 19:53:10.751  6736  6736 D BlackBoxCore: getService: location_manager, android.os.BinderProxy@8ebd165
+02-16 19:53:10.753  6431  6717 D SystemCallProvider: call: VM, Bundle[mParcelledData.dataSize=96]
+02-16 19:53:10.754  6736  6736 D BlackBoxCore: getService: notification_manager, android.os.BinderProxy@f531e3a
+02-16 19:53:10.755  6736  6776 I System.out: [okhttp]:check permission begin!
+02-16 19:53:10.755  6736  6776 W System  : ClassLoader referenced unknown path: system/framework/mediatek-cta.jar
+02-16 19:53:10.757  6736  6776 I System.out: [okhttp] e:java.lang.ClassNotFoundException: com.mediatek.cta.CtaUtils
+02-16 19:53:10.769  6736  6776 I System.out: [socket]:check permission begin!
+02-16 19:53:10.769  6736  6776 W System  : ClassLoader referenced unknown path: system/framework/mediatek-cta.jar
+02-16 19:53:10.771  6736  6776 I System.out: [socket] e:java.lang.ClassNotFoundException: com.mediatek.cta.CtaUtils
+02-16 19:53:10.780  6736  6736 W lxy     : 6736--
+02-16 19:53:10.858  6736  6780 I FA      : App measurement initialized, version: 75108
+02-16 19:53:10.858  6736  6780 I FA      : To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+02-16 19:53:10.858  6736  6780 I FA      : To enable faster debug mode event logging run:
+02-16 19:53:10.858  6736  6780 I FA      :   adb shell setprop debug.firebase.analytics.app com.gk.hack.cheat.tools
+02-16 19:53:11.099  6588  6600 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:11.216  6736  6780 I FA      : Tag Manager is not found and thus will not be used
+02-16 19:53:11.404  6736  6776 I System.out: [OkHttp] sendRequest>>
+02-16 19:53:11.404  6736  6776 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:11.511  6535  6547 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:11.674  6736  6748 E ack.cheat.tool: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:12.091  6431  6443 E t.tools:sandbo: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:12.184  6736  6736 I Choreographer: Skipped 58 frames!  The application may be doing too much work on its main thread.
+02-16 19:53:12.266  6736  6784 I System.out: [okhttp]:check permission begin!
+02-16 19:53:12.266  6736  6784 I System.out: [okhttp]:not MMS!
+02-16 19:53:12.266  6736  6784 I System.out: [okhttp]:not Email!
+02-16 19:53:12.284  6736  6784 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:12.425  6736  6801 E BmLog   : 发送请求 https://www.gamekillerapp.com/api/overseas/v1/modifier/report-start headers null body Access-Sign: 7e280237997a5e48f3b7247d7494f662
+02-16 19:53:12.425  6736  6801 E BmLog   : Channel: MagicBox64
+02-16 19:53:12.425  6736  6801 E BmLog   : Access-Timestamp: 1676595191
+02-16 19:53:12.425  6736  6801 W BmLog   : 收到请求-->--> POST https://www.gamekillerapp.com/api/overseas/v1/modifier/report-start
+02-16 19:53:12.426  6736  6801 W BmLog   : 收到请求-->Content-Type: application/json
+02-16 19:53:12.426  6736  6801 W BmLog   : 收到请求-->Content-Length: 152
+02-16 19:53:12.427  6736  6801 W BmLog   : 收到请求-->Access-Sign: 7e280237997a5e48f3b7247d7494f662
+02-16 19:53:12.427  6736  6801 W BmLog   : 收到请求-->Channel: MagicBox64
+02-16 19:53:12.435  6736  6801 W BmLog   : 收到请求-->Access-Timestamp: 1676595191
+02-16 19:53:12.441  6736  6801 W BmLog   : 收到请求-->{"statisticsNo":"1","startWay":"1","productId":"39","language":"en","platformId":"9","terminal":"android","uuid":"9695128c-b364-4cbd-9976-f6fa8e6de5b8"}
+02-16 19:53:12.441  6736  6801 W BmLog   : 收到请求-->--> END POST (152-byte body)
+02-16 19:53:12.443  6640  6653 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:12.493  6736  6750 I ack.cheat.tool: Background concurrent copying GC freed 12982(1205KB) AllocSpace objects, 2(40KB) LOS objects, 49% free, 4341KB/8683KB, paused 1.201ms total 293.674ms
+02-16 19:53:13.076  6736  6736 I BmLog   : janus_test
+02-16 19:53:13.091  6736  6736 W lxy     : advJson--{"allModInstallApp":[{"accelerateSize":0,"appDataType":1,"appId":0,"canDelete":true,"cloneMode":false,"fastOpen":false,"installTime32":0,"installTime64":0,"isCanSpeed":false,"isFirstOpen":false,"isLoading":false,"isRemoteApk":true,"name":"Roblox","packageName":"com.roblox.client","path":null,"strDrawable":"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
+02-16 19:53:13.091  6736  6736 W lxy     : 
+02-16 19:53:13.140  6588  6600 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:13.154  6736  6806 E BmLog   : 发送请求 https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D headers null body Access-Sign: 27c25c420df96377d900eb754d1af6f0
+02-16 19:53:13.154  6736  6806 E BmLog   : Channel: MagicBox64
+02-16 19:53:13.154  6736  6806 E BmLog   : Access-Timestamp: 1676595193
+02-16 19:53:13.154  6736  6806 W BmLog   : 收到请求-->--> GET https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D
+02-16 19:53:13.154  6736  6806 W BmLog   : 收到请求-->Access-Sign: 27c25c420df96377d900eb754d1af6f0
+02-16 19:53:13.155  6736  6806 W BmLog   : 收到请求-->Channel: MagicBox64
+02-16 19:53:13.155  6736  6806 W BmLog   : 收到请求-->Access-Timestamp: 1676595193
+02-16 19:53:13.155  6736  6806 W BmLog   : 收到请求-->--> END GET
+02-16 19:53:13.291  6736  6807 E BmLog   : 发送请求 https://www.gamekillerapp.com/api/overseas/v1/version/package/check-for-updates?packageName=com.gk.hack.cheat.tools&versionNo=500024&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=40BD7F4353469CA34490B1CDAE6F3C99 headers null body Access-Sign: 7872b5ca8e90f1e34eb2bd65dbf78e25
+02-16 19:53:13.293  6736  6807 E BmLog   : Channel: MagicBox64
+02-16 19:53:13.293  6736  6807 E BmLog   : Access-Timestamp: 1676595193
+02-16 19:53:13.293  6736  6807 W BmLog   : 收到请求-->--> GET https://www.gamekillerapp.com/api/overseas/v1/version/package/check-for-updates?packageName=com.gk.hack.cheat.tools&versionNo=500024&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=40BD7F4353469CA34490B1CDAE6F3C99
+02-16 19:53:13.294  6736  6807 W BmLog   : 收到请求-->Access-Sign: 7872b5ca8e90f1e34eb2bd65dbf78e25
+02-16 19:53:13.294  6736  6807 W BmLog   : 收到请求-->Channel: MagicBox64
+02-16 19:53:13.294  6736  6807 W BmLog   : 收到请求-->Access-Timestamp: 1676595193
+02-16 19:53:13.295  6736  6807 W BmLog   : 收到请求-->--> END GET
+02-16 19:53:13.320  6736  6814 E BmLog   : 发送请求 https://www.gamekillerapp.com/api/overseas/v1/version/tool/check-for-updates?baseVersionName=3.0.0&packageVersionCode=500024&type=3&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=4B028525C8F6AA8ED076C7139DAEBFBF headers null body Access-Sign: 8ab14911a69181828f3269e6c651cde6
+02-16 19:53:13.320  6736  6814 E BmLog   : Channel: MagicBox64
+02-16 19:53:13.320  6736  6814 E BmLog   : Access-Timestamp: 1676595193
+02-16 19:53:13.321  6736  6814 W BmLog   : 收到请求-->--> GET https://www.gamekillerapp.com/api/overseas/v1/version/tool/check-for-updates?baseVersionName=3.0.0&packageVersionCode=500024&type=3&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=4B028525C8F6AA8ED076C7139DAEBFBF
+02-16 19:53:13.321  6736  6814 W BmLog   : 收到请求-->Access-Sign: 8ab14911a69181828f3269e6c651cde6
+02-16 19:53:13.321  6736  6814 W BmLog   : 收到请求-->Channel: MagicBox64
+02-16 19:53:13.321  6736  6814 W BmLog   : 收到请求-->Access-Timestamp: 1676595193
+02-16 19:53:13.321  6736  6814 W BmLog   : 收到请求-->--> END GET
+02-16 19:53:13.362  6736  6748 E ack.cheat.tool: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:13.507  6640  6679 I System.out: [okhttp]:check permission begin!
+02-16 19:53:13.507  6640  6679 I System.out: [okhttp]:not MMS!
+02-16 19:53:13.507  6640  6679 I System.out: [okhttp]:not Email!
+02-16 19:53:13.512  6535  6547 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:13.514  6431  6531 I System.out: [okhttp]:check permission begin!
+02-16 19:53:13.517  6431  6531 I System.out: [okhttp]:not MMS!
+02-16 19:53:13.517  6431  6531 I System.out: [okhttp]:not Email!
+02-16 19:53:13.522  6640  6679 I System.out: [socket]:check permission begin!
+02-16 19:53:13.544  6535  6574 I System.out: [okhttp]:check permission begin!
+02-16 19:53:13.548  6535  6574 I System.out: [okhttp]:not MMS!
+02-16 19:53:13.549  6535  6574 I System.out: [okhttp]:not Email!
+02-16 19:53:13.560  6535  6574 I System.out: [socket]:check permission begin!
+02-16 19:53:13.585  6431  6531 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:13.595  6736  6806 I System.out: [socket]:check permission begin!
+02-16 19:53:13.595  6588  6620 I System.out: [okhttp]:check permission begin!
+02-16 19:53:13.595  6736  6801 I System.out: [socket]:check permission begin!
+02-16 19:53:13.596  6736  6814 I System.out: [socket]:check permission begin!
+02-16 19:53:13.596  6588  6620 I System.out: [okhttp]:not MMS!
+02-16 19:53:13.598  6736  6807 I System.out: [socket]:check permission begin!
+02-16 19:53:13.599  6588  6620 I System.out: [okhttp]:not Email!
+02-16 19:53:13.678  6736  6736 W lxy     : google-服务：true
+02-16 19:53:13.679  6588  6620 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:13.738  6736  6736 I SurfaceFactory: [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@bc7958c
+02-16 19:53:13.758  6736  6736 D ViewRootImpl[MainActivity]: hardware acceleration = true , fakeHwAccelerated = false, sRendererDisabled = false, forceHwAccelerated = false, sSystemRendererDisabled = false
+02-16 19:53:13.768  6736  6736 I InputTransport: Create ARC handle: 0xb400006f34222e70
+02-16 19:53:13.769  6736  6736 V PhoneWindow: DecorView setVisiblity: visibility = 0, Parent = android.view.ViewRootImpl@b1e7e78, this = DecorView@f549951[MainActivity]
+02-16 19:53:13.779  6736  6736 I Choreographer: Skipped 84 frames!  The application may be doing too much work on its main thread.
+02-16 19:53:14.092  6431  6443 E t.tools:sandbo: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:14.112  6535  6574 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:14.113  6640  6679 I System.out: [OkHttp] sendRequest<<
+02-16 19:53:14.353  6736  6842 I System.out: [socket]:check permission begin!
+02-16 19:53:14.483  6640  6653 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:14.595  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =androidx.appcompat.widget.AppCompatTextView{fb2e04a V.ED..... ......ID 0,0-0,0 #7f080377 app:id/tv_mod_title}time =770 ms
+02-16 19:53:14.605  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =androidx.constraintlayout.widget.ConstraintLayout{2bc3bbb V.E...... ......I. 0,0-0,0}time =782 ms
+02-16 19:53:14.610  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =android.widget.RelativeLayout{1fa98d8 V.E...... ......ID 0,0-0,0 #7f08015f app:id/id_rl_view_actionBar_container}time =787 ms
+02-16 19:53:14.621  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =com.joke.chongya.sandbox.widget.ModActionBar{1551431 V.E...... ......I. 0,0-0,0 #7f0801fb app:id/mb_actionbar}time =797 ms
+02-16 19:53:14.636  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =android.widget.LinearLayout{a54861c VFE...... ......ID 0,0-0,0 #7f0803f3 app:id/virtual_parent}time =813 ms
+02-16 19:53:14.637  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =android.widget.FrameLayout{c81d225 V.E...... ......I. 0,0-0,0 #7f08012c app:id/fragment_container}time =814 ms
+02-16 19:53:14.638  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =androidx.constraintlayout.widget.ConstraintLayout{eebeffa V.E...... ......I. 0,0-0,0 #7f0801e5 app:id/mainParent}time =820 ms
+02-16 19:53:14.639  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =androidx.appcompat.widget.ContentFrameLayout{2ef89ab V.E...... ......I. 0,0-0,0 #1020002 android:id/content}time =821 ms
+02-16 19:53:14.640  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =androidx.appcompat.widget.FitWindowsLinearLayout{131e808 V.E...... ......I. 0,0-0,0 #7f080041 app:id/action_bar_root}time =822 ms
+02-16 19:53:14.640  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =android.widget.FrameLayout{5226ba1 V.E...... ......I. 0,0-0,0}time =822 ms
+02-16 19:53:14.640  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =android.widget.LinearLayout{bf911c6 V.E...... ......I. 0,0-0,0}time =822 ms
+02-16 19:53:14.641  6736  6736 D View    : [ANR Warning]onMeasure time too long, this =DecorView@f549951[MainActivity]time =823 ms
+02-16 19:53:14.671  6736  6788 E GED     : Failed to get GED Log Buf, err(0)
+02-16 19:53:15.100  6736  6788 E ion     : ioctl c0044901 failed with code -1: Invalid argument
+02-16 19:53:15.179  6588  6600 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:15.363  6736  6748 E ack.cheat.tool: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:15.414  6736  6788 I OpenGLRenderer: Davey! duration=3032ms; Flags=1, IntendedVsync=206483651915037, Vsync=206485051915065, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=206485052601689, AnimationStart=206485052612920, PerformTraversalsStart=206485053029612, DrawStart=206486331245227, SyncQueued=206486357790689, SyncStart=206486359247151, IssueDrawCommandsStart=206486359515766, SwapBuffers=206486682926766, FrameCompleted=206486686121458, DequeueBufferDuration=337153, QueueBufferDuration=1747846, GpuCompleted=0, 
+02-16 19:53:15.471  6736  6736 I Choreographer: Skipped 100 frames!  The application may be doing too much work on its main thread.
+02-16 19:53:15.510  6736  6736 W hermes  : 正在连接服务
+02-16 19:53:15.522  6736  6736 W hermes  : 绑定服务==true
+02-16 19:53:15.551  6535  6547 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:15.653  6736  6801 W BmLog   : 收到请求--><-- HTTP FAILED: java.net.SocketException: Socket is closed
+02-16 19:53:15.841  6640  6640 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.phenotype.service.START dat=chimera-action: cmp=com.google.android.gms/.chimera.PersistentApiService }
+02-16 19:53:15.946  6736  6750 I ack.cheat.tool: ThreadFlipBegin blocked for 11.796ms
+02-16 19:53:15.949  6736  6736 V PhoneWindow: DecorView setVisiblity: visibility = 4, Parent = android.view.ViewRootImpl@b1e7e78, this = DecorView@f549951[MainActivity]
+02-16 19:53:16.131  6431  6443 E t.tools:sandbo: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:16.242  6736  6806 W BmLog   : 收到请求--><-- 200 https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D (3081ms)
+02-16 19:53:16.242  6736  6806 W BmLog   : 收到请求-->Server: nginx/1.16.1
+02-16 19:53:16.251  6736  6806 W BmLog   : 收到请求-->Date: Fri, 17 Feb 2023 00:53:17 GMT
+02-16 19:53:16.252  6736  6806 W BmLog   : 收到请求-->Content-Type: application/json;charset=UTF-8
+02-16 19:53:16.252  6736  6806 W BmLog   : 收到请求-->Content-Length: 356
+02-16 19:53:16.252  6736  6806 W BmLog   : 收到请求-->Connection: keep-alive
+02-16 19:53:16.266  6736  6806 W BmLog   : 收到请求-->{"content":[{"bannerImageId":166,"id":13,"imageUrl":"https://download.gamekillerapp.com/images/4466FAQ.png","jumpUrl":"https://gamekillerapp.com/archive-modifier/FAQ.html"},{"bannerImageId":167,"id":13,"imageUrl":"https://download.gamekillerapp.com/images/2230Tutorial.png","jumpUrl":"https://gamekillerapp.com/archive-modifier/tutorial.html"}],"status":1}
+02-16 19:53:16.266  6736  6806 W BmLog   : 收到请求--><-- END HTTP (356-byte body)
+02-16 19:53:16.325  6736  6814 W BmLog   : 收到请求--><-- 200 https://www.gamekillerapp.com/api/overseas/v1/version/tool/check-for-updates?baseVersionName=3.0.0&packageVersionCode=500024&type=3&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=4B028525C8F6AA8ED076C7139DAEBFBF (3003ms)
+02-16 19:53:16.325  6736  6814 W BmLog   : 收到请求-->Server: nginx/1.16.1
+02-16 19:53:16.325  6736  6814 W BmLog   : 收到请求-->Date: Fri, 17 Feb 2023 00:53:17 GMT
+02-16 19:53:16.326  6736  6814 W BmLog   : 收到请求-->Content-Type: text/plain;charset=UTF-8
+02-16 19:53:16.326  6736  6814 W BmLog   : 收到请求-->Content-Length: 25
+02-16 19:53:16.326  6736  6814 W BmLog   : 收到请求-->Connection: keep-alive
+02-16 19:53:16.373  6736  6814 W BmLog   : 收到请求-->{"content":{},"status":1}
+02-16 19:53:16.378  6736  6814 W BmLog   : 收到请求--><-- END HTTP (25-byte body)
+02-16 19:53:16.381  6736  6799 E BmLog   : status: 1,message:
+02-16 19:53:16.524  6640  6653 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:17.044  6736  6736 I Choreographer: Skipped 36 frames!  The application may be doing too much work on its main thread.
+02-16 19:53:17.070  6736  6806 E BmLog   : 发送请求 https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D headers null body Access-Sign: fd3a94c075a3a179803a34603d886131
+02-16 19:53:17.071  6736  6806 E BmLog   : Channel: MagicBox64
+02-16 19:53:17.071  6736  6806 E BmLog   : Access-Timestamp: 1676595196
+02-16 19:53:17.071  6736  6806 W BmLog   : 收到请求-->--> GET https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D
+02-16 19:53:17.081  6736  6806 W BmLog   : 收到请求-->Access-Sign: fd3a94c075a3a179803a34603d886131
+02-16 19:53:17.081  6736  6806 W BmLog   : 收到请求-->Channel: MagicBox64
+02-16 19:53:17.081  6736  6806 W BmLog   : 收到请求-->Access-Timestamp: 1676595196
+02-16 19:53:17.082  6736  6806 W BmLog   : 收到请求-->--> END GET
+02-16 19:53:17.111  6736  6807 W BmLog   : 收到请求--><-- 200 https://www.gamekillerapp.com/api/overseas/v1/version/package/check-for-updates?packageName=com.gk.hack.cheat.tools&versionNo=500024&statisticsNo=1&productId=39&language=en&platformId=9&terminal=android&sign=40BD7F4353469CA34490B1CDAE6F3C99 (3815ms)
+02-16 19:53:17.111  6736  6807 W BmLog   : 收到请求-->Server: nginx/1.16.1
+02-16 19:53:17.111  6736  6807 W BmLog   : 收到请求-->Date: Fri, 17 Feb 2023 00:53:17 GMT
+02-16 19:53:17.112  6736  6807 W BmLog   : 收到请求-->Content-Type: text/plain;charset=UTF-8
+02-16 19:53:17.112  6736  6807 W BmLog   : 收到请求-->Content-Length: 12
+02-16 19:53:17.112  6736  6807 W BmLog   : 收到请求-->Connection: keep-alive
+02-16 19:53:17.117  6736  6807 W BmLog   : 收到请求-->{"status":1}
+02-16 19:53:17.118  6736  6807 W BmLog   : 收到请求--><-- END HTTP (12-byte body)
+02-16 19:53:17.219  6588  6600 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:17.363  6736  6748 E ack.cheat.tool: failed to connect to jdwp control socket: Connection refused
+02-16 19:53:17.418  6736  6806 W BmLog   : 收到请求--><-- 200 https://www.gamekillerapp.com/api/overseas/v1/banner/list?statisticsNo=1&code=modifier_banner&productId=39&language=en&platformId=9&terminal=android&sign=2247981BFEF1DDA274E6E6E11790DF3D (328ms)
+02-16 19:53:17.419  6736  6806 W BmLog   : 收到请求-->Server: nginx/1.16.1
+02-16 19:53:17.421  6736  6806 W BmLog   : 收到请求-->Date: Fri, 17 Feb 2023 00:53:18 GMT
+02-16 19:53:17.422  6736  6806 W BmLog   : 收到请求-->Content-Type: application/json;charset=UTF-8
+02-16 19:53:17.423  6736  6806 W BmLog   : 收到请求-->Content-Length: 356
+02-16 19:53:17.423  6736  6806 W BmLog   : 收到请求-->Connection: keep-alive
+02-16 19:53:17.429  6736  6806 W BmLog   : 收到请求-->{"content":[{"bannerImageId":166,"id":13,"imageUrl":"https://download.gamekillerapp.com/images/4466FAQ.png","jumpUrl":"https://gamekillerapp.com/archive-modifier/FAQ.html"},{"bannerImageId":167,"id":13,"imageUrl":"https://download.gamekillerapp.com/images/2230Tutorial.png","jumpUrl":"https://gamekillerapp.com/archive-modifier/tutorial.html"}],"status":1}
+02-16 19:53:17.429  6736  6806 W BmLog   : 收到请求--><-- END HTTP (356-byte body)
+02-16 19:53:17.441  6736  6800 E BmLog   : status: 1,message:
+02-16 19:53:17.591  6535  6547 E .cheat.tools:p: failed to connect to jdwp control socket: Connection refused
