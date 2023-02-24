@@ -1,0 +1,15 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 2/23/2023 22:09:34 pm<span title="2/23/2023 22:09:34 pm">A5 #1</span>
+Scores<- data.frame("T1"=c(78,67,92,85,69,56),
+ "T2" = c(86,65,89,85,75,62), "F" = c(82,72,90,82,72,60))
+ str(Scores)
+T1<-Scores$T1
+T2<-Scores$T2
+F<-Scores$F
+# Model 1
+M1= lm(F~T1+T2, data=Scores) #Creates the linear regression model
+summary(M1)
+plot(M1$residuals)
+print("predicted final exam score of a student who received a score of 74% on the first test and 81% on the second test.")
+predict(M1,data.frame(T1=74,T2=81))
