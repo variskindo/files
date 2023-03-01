@@ -1,0 +1,15 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 2/28/2023 20:59:39 pm<span title="2/28/2023 20:59:39 pm">A6</span>
+fem_babies<- data.frame("Age_months"=c(0,3,9,15,20,36),
+ "Weight_pounds" = c(7.3,13.3,18.8, 22, 24.4, 31.5), "Length_inches" = c(19.4,23.6, 27.6, 30.6, 32.6, 37))
+ str(fem_babies)
+Age_months<-fem_babies$Age_months
+Length_inches<-fem_babies$Length_inches
+Weight_pounds<-fem_babies$Weight_pounds
+# Model 1
+M1= lm(Age_months~Length_inches +Weight_pounds, data=fem_babies) #Creates the linear regression model
+summary(M1) #Review the results of our linear regression model.
+plot(M1$residuals)
+print("predicted age, in months, of a female baby that weighs 20 pounds and is 28 inches long")
+predict(M1,data.frame(Length_inches=28,Weight_pounds=20))
