@@ -1,0 +1,32 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 2/28/2023 20:59:39 pm<span title="2/28/2023 20:59:39 pm">A6</span>
+fem_babies<- data.frame("Age_months"=c(0,3,9,15,20,36),
+ "Weight_pounds" = c(7.3,13.3,18.8, 22, 24.4, 31.5), "Length_inches" = c(19.4,23.6, 27.6, 30.6, 32.6, 37))
+ str(fem_babies)
+Age_months<-fem_babies$Age_months
+Length_inches<-fem_babies$Length_inches
+Weight_pounds<-fem_babies$Weight_pounds
+# Model 1
+M1= lm(Age_months~Length_inches +Weight_pounds, data=fem_babies) #Creates the linear regression model
+summary(M1) #Review the results of our linear regression model.
+plot(M1$residuals)
+print("predicted age, in months, of a female baby that weighs 20 pounds and is 28 inches long")
+predict(M1,data.frame(Length_inches=28,Weight_pounds=20))
+# Saved at 3/1/2023 19:34:52 pm<span title="3/1/2023 19:34:52 pm">Fembabies script</span>
+#Below you will see how we must enter our data so R can read it.
+female_babies<-data.frame("Age_Months"=c(0,3,9,15,20,36),"Weight_Pounds"=c(7.3,13.3,18.8,22,24.4,31.5), "Length_Inches"=c(19.4,23.6,27.6,30.6,32.6,37)) 
+
+#This  gives a description of the dataset scores
+#str(female_babies)
+
+Age_Months<-female_babies$Age_Months
+Weight_Pounds<-female_babies$Weight_Pounds
+Length_Inches<-female_babies$Length_Inches
+#The female_babies$Age_Months tells R to look at "Age_Months" in our scores dataset. 
+#Same thing for female_babies$Weight_Pounds and female_babies$Length_Inches.
+M1=lm(Age_Months~Weight_Pounds+Length_Inches,data=female_babies) #We use the "lm" function to create our linear regression model.
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(M1$residuals)# plots the residuals
+print("Predicted age of a female baby that has a weight of 20 pounds and a length of 28 inches.")   
+predict(M1,data.frame(Weight_Pounds=20, Length_Inches=28))
