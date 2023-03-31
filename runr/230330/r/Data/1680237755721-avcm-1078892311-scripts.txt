@@ -1,0 +1,19 @@
+# Saved at 3/30/2023 21:42:35 pm<span title="3/30/2023 21:42:35 pm">Q0</span>
+data<-c(83, 81, 82, 79, 78, 77, 79, 79, 82, 81)
+p=.8
+q=.2
+n=100
+sd<-sqrt(p*q)
+se<-sd/sqrt(n)
+x1<-83/100; x2<-81/100; x3<82-/100; x4<-79/100; x5<-78/100; x6<-77/100; x7<-79/100; x8<-79/100; x9<-82/100; x10<-81/100
+Sample_means<-c(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10)
+print("Sample means")
+Sample_means<-c
+z1<-(x1-p)/se; z2<-(x2-p)/se; z3<-(x3-p)/se; z4<-(x4-p)/se; z5<-(x5-p)/se;
+z6<-(x6-p)/se; z7<-(x7-p)/se; z8<-(x8-p)/se; z9<-(x9-p)/se; z10<-(x10-p)/se;
+Sample_zscores<-c(z1,z2,z3,z4,z5,z6,z7,z8,z9,z10
+print("Sample z-scores")
+Sample_zscores
+hist(Sample_means, breaks=c(.77,.78,.79,.8,.81, .82,.83).
+hist(Sample_zscores, freq=FALSE, breaks=c(-1,-.5,0,.5, 1))
+breaks=c(-3,-2,-1,0,1,2, 3)) curve(dnorm(x, mean=0, sd=1), col="blue", add=TRUE
