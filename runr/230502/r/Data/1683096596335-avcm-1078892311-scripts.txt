@@ -1,0 +1,9 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 5/2/2023 23:49:56 pm<span title="5/2/2023 23:49:56 pm">lec 17</span>
+M <- as.table(rbind(c(60,54,60,41), c(80,45,70,30)))
+dimnames(M) <-list(Gender = c("F","M"),
+Grade_Level=c("High School","Bachelors","Masters", "PHD"))
+chisq.test(M)  # Prints test summary
+chisq.test(M)$observed   # observed counts (same as M)
+chisq.test(M)$expected   # expected counts assuming null is true.
