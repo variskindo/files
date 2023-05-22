@@ -1,0 +1,156 @@
+# Saved at 5/23/2023 4:52:36 am<span title="5/23/2023 4:52:36 am">R Script 23-May-2023</span>
+dll_path <- "C:/Apps/wwwroot/php/files/r/Data/ROptions.lib"
+dll_handle <- dyn.load(dll_path)
+# Define the function signature
+
+arr <- c(1.2, 2.3, 3, 4)
+sum(arr)
+#.C("IntegerFunc", as.integer(2), as.integer(3), as.character("+"))
+.C("ArrayFunc", as.double(arr), as.integer(length(arr)))
+dyn.unload(dll_path)
+
+Spot <- 14500
+Strike <- 15150
+Rebate <- 200
+Rd <- 0.05
+Rf <- 0.01
+Vol <- 0.1
+Tenor <- 0.25
+start_time <- Sys.time()  # Record the start time
+for (i in 1:1000) {
+  r <- varisk.BlackScholes("p", "p", Spot, Strike, Tenor, Rd, Rd-Rf, Vol)
+}
+end_time <- Sys.time()  # Record the end time
+print(paste(r, end_time - start_time))
+
+BlackScholesVanilla <- function(OutPutFlag, CallPutFlag, Spot, Strike, Tenor, Rd, Rf, Vol) {
+  r <- .C("BlackScholes", as.double(0), # first argument is the result
+    as.character(OutPutFlag), as.character(CallPutFlag), as.double(Spot), 
+    as.double(Strike), as.double(Tenor), as.double(Rd), 
+    as.double(Rd-Rf), as.double(Vol))[[1]]
+}
+
+BlackScholesDigital <- function(OutPutFlag, CallPutFlag, Spot, Strike, Rebate, Tenor, Rd, Rf, Vol) {
+  r <- .C("CashOrNothing", as.double(0), # first argument is the result
+    as.character(OutPutFlag), as.character(CallPutFlag), as.double(Spot), 
+    as.double(Strike), as.double(Rebate), as.double(Tenor), as.double(Rd), 
+    as.double(Rd-Rf), as.double(Vol))[[1]]
+}
+
+GetOptEuropeanPut <- function(Spot, Strike, Tenor, Rd, Rf, Vol) {
+  r <- .C("GetOptEuropeanPut", as.double(0), as.double(Spot), 
+    as.double(Strike), as.double(Rd), as.double(Rf), as.double(Vol),
+    as.double(Tenor))[[1]]
+}
+
+start_time <- Sys.time()  # Record the start time
+# Load the DLL
+dll_handle <- dyn.load(dll_path)
+
+# Call the function in the DLL
+for (i in 1:1000) {
+  r <- GetOptEuropeanPut(Spot, Strike, Tenor, Rd, Rf, Vol)
+}
+#.C("AddNumbers", as.integer(3), as.integer(6), as.character("+"))
+#.C("foo", as.integer(3), as.double(2))
+
+# Unload the DLL
+dyn.unload(dll_path)
+end_time <- Sys.time()  # Record the end time
+print(paste(r, end_time - start_time))
+
+start_time <- Sys.time()  # Record the start time
+# Load the DLL
+dll_handle <- dyn.load(dll_path)
+
+# Call the function in the DLL
+for (i in 1:1000) {
+  r <- BlackScholesVanilla("p", "p", Spot, Strike, Tenor, Rd, Rf, Vol)
+}
+#.C("AddNumbers", as.integer(3), as.integer(6), as.character("+"))
+#.C("foo", as.integer(3), as.double(2))
+1000000 * BlackScholesDigital("p", "c", 1.061, 1.063, 0.001, 92/365, 
+  0.04757, 0.02496, 0.08236)
+
+# Unload the DLL
+dyn.unload(dll_path)
+end_time <- Sys.time()  # Record the end time
+print(paste(r, end_time - start_time))
+
+current_date <- Sys.Date()
+# Add 2 days to the current date
+new_date <- current_date + 2
+# Print the new date
+print(format(new_date, format="%d-%b-%Y"))
+
+fxoEuropean <- 1
+fxoAmerican <- 2
+fxoStyles <- c("European", "American")
+df <- data.frame(
+  style = c(1, 2, 2, 1),
+  eff.notional = c(100, 200, 300, 400),
+  eff.notional2 = c(100000, 200000, 300000, 400000)
+)
+df$style <- fxoStyles[df$style]
+df
+
+frtb.CVA.TL.IR <- data.frame(
+  cparty = c("DEUS", "DEUS", "DEUS", "CIJK"),
+  hs = c("IDR", "IDR", "IDR", "USD"),
+  timebucket = c("1", "2", "2", "3"),
+  eff.notional = c(100, 200, 300, 400),
+  eff.notional2 = c(100000, 200000, 300000, 400000)
+)
+length(frtb.CVA.TL.IR)
+frtb.CVA.TL.FX <- data.frame(
+  cparty = c("DEUS", "PT Y"),
+  hs = c("IDR", "IDR"),
+  timebucket = c("1", "2"),
+  eff.notional = c(100, 200),
+  eff.notional2 = c(100000, 200000)
+)
+v <- frtb.CVA.TL.FX
+colnames(v) <- c("C1", "C2", "C3", "C4", "C5")
+write.csv(v, "C:/Apps/wwwroot/php/files/r/Data/Test.csv", row.names = FALSE, quote = FALSE)
+
+cparty <- as.character(subset(frtb.CVA.TL.IR, hs=="IDRS")$cparty)[1]
+length(cparty) == 0
+
+frtb.CVA.NS.List <- union(frtb.CVA.TL.IR$cparty, frtb.CVA.TL.FX$cparty) # get netting set list
+frtb.CVA.NS.List
+x <- sum(with(frtb.CVA.TL.IR, 
+          ifelse(hs == "IDR", eff.notional, 0)))
+x
+ 
+varisk.initVars()
+whatif <- '/Data/test/DKI-MM-Test.xlsx,2,15' # "what-if" trades
+whatif <- gsub("  ", " ", whatif) # "  100.00"
+s <- strsplit(whatif, ",")
+s[[1]]
+if (length(s[[1]]) == 3 && grepl("/", s[[1]][1], fixed=TRUE) && grepl(".xls", s[[1]][1], fixed=TRUE)) {
+  paste0(folder.root, s[[1]][1])
+}
+
+df <- readxl::read_excel("C:/Apps/wwwroot/php/files/r/230430/DKI-SWP.xlsx", sheet=2, skip=15)
+deals <- data.frame(df)
+class(deals)
+class(s[[1]])
+n <- nrow(deals)
+for (i in 1:n) {
+  if (n == 0) break
+  s <- deals[i, ][1]
+  # use scan to split a string by space except when contained within quotes
+  deal <- scan(text=s, what='character', quiet=TRUE)
+  print(deal)
+  m <- length(deal)
+  print(m)
+}
+
+host.name
+regexpr("http://", host.name)[1]
+folder.date
+s <- gsub('C:/Apps/wwwroot/', 'Z:/bdki/', folder.date)
+s
+gsub('C:/Apps/wwwroot/', 'Z:/bdki/', s)
+
+#Server=1
