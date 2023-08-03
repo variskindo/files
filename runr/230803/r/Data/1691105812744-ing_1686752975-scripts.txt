@@ -1,0 +1,5 @@
+# Saved at 8/3/2023 20:36:52 pm<span title="8/3/2023 20:36:52 pm">Goles por partido</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+obs[obs==NA]<-NA
