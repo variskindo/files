@@ -1,0 +1,50 @@
+# Saved at 8/3/2023 20:36:52 pm<span title="8/3/2023 20:36:52 pm">Goles por partido</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+obs[obs==NA]<-NA
+# Saved at 8/4/2023 9:12:51 am<span title="8/4/2023 9:12:51 am">Avance viernes 4_8</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x,main = "Goles de River en cada partido de la liga", xlab = "Goles", ylab = "Frecuencia")
+text(barp,x,labels=x)
+#x1<-mean(x)
+pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 9:23:43 am<span title="8/4/2023 9:23:43 am">MÃ¡s nuevo</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 11:32:52 am<span title="8/4/2023 11:32:52 am">Viernes Mava</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, y=c(0,12),main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x, pos=3,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 11:43:16 am<span title="8/4/2023 11:43:16 am">Mava</span>
+#Data=../r/230804/runr-ing_1686752975-Goles viernes.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, y=c(0,12), main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x,pos=3,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')
