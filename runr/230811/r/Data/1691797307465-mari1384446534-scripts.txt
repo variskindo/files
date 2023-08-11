@@ -1,0 +1,12 @@
+# Saved at 8/11/2023 20:41:47 pm<span title="8/11/2023 20:41:47 pm">Presentacion2</span>
+#Data=../r/230810/runr-mava-455900245-GastosMedios por Etnia.xlsx
+#Sheet=1
+print(obs) #display the data
+
+x <- obs$GastosMedios
+x1<-obs$Origen
+print(x)
+GRAFICO<-barplot(x,names.arg = x1, ylim=c(0,50000),col = "Green")
+text(GRAFICO,x, pos=3, labels = x)
+barp <- barplot(x, ylim=c(0,50000),names.arg = c("P.Orig ", "Asia", "Africa", "Hispano", "CentAm", " Hawai", "Otros", "Norteame"),col = c("Green","Orange","Red","Blue","Pink","Yellow"))
+text(barp, x ,pos=3, labels = x)
