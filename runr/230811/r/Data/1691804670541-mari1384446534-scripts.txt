@@ -1,0 +1,55 @@
+# Saved at 8/11/2023 20:41:47 pm<span title="8/11/2023 20:41:47 pm">Presentacion2</span>
+#Data=../r/230810/runr-mava-455900245-GastosMedios por Etnia.xlsx
+#Sheet=1
+print(obs) #display the data
+
+x <- obs$GastosMedios
+x1<-obs$Origen
+print(x)
+GRAFICO<-barplot(x,names.arg = x1, ylim=c(0,50000),col = "Green")
+text(GRAFICO,x, pos=3, labels = x)
+barp <- barplot(x, ylim=c(0,50000),names.arg = c("P.Orig ", "Asia", "Africa", "Hispano", "CentAm", " Hawai", "Otros", "Norteame"),col = c("Green","Orange","Red","Blue","Pink","Yellow"))
+text(barp, x ,pos=3, labels = x)# Saved at 8/11/2023 21:59:12 pm<span title="8/11/2023 21:59:12 pm">N1</span>
+#Data=../r/230811/runr-mari1384446534-DatosCompletos.xls
+#Sheet=1
+print(obs) #display the data
+
+#DIAGRAMA DE BARRAS PARA fRECUENCIAS RELATIVAS PORCENTUALES DE INDIVIDUOS POR ETNIA
+x1 <- obs$Etnia
+#print(x1)
+tabla2 <- table(x1)
+tabla2<-prop.table(tabla2)*100
+
+tabla2
+
+xx<-barplot(tabla2,ylim=c(0,50),col =rainbow(8),main='Diagrama de Barras Porcentaje de consumidores por Etnia')
+text(x=xx,y=tabla2, pos=3,  col=,
+    label=tabla2)
+    
+  #DIAGRAMA DE BARRAS PARA fRECUENCIAS ASOLUTA DE INDIVIDUOS POR GENERO  
+ #   x <- obs$Genero
+ #   tabla1 <- table(x)
+ 
+#Nombre<-names(tabla2)
+#Nombre1<-names(tabla1)
+#tabla1
+#xx<-barplot(tabla1,xlab='Genero',names.arg = Nombre1,col = c("Green","Orange"),main=' frcuencias absolutas de consumidores por genero')
+#text(x=xx, y=tabla1,pos=1,  col=,
+ #   label=tabla1)
+ 
+ #DIAGRAMA DE BARRAS PARA fRECUENCIAS ASOLUTA DE INDIVIDUOS POR COHORTE
+# x3 <- obs$Cohorte
+ #tabla3 <- table(x3)
+ #tabla3
+ #xx<-barplot(tabla3,xlab='Cohorte',col= "Red ",main=' frcuencias absolutas de consumidores por Cohorte')
+ #text(x=xx, y=tabla3,pos=1,  col=,
+ #  label=tabla3)
+ obs1<-obs[obs$Etnia=="N.America",]
+GASTOSmedios=mean(obs1$Gastos)
+GASTOSmedios
+# Saved at 8/11/2023 22:44:30 pm<span title="8/11/2023 22:44:30 pm">prueba</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
