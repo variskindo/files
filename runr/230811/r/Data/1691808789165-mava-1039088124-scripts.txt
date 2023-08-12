@@ -1,0 +1,38 @@
+# Saved at 8/11/2023 23:53:08 pm<span title="8/11/2023 23:53:08 pm">Presentación1</span>
+#Data=../r/230811/runr-mava-1039088124-DatosCompletos.xls
+#Sheet=1
+print(obs) #display the data
+
+#DIAGRAMA DE BARRAS PARA fRECUENCIAS RELATIVAS PORCENTUALES DE INDIVIDUOS POR ETNIA
+x1 <- obs$Etnia
+#print(x1)
+tabla2 <- table(x1)
+tabla2<-prop.table(tabla2)*100
+
+tabla2
+
+xx<-barplot(tabla2,ylim=c(0,50),col =rainbow(8),main='Diagrama de Barras Porcentaje de consumidores por Etnia')
+text(x=xx,y=tabla2, pos=3,  col=,
+    label=tabla2)
+    
+  #DIAGRAMA DE BARRAS PARA fRECUENCIAS ASOLUTA DE INDIVIDUOS POR GENERO  
+ #   x <- obs$Genero
+ #   tabla1 <- table(x)
+ 
+#Nombre<-names(tabla2)
+#Nombre1<-names(tabla1)
+#tabla1
+#xx<-barplot(tabla1,xlab='Genero',names.arg = Nombre1,col = c("Green","Orange"),main=' frcuencias absolutas de consumidores por genero')
+#text(x=xx, y=tabla1,pos=1,  col=,
+ #   label=tabla1)
+ 
+ #DIAGRAMA DE BARRAS PARA fRECUENCIAS ASOLUTA DE INDIVIDUOS POR COHORTE
+# x3 <- obs$Cohorte
+ #tabla3 <- table(x3)
+ #tabla3
+ #xx<-barplot(tabla3,xlab='Cohorte',col= "Red ",main=' frcuencias absolutas de consumidores por Cohorte')
+ #text(x=xx, y=tabla3,pos=1,  col=,
+ #  label=tabla3)
+ obs1<-obs[obs$Etnia=="N.America",]
+GASTOSmedios=mean(obs1$Gastos)
+GASTOSmedios
