@@ -1,0 +1,8 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 8/24/2023 20:25:20 pm<span title="8/24/2023 20:25:20 pm">Least Favorite Day of the Week</span>
+least_fav_day_of_the_week<-c(50,5,25,7,1,2,10)
+barplot(least_fav_day_of_the_week,horiz=TRUE,name.arg=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"),main="Least Favorite Day of the Week",xlab="Days",ylab="Number of People",col=c("Black","Yellow","Grey","Pink","Lightblue","Green","White"))
+# Saved at 8/24/2023 23:11:34 pm<span title="8/24/2023 23:11:34 pm">barplot</span>
+least_day<-c(50,5,25,7,1,2,10)
+barplot(least_day,horiz=TRUE,names.arg=c("Monday","Tuesday","Wednesday","Thurs.","Friday","Saturday","Sunday"),main="Least Favorite Day of the Week",xlab="Number of People",ylab="Days",col=c("black","yellow","grey","pink","lightblue","green","white"))
