@@ -1,0 +1,7 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 8/29/2023 20:41:32 pm<span title="8/29/2023 20:41:32 pm">bar</span>
+least_day<-c(35,30,10,25,40,5)
+barplot(least_day,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),main="Favorite Fruit Jacqueline Hernandez",xlab="Number of People",ylab="Type of Fruit",col=c("green","orange","yellow","brown","blue","red"))# Saved at 8/29/2023 20:48:10 pm<span title="8/29/2023 20:48:10 pm">q2</span>
+Ages<-c(18,18,19,19, 20,21,21,21,21,22,23,25, 27, 28,28,30,30,32,33,34,34,36,40,45,53)
+hist(Ages,breaks=c(15,20,30,45,60),col="orange",main="Ages",xlab="nonuniform bin sizes",ylab="Density of ages")
