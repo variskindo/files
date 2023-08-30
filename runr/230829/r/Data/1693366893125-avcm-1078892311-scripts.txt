@@ -1,0 +1,5 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 8/29/2023 20:41:32 pm<span title="8/29/2023 20:41:32 pm">bar</span>
+least_day<-c(35,30,10,25,40,5)
+barplot(least_day,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),main="Favorite Fruit Jacqueline Hernandez",xlab="Number of People",ylab="Type of Fruit",col=c("green","orange","yellow","brown","blue","red"))
