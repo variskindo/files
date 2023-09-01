@@ -1,0 +1,76 @@
+# Saved at 9/2/2023 5:56:36 am<span title="9/2/2023 5:56:36 am">Test</span>
+reportDate <- as.Date("2023-08-30")
+format(reportDate, "%m-%d-%Y")
+
+df <- data.frame(
+  COL1 = c("ABC", "DEF", "ABC", "GHI", "ABC"),
+  COL2 = c(10, 20, 30, 40, 50)
+)
+df2 <- data.frame(
+  COLM = c(10, 20, 30),
+  COL1 = c("XXX", "YYY", "ZZZ"),
+  COLN = c(10, 20, 30)
+)
+df$COL2[df$COL1 == "ABC"] <- -10
+df
+all.deals <- data.frame(id=c(), instrumentID=c())
+all.deals <- rbind(all.deals, data.frame(id=df$COL1, instrumentID=1))
+all.deals <- rbind(all.deals, data.frame(id=df2$COL1, instrumentID=2))
+all.deals
+
+Sys.setenv(TZ = "Etc/GMT+7")
+s <- "/230704/test.csv"
+result <- sub(".*files/r", "", s)
+print(result)
+
+s <- "https://my.xyz/files/r/230704/test.csv"
+arr <- trimws(strsplit(s, "/", fixed = TRUE)[[1]])
+print(length(arr))
+
+s <- '1 "VAL_CAP:10260" 6.2e+10 "PDKTIDJA" "Repo" "IDGB-FR0076" "Reverse Repo" 5.65 2023-03-06 2023-03-06 2023-03-07 "BPD KALTIM & KALTARA" "IDR"'
+deal <- scan(text=s, what='character', quiet=TRUE)
+
+s <- as.Date("01/01/2023")
+lubridate::is.Date(s)
+
+original_string <- "https://my.domain.com"
+# Check if "my" is found in the string
+is_found <- grepl("my", original_string)
+is_found
+
+s <- "/Data/test/DKI-MM-Test.xlsx,2,15\n/Data/test/DKI-MM-Test.xlsx,2,15"
+s <- trimws(strsplit(s, ",", fixed = TRUE)[[1]])
+length(s)
+
+Title <- paste("My Report | 2023-02-28 |",
+                "AUD, 2, 1=2.9, 2=3.0; SGD, 1, 1=0.25, 2=0.26 |",
+                "GBP/USD, 1.2015, 3=6.5; GBP/AUD, 1.7914, 3=7.5; EUR/USD, 1.0525, 3=8.5")
+Titles <- trimws(strsplit(Title, "|", fixed = TRUE)[[1]])
+Titles[1]
+Titles[2]
+IRs <- trimws(strsplit(Titles[3], ";", fixed = TRUE)[[1]])
+for (i in 1:length(IRs)) {
+   arr <- trimws(strsplit(IRs[i], ",", fixed = TRUE)[[1]])
+   for (j in 1:length(arr)) {
+      print(arr[j])
+   }
+}
+FXs <- trimws(strsplit(Titles[4], ";", fixed = TRUE)[[1]])
+for (i in 1:length(FXs)) {
+   arr <- trimws(strsplit(FXs[i], ",", fixed = TRUE)[[1]])
+   for (j in 1:length(arr)) {
+      print(arr[j])
+   }
+}
+
+print("ALL")
+MyVariables<-objects()
+for (i in MyVariables) {
+  print(i)
+}
+
+print("NOT ALL")
+e <- as.list(globalenv())
+str(e)
+
+#Server=3
