@@ -1,0 +1,6 @@
+# Saved at 9/22/2023 20:38:23 pm<span title="9/22/2023 20:38:23 pm">defaultExample</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
