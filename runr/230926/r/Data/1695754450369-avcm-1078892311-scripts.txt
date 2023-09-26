@@ -1,0 +1,41 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 9/25/2023 22:11:57 pm<span title="9/25/2023 22:11:57 pm">a5</span>
+Scores<- data.frame("T1"=c(78,67,92,85,69,56),
+ "T2" = c(86,65,89,85,65,72), "F" = c(82,72,90,82,72,62)) 
+ 
+#str(Scores)   #This  gives a description of the dataset scores
+T1<-Scores$T1 
+T2<-Scores$T2 
+F<-Scores$F
+
+# Model 1
+#We now create a linear model to see how well T1 scores predict final exam scores. 
+M1= lm(F~T1,data=Scores) #We use the "lm" function to create our linear regression model.
+print("Summary of Model 1")  
+summary(M1) #This gives a summary of the main features of our linear regression model which includes RSE,equation of regression line, R^2 and adj(R^2) values.
+plot(T1,F, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted final exam score of a student who received a 74% on the first test.")  
+predict(M1,data.frame(T1=74))
+# Saved at 9/26/2023 11:54:10 am<span title="9/26/2023 11:54:10 am">cherry tree girth</span>
+cherry_tree<-data.frame("girth"=c(8.6,10.5,11.4,14,16.3),
+"height_inches"=c(65,72,76,78,77), "volume"=c(10.3, 16.4, 21.4, 35.5, 42.6))
+
+str(cherry_tree)
+
+girth<-cherry_tree$girth
+
+height<-cherry_tree$height
+
+volume<-cherry_tree$volume
+
+M1=lm(volume~girth, data=cherry_tree)#We use the "lm" funtion to create our linear regression model. 
+print("Summary of Model 1")
+summary(M1) #this gives a summary of the main feaautres of our linear regression model which includes RSE, equation of regression line, R^2 and adj(R^2) values.
+plot(girth, volume, pch=16, col="blue") #creates a scatter plot
+abline(M1)#Adds the regression line to our scatter plot
+plot(M1$residuals)# plots the residuals
+print("Predicted volume of a black cherry tree that has a girth of 18.2 inches.")
+predict(M1,data.frame(girth=18.2))
