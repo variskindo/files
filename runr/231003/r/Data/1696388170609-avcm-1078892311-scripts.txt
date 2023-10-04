@@ -1,0 +1,18 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 10/3/2023 19:56:10 pm<span title="10/3/2023 19:56:10 pm">female babies blue dots</span>
+Female_babies<- data.frame("Age_months"=c(0, 3, 9, 15, 20, 36),
+"Weight_pounds" = c(7.3, 13.3, 18.8, 22, 24.4, 31.5), "Length_inches" = c(19.4, 23.6, 27.6, 30.6, 32.6, 37)) 
+ 
+#str(Female_babies)
+Age_months<-Female_babies$Age_months 
+Weight_pounds<-Female_babies$Weight_pounds
+
+Length_inches<-Female_babies$Length_inches
+
+# Model 1
+M1= lm(Age_months~Weight_pounds+Length_inches,data=Female_babies) 
+summary(M1)
+plot(M1$residuals)
+print("Predicted female babys age who weighs 20 pounds and is 28 inches long.")  
+predict(M1,data.frame(Weight_pounds=20, Length_inches=28))
