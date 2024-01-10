@@ -1,0 +1,6 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/10/2024 0:33:35 am<span title="1/10/2024 0:33:35 am">Example</span>
+Heights_Inches<-c(61, 63, 64,64,64, 65, 65, 66, 68, 68, 68, 69,70,70, 71,72,72, 72, 73,75)
+hist(Heights_Inches, breaks=c(60,62,64,66,68,70,72,74,76), col="green", main="Heights", xlab="uniform bin sizes",  
+ylab="Frequency of heights in each bin")
