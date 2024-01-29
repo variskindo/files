@@ -1,0 +1,13 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/18/2024 23:47:56 pm<span title="1/18/2024 23:47:56 pm">A2</span>
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),main="Favorite Fruit_by_Nadia_Scott",xlab= "Number of people",ylab="Type of Fruit" ,
+col=c("Green","Orange","Yellow","Brown","Blue","Red"))# Saved at 1/22/2024 10:59:58 am<span title="1/22/2024 10:59:58 am">A2 </span>
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),
+main="Fav_Fruit_by_Shanel_Palacios_Sotelo",ylab="number of people",xlab="days",
+col=c("green","orange","yellow","brown","blue","red"))# Saved at 1/29/2024 0:08:55 am<span title="1/29/2024 0:08:55 am">BOX PLOTS LECTURE 4</span>
+M<-c(55, 30, 1, 10, 50, 80, 52, 45, 45, 35, 40, 31, 40, 100, 2, 54, 120)
+S<-c(95, 80, 1, 30, 50 ,60, 55, 70 ,55, 62, 101, 65, 69, 68, 66, 1)
+boxplot(M,S,horiz=TRUE,main="Side-by-side Boxplots",names=c("Boxplot for M","Boxplot for S"),col=c("purple","blue"))
