@@ -1,0 +1,15 @@
+# Saved at 2/21/2024 23:02:06 pm<span title="2/21/2024 23:02:06 pm">female baby</span>
+female_baby<-data.frame("Age"=c(0,3,9,15,20,36), "weight"=c(7.3,13.3,18.8,22,24.4,31.5), "length"=c(19.4,23.6,27.6,30.6,32.6,37))
+#str(female_baby)
+Age<-female_baby$Age
+weight<-female_baby$weight
+length<-female_baby$length
+#Model 1
+M1= lm(length~Age+weight, data=female_baby)#creates our multilinear regression model.
+print("Summary Of Model 1")
+summary(M1)
+plot(Age,length, pch = 16, col = "blue") #creates a scatter plot.
+abline(M1) #Adds the regression line to our scatter plot
+plot(female_baby$residuals)
+print("predicts a female baby's age who weighs 20 pounds and is 28 inches long.")
+predict(M1,data.frame(weight=20, length=28))
