@@ -1,0 +1,45 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 1/18/2024 23:47:56 pm<span title="1/18/2024 23:47:56 pm">A2</span>
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),main="Favorite Fruit_by_Nadia_Scott",xlab= "Number of people",ylab="Type of Fruit" ,
+col=c("Green","Orange","Yellow","Brown","Blue","Red"))# Saved at 1/22/2024 10:59:58 am<span title="1/22/2024 10:59:58 am">A2 </span>
+fav_fruit<-c(35,30,10,25,40,5)
+barplot(fav_fruit,horiz=TRUE,names.arg=c("Apple","Orange","Banana","Kiwi","Blueberry","Grape"),
+main="Fav_Fruit_by_Shanel_Palacios_Sotelo",ylab="number of people",xlab="days",
+col=c("green","orange","yellow","brown","blue","red"))# Saved at 1/29/2024 0:08:55 am<span title="1/29/2024 0:08:55 am">BOX PLOTS LECTURE 4</span>
+M<-c(55, 30, 1, 10, 50, 80, 52, 45, 45, 35, 40, 31, 40, 100, 2, 54, 120)
+S<-c(95, 80, 1, 30, 50 ,60, 55, 70 ,55, 62, 101, 65, 69, 68, 66, 1)
+boxplot(M,S,horiz=TRUE,main="Side-by-side Boxplots",names=c("Boxplot for M","Boxplot for S"),col=c("purple","blue"))
+# Saved at 1/31/2024 0:32:31 am<span title="1/31/2024 0:32:31 am">A3 (01/30/2024)</span>
+M<-c(6,1,3,4,7,8,3,5,6,8)
+S<-c(7,1,10,12, 0, 10, 15, 20, 60)
+boxplot(M,S,horiz=TRUE,main="Two Boxplots for Comparison_Shanel_Palacios_Sotelo",names=c("Boxplot for M","Boxplot for S"),col=c("orange","red"))
+# Saved at 2/14/2024 0:10:51 am<span title="2/14/2024 0:10:51 am">Lecture 7 QUESTION 1</span>
+cherry_tree<-data.frame("girth"=c(8.6,10.5,11.4,14,16.3),
+"height"=c(65,72,76,78,77), "volume"=c(10.3,16.4,21.4,35.5,42.6))
+girth<-cherry_tree$girth
+height<-cherry_tree$height
+volume<-cherry_tree$volume
+M1=lm(volume~girth+height, data=cherry_tree)
+summary(M1)
+plot(M1$residuals)
+print("Predicted the volume of a black cherry tree that has a girth of 18.2 inches and a height of 72 inches.")
+predict(M1, data.frame(girth=18.2, height=72))
+# Saved at 3/25/2024 10:47:32 am<span title="3/25/2024 10:47:32 am">WEEK MARCH 25 </span>
+data<-c(135, 110, 111, 133, 126, 119, 138, 124, 126, 125, 120, 120, 123, 131, 128, 119, 135, 123, 137, 114, 119, 130, 125, 136, 125, 121, 130, 132, 113, 130)
+p=.5
+q=.5
+n=250
+sd<-sqrt(p*q)
+se<-sd/sqrt(n)
+x1<-135/250; x2<-110/250; x3<-111/250; x4<-133/250; x5<-126/250; x6<-119/250; x7<-138/250; x8<-124/250; x9<-126/250; x10<-125/250; x11<-120/250; x12<-120/250; x13<-123/250; x14<-131/250; x15<-128/250; x16<-119/250; x17<-135/250; x18<-123/250; x19<-137/250; x20<-114/250; x21<-119/250; x22<-130/250; x23<-125/250; x24<-136/250; x25<-125/250; x26<-121/250; x27<-130/250; x28<-132/250; x29<-113/250; x30<-130/250;
+Sample_means<-c(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30)
+print("Sample means")
+Sample_means
+z1<-(x1-p)/se; z2<-(x2-p)/se; z3<-(x3-p)/se; z4<-(x4-p)/se; z5<-(x5-p)/se; z6<-(x6-p)/se; z7<-(x7-p)/se; z8<-(x8-p)/se; z9<-(x9-p)/se; z10<-(x10-p)/se; z11<-(x11-p)/se; z12<-(x12-p)/se; z13<-(x13-p)/se; z14<-(x14-p)/se; z15<-(x15-p)/se; z16<-(x16-p)/se; z17<-(x17-p)/se; z18<-(x18-p)/se; z19<-(x19-p)/se; z20<-(x20-p)/se; z21<-(x21-p)/se; z22<-(x22-p)/se; z23<-(x23-p)/se; z24<-(x24-p)/se; z25<-(x25-p)/se; z26<-(x26-p)/se; z27<-(x27-p)/se; z28<-(x28-p)/se; z29<-(x29-p)/se; z30<-(x30-p)/se; Sample_zscores<-c(z1, z2, z3, z4, z5, z6, z7, z8, z9, z10, z11, z12, z13, z14,z15, z16, z17, z18, z19, z20, z22, z23, z24, z25, z26, z27, z28, z29, z30)
+print("Sample z-scores")
+Sample_zscores
+hist(Sample_means, breaks=c(.44,.46,.48,.50,.52,.54,.56))
+hist(Sample_zscores, freq=FALSE, breaks=c(-3,-2,-1,0,1,2, 3))
+curve(dnorm(x, mean=0, sd=1), col= "blue", add=TRUE)
