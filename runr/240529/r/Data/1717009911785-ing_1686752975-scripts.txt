@@ -1,0 +1,420 @@
+# Saved at 8/3/2023 20:36:52 pm<span title="8/3/2023 20:36:52 pm">Goles por partido</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+obs[obs==NA]<-NA# Saved at 8/4/2023 9:12:51 am<span title="8/4/2023 9:12:51 am">Avance viernes 4_8</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x,main = "Goles de River en cada partido de la liga", xlab = "Goles", ylab = "Frecuencia")
+text(barp,x,labels=x)
+#x1<-mean(x)
+pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 9:23:43 am<span title="8/4/2023 9:23:43 am">Ms nuevo</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 11:32:52 am<span title="8/4/2023 11:32:52 am">Viernes Mava</span>
+#Data=../r/230803/runr-ing_1686752975-Goles por partido.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, y=c(0,12),main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x, pos=3,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')# Saved at 8/4/2023 11:43:16 am<span title="8/4/2023 11:43:16 am">Mava</span>
+#Data=../r/230804/runr-ing_1686752975-Goles viernes.xlsx
+#Sheet=1
+print(obs) #display the data
+#Enviamos los datos a un vector
+x<-obs$Frecuencia
+print(x)
+#Hacemos un grfico de barras de la frecuencia absoluta de Goles por partido
+barp<-barplot(x, y=c(0,12), main="Goles de River en el campeonato", xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barp,x,pos=3,labels=x)
+#x1<-mean(x)
+#pie(x, labels=x,main='Grfico de pastel')# Saved at 8/7/2023 18:22:43 pm<span title="8/7/2023 18:22:43 pm">Goles River-Talleres</span>
+#Data=../r/230807/runr-ing_1686752975-Datos goles River Talleres.xlsx
+#Sheet=1
+print(obs) #display the data
+
+#Tabla de Frecuencias Absolutas de Goles de River
+River<-table(obs$RIVER)
+print(River)
+#Tabla de Frecuencias Absolutas de Goles de Talleres
+Talleres<-table(obs$TALLERES)
+print(Talleres)
+
+#Promdio de Goles de cada equipo
+PromRiver<-mean(obs$RIVER)
+PromTalleres<-mean(obs$TALLERES)
+print(PromRiver)
+print(PromTalleres)
+
+#Comando para que muestre ambos grficos de cada tipo, uno al lado del otro
+par(mfrow = c(1, 2))
+
+#Grfico de barras de Goles por partido de River
+barRiver<-barplot(River, col=rainbow(5),density=50,y=c(0,12),main="Goles de River por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barRiver,River,pos=3,labels=River)
+
+#Grfico de barras de Goles por partido de Talleres
+barTalleres<-barplot(Talleres, col=rainbow(5),density=50,y=c(0,12),main="Goles de Talleres por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barTalleres,Talleres,pos=3,labels=Talleres)
+
+#Grfico circular River
+etiquetas <- paste0(River, " = ",round(100 * River/sum(River), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)
+
+#Grfico circular Talleres
+etiquetas <- paste0(Talleres, " = ",round(100 * Talleres/sum(Talleres), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)# Saved at 8/7/2023 18:47:20 pm<span title="8/7/2023 18:47:20 pm">Goles River Talleres completo</span>
+#Data=../r/230807/runr-ing_1686752975-Datos goles River Talleres.xlsx
+#Sheet=1
+print(obs) #display the data
+
+#Tabla de Frecuencias Absolutas de Goles de River
+River<-table(obs$RIVER)
+print(River)
+#Tabla de Frecuencias Absolutas de Goles de Talleres
+Talleres<-table(obs$TALLERES)
+print(Talleres)
+
+RiverTalleres <- matrix(c(River,Talleres),
+            nrow=2,byrow=TRUE)
+rownames(RiverTalleres) <- c('Goles de River', 'Goles de Talleres')
+colnames(RiverTalleres) <- c('0', '1','2','3','4')
+print(RiverTalleres)
+
+#Promdio de Goles de cada equipo
+PromRiver<-mean(obs$RIVER)
+PromTalleres<-mean(obs$TALLERES)
+print(PromRiver)
+print(PromTalleres)
+
+#Comando para que muestre ambos grficos de cada tipo, uno al lado del otro
+par(mfrow = c(1, 2))
+
+#Grfico de barras de Goles por partido de River
+barRiver<-barplot(River, col=rainbow(5),density=50,y=c(0,12),main="Goles de River por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barRiver,River,pos=3,labels=River)
+
+#Grfico de barras de Goles por partido de Talleres
+barTalleres<-barplot(Talleres, col=rainbow(5),density=50,y=c(0,12),main="Goles de Talleres por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barTalleres,Talleres,pos=3,labels=Talleres)
+
+#Grfico circular River
+etiquetas <- paste0(River, " = ",round(100 * River/sum(River), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)
+
+#Grfico circular Talleres
+etiquetas <- paste0(Talleres, " = ",round(100 * Talleres/sum(Talleres), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)
+
+#Grfico de barras comparativo
+barRV<-barplot(RiverTalleres,beside=TRUE,ylim=c(0,12),xlab='Goles por partido',ylab='Frecuencia',name=c("0","1","2","3","4"),col=c('red', 'black'), density=50)
+ legend('topleft', legend=rownames(RiverTalleres), bty='n',fill=c("red", "black"), density=50)
+ 
+ 
+ text(x=barRV, y=RiverTalleres, pos=3, cex=0.8, label=RiverTalleres)# Saved at 8/8/2023 9:06:56 am<span title="8/8/2023 9:06:56 am">Primeros pasos en R</span>
+#Data=../r/230807/runr-ing_1686752975-Datos goles River Talleres.xlsx
+#Sheet=1
+#print(obs) #display the data
+obs
+#Tabla de Frecuencias Absolutas de Goles de River
+River<-table(obs$RIVER)
+River
+#Tabla de Frecuencias Absolutas de Goles de Talleres
+Talleres<-table(obs$TALLERES)
+Talleres
+
+RiverTalleres <- matrix(c(River,Talleres),
+            nrow=2,byrow=TRUE)
+rownames(RiverTalleres) <- c('Goles de River', 'Goles de Talleres')
+colnames(RiverTalleres) <- c('0', '1','2','3','4')
+RiverTalleres
+
+#Promdio de Goles de cada equipo
+PromRiver<-mean(obs$RIVER)
+PromTalleres<-mean(obs$TALLERES)
+PromRiver
+PromTalleres
+
+#Mediana de los goles de cada equipo
+MedianaRiver<-median(obs$RIVER)
+MedianaTalleres<-median(obs$TALLERES)
+MedianaRiver
+MedianaTalleres
+
+#Comando para que muestre ambos grficos de cada tipo, uno al lado del otro
+par(mfrow = c(1, 2))
+
+#Grfico de barras de Goles por partido de River
+barRiver<-barplot(River, col=rainbow(5),density=50,y=c(0,12),main="Goles de River por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barRiver,River,pos=3,labels=River)
+
+#Grfico de barras de Goles por partido de Talleres
+barTalleres<-barplot(Talleres, col=rainbow(5),density=50,y=c(0,12),main="Goles de Talleres por partido",xlab="Cantidad de goles por partido", ylab = "Frecuencia")
+text(barTalleres,Talleres,pos=3,labels=Talleres)
+
+#Grfico circular River
+etiquetas <- paste0(River, " = ",round(100 * River/sum(River), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)
+
+#Grfico circular Talleres
+etiquetas <- paste0(Talleres, " = ",round(100 * Talleres/sum(Talleres), 2), "%")
+pie(River, labels=etiquetas, col=rainbow(5),density = 50)
+legend("topleft", legend = c("0 goles", "1 gol", "2 goles","3 goles", "4 goles"), fill =rainbow(5), density=50)
+
+#Grfico de barras comparativo
+barRV<-barplot(RiverTalleres,beside=TRUE,ylim=c(0,12),xlab='Goles por partido',ylab='Frecuencia',name=c("0","1","2","3","4"),col=c('red', 'black'), density=50)
+ legend('topleft', legend=rownames(RiverTalleres), bty='n',fill=c("red", "black"), density=50)
+ 
+ 
+ text(x=barRV, y=RiverTalleres, pos=3, cex=0.8, label=RiverTalleres)# Saved at 8/15/2023 15:02:55 pm<span title="8/15/2023 15:02:55 pm">Actividad 2</span>
+#Data=../r/230815/runr-ing_1686752975-GastosMedios por Etnia.xlsx
+#Sheet=1
+print(obs) #display the data
+x <- obs$GastosMedios
+x1<-obs$Origen
+GRAFICO<-barplot(x,names.arg = x1, ylim=c(0,50000), col=rainbow(8))
+text(GRAFICO, x ,pos=3, labels = x)# Saved at 8/15/2023 15:49:21 pm<span title="8/15/2023 15:49:21 pm">Actividad 3</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 3.xlsx
+#Sheet=1
+print(obs) #display the data
+x1 <- matrix(c(obs$Gastos,obs$Consumidores),
+            nrow=2,byrow=TRUE)
+rownames(x1) <- c('Gastos', 'Consumidores')
+
+a<-barplot(x1,beside=TRUE,ylim=c(0,60),xlab="Origen",
+ ylab='Porcentaje de Gastos y de consumidores',name=obs$Origen,col=c('blue', 'red'),
+ main="Porcentaje de Gastos y de consumidores por origen",cex.lab=1)
+
+
+legend('topleft', legend=rownames(x1), bty='n',fill=c("blue", "red"))
+
+ 
+ text(x=a, y=x1, pos=3, cex=0.8, label=x1)# Saved at 8/15/2023 18:05:34 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="8/15/2023 18:05:34 pm">Base de Datos 1</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 1.xls
+#Sheet=1
+print(obs) #display the data# Saved at 8/15/2023 18:06:59 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="8/15/2023 18:06:59 pm">Base de Datos 2</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 2.xlsx
+#Sheet=1
+print(obs) #display the data# Saved at 8/15/2023 18:37:11 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="8/15/2023 18:37:11 pm">Base de Datos 3</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 3.xlsx
+#Sheet=1
+print(obs) #display the data
+
+x1 <- matrix(c(obs$Gastos,obs$Consumidores),  nrow=2,byrow=TRUE)
+rownames(x1) <- c('Gastos', 'Consumidores')
+
+
+# Saved at 8/15/2023 18:43:29 pm<span class="glyphicon glyphicon-share" style="margin-right:4px"></span><span title="8/15/2023 18:43:29 pm">Base de Datos 4</span>
+#Data=../r/230808/runr-mava-455900245-Reciente.xlsx
+#Sheet=1
+print(obs) #display the data
+
+Gastos <- matrix(c(obs$PGHispanos,obs$PGNAmericanos),
+           nrow=2,byrow=TRUE)
+Gastos
+
+
+rownames(Gastos) <- c('PGHispanos', 'PGNAmericanos')
+colnames(Gastos) <- c('0-5', '6-12','13-17','18-21','22-50','51+')
+Gastos
+a<-barplot(Gastos,beside=TRUE,ylim=c(0,60000),xlab="cohorte",
+ ylab='Gastos promedio',name=c("0-5","6-12","13-17","18-21","22-50","51+"),col=c('blue', 'red'),cex.lab=0.8)
+ legend('topleft', legend=rownames(Gastos), bty='n',fill=c("blue", "red"))
+
+ text(x=a, y=Gastos, pos=3, cex=0.8, label=Gastos)
+# Saved at 8/15/2023 18:59:45 pm<span title="8/15/2023 18:59:45 pm">Actividad 1 resuelta</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 1.xls
+#Sheet=1
+#print(obs) #display the data
+
+x1 <- obs$Etnia
+tabla2 <- table(x1)
+tabla2<-prop.table(tabla2)
+tabla2<-prop.table(tabla2)*100
+
+xx<-barplot(tabla2,col=rainbow(8), main="Diagrama de Barras Porcentaje de consumidores por Etnia")
+text(x=xx, y=tabla2, pos=3, label=tabla2)
+
+obs1<-obs[obs$Etnia=="N.America",]
+GASTOSmedios<-mean(obs1$Gastos)
+GASTOSmedios
+# Saved at 8/15/2023 19:01:03 pm<span title="8/15/2023 19:01:03 pm">Actividad 2 resuelta</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 2.xlsx
+#Sheet=1
+print(obs) #display the data
+
+x <- obs$GastosMedios
+x1<-obs$Origen
+GRAFICO<-barplot(x,names.arg = x1, ylim=c(0,50000), col=rainbow(8))
+text(GRAFICO, x ,pos=3, labels = x)
+# Saved at 8/15/2023 19:08:04 pm<span title="8/15/2023 19:08:04 pm">Actividad 3 resuelta</span>
+#Data=../r/230815/runr-ing_1686752975-Base de Datos 3.xlsx
+#Sheet=1
+print(obs) #display the data
+
+x1 <- matrix(c(obs$Gastos,obs$Consumidores),  nrow=2,byrow=TRUE)
+rownames(x1) <- c('Gastos', 'Consumidores')
+x1
+
+a<-barplot(x1,beside=TRUE, col=c('blue','red'), name=obs$Origen, ylim=c(0,60))
+legend('topleft', legend=rownames(x1),  fill=c("blue", "red"))
+text(x=a, y=x1, pos=3, cex=0.8, label=x1)
+# Saved at 5/21/2024 12:28:31 pm<span title="5/21/2024 12:28:31 pm">Prueba 21_5 taller test</span>
+n=10
+
+set.seed(1)
+mediaMuestral=function(n)
+
+{muestra=rnorm(n,269,0.15)
+media=mean(muestra)
+return(media)}
+y=mediaMuestral(n)
+y
+y1=abs(y-269)
+z0=(abs(y-269))/(0.15/sqrt(n))
+z0
+
+muchasmedias=replicate(10000,mediaMuestral(n))
+#z=qnorm(0.05,lower.tail=FALSE)
+#e=z*0.15/sqrt(n)
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(abs(hx$breaks-269)<y1,0,3))
+prop=1-sum(abs(muchasmedias-269)<y1)/10000
+prop#intervalos=cut(muchasmedias,breaks=c(269-e,269+e))
+# Saved at 5/21/2024 12:39:49 pm<span title="5/21/2024 12:39:49 pm">21_5_TTHprueba2 </span>
+n=10
+set.seed(1)
+mediaMuestral=function(n)
+
+{muestra=rnorm(n,269,0.15)
+media=mean(muestra)
+return(media)}
+y=mediaMuestral(n)
+y
+y1=abs(y-269)
+#z0=(abs(y-269))/(0.15/sqrt(n))
+#z0
+set.seed(NULL) #anula la semilla anterior para que las 10000 no sean todas iguales cuando se corre el programa
+muchasmedias=replicate(10000,mediaMuestral(n))
+#z=qnorm(0.05,lower.tail=FALSE)
+#e=z*0.15/sqrt(n)
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(abs(hx$breaks-269)<y1,0,3))
+prop=1-sum(abs(muchasmedias-269)<y1)/10000
+prop#intervalos=cut(muchasmedias,breaks=c(269-e,269+e))
+# Saved at 5/21/2024 13:00:14 pm<span title="5/21/2024 13:00:14 pm">21_5_TTHprueba3</span>
+n=10
+set.seed(1)
+mediaMuestral=function(n)
+
+{muestra=rnorm(n,49,1)
+media=mean(muestra)
+return(media)}
+y=mediaMuestral(n)
+y
+y1=abs(y-49)
+y1
+z0=(abs(y-49))/(1/sqrt(n))
+z0
+set.seed(NULL) #anula la semilla anterior para que las 10000 no sean todas iguales cuando se corre el programa
+muchasmedias=replicate(10000,mediaMuestral(n))
+
+#z=qnorm(0.05,lower.tail=FALSE)
+#e=z*0.15/sqrt(n)
+hx=hist((muchasmedias-49)/(1/sqrt(n)),breaks=100)
+
+plot(hx,col=ifelse(abs((hx$breaks-49)/(1/sqrt(n)))<z0,0,2))
+#prop=1-sum(abs(muchasmedias-49)<y1)/10000
+#prop#intervalos=cut(muchasmedias,breaks=c(269-e,269+e))
+# Saved at 5/22/2024 11:54:03 am<span title="5/22/2024 11:54:03 am">22_5 prueba TTH</span>
+n=10
+set.seed(1)
+mediaMuestral=function(n)
+
+{muestra=rnorm(n,50,8)
+media=mean(muestra)
+return(media)}
+
+
+y=mediaMuestral(n)
+y
+
+#y1=abs(y-49)
+#y1
+#z0=(abs(y-49))/(1/sqrt(n))
+#z0
+set.seed(NULL)
+muchasmedias=replicate(10,mediaMuestral(n))
+muchasmedias
+z=qnorm(0.05,lower.tail=FALSE)
+e=z*8/sqrt(n)
+hx=hist(muchasmedias,breaks=100)
+plot(hx,col=ifelse(abs(hx$breaks-50)<e,0,3))
+cant=10-sum(abs(muchasmedias-50)<e)
+cant
+prop=1-sum(abs(muchasmedias-50)<e)/10
+prop
+# Saved at 5/29/2024 16:11:51 pm<span title="5/29/2024 16:11:51 pm">Actividad 1a</span>
+n=10
+x<-rnorm(n ,14.9 ,2)
+#print(x)
+Xbarra=mean(x)
+cat("Xbarra", paste(Xbarra,"
+")) #comando para que salga impreso el nombre 
+
+mediaest <- (Xbarra-15) / (2 / sqrt(n))
+z0 <-mediaest #media estandarizada de la muestra
+cat("z0", paste(z0,"
+"))
+
+pvalorexacto <- pnorm(z0)
+cat("pvalorexacto", paste(pvalorexacto,"
+")) #comando para que salga impreso el nombre 
+
+#valor_z <- qnorm(pvalorexacto, mean = 0, sd = 1)
+#valor_z
+
+#Creamos una funcin en la que se genere una muestra aleatoria con n=10 de una normal con media=15 y desvo=2. 
+#Luego la estandarizamos y le pedimos al programa que cada vez que llamamos a la funcn mediaMuestral, nos d el valor de la estandarizacin de la media de la muestra 
+
+mediaMuestral <- function(n) {
+   muestra <-rnorm(n ,15 ,2)
+   mean(muestra)
+   mediaest <- (mean(muestra) - 15) / (2 / sqrt(n))
+   return(mediaest)
+}
+
+
+#Replicamos ese procedimiento 10000 veces y cada muestra nos va a devolver el valor de la media muestral estandarizada
+
+muchasmedias=replicate(10000,mediaMuestral(n))
+#muchasmedias
+hx=hist(muchasmedias,breaks=50)
+plot(hx,col=ifelse(hx$breaks>z0,0,3)) #pedimos que grafique el histograma de las medias muestrales estandarizadas generadas y que pinte de verde aquellas que son menores que "y"
+pvalorsimulado=1-(sum(muchasmedias>z0)/10000) #p-valor simulado
+cat("pvalorsimulado", paste(pvalorsimulado,"\n")) #comando para que salga impreso el nombre 
+
+
