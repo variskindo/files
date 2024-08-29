@@ -1,0 +1,5 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 8/28/2024 19:36:12 pm<span title="8/28/2024 19:36:12 pm">qustion 4</span>
+least_favorite_day_of_the_week<-c(50,5,25,7,1,2,10)
+barplot(least_favorite_day_of_the_week,horiz=TRUE,names.arg=c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), main="Least Favorite Day of the week", xlab=  "Days", ylab= "Number of people",col=c("blue","yellow", "grey","pink","lightblue","white", "black"))
