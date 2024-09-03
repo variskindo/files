@@ -1,0 +1,9 @@
+# Saved at 8/26/2024 14:28:13 pm<span title="8/26/2024 14:28:13 pm">quiz 1 </span>
+Ages<-c(44, 52, 55, 58, 65, 65, 66, 70, 72, 75, 75, 80, 81, 82, 82, 83, 88, 89, 89, 90, 94, 99)
+hist(Ages, breaks=c(45, 55, 70, 90, 100), col="blue",
+main="Ages Ashley", xlab="nonuniform bin sizes",
+ylab="Density Histogram")# Saved at 9/2/2024 23:19:27 pm<span title="9/2/2024 23:19:27 pm">ages</span>
+Ages<-c(61, 63, 64,64,64, 65, 65, 66, 68, 68, 68, 69,70,70, 71,72,72, 72, 73,75)
+hist(Ages, breaks=c(60,62,64,66,68,70,72,74,76), col="darkmagenta",
+main="Ages Ashley", xlab="nonuniform bin sizes",
+ylab="Density Histogram")
