@@ -1,0 +1,9 @@
+# Saved at 9/2/2024 21:18:40 pm<span title="9/2/2024 21:18:40 pm">Fave Fruit</span>
+Fave_fruit<-c(35,30,10,25,40,5)
+barplot(Fave_fruit, horiz=TRUE, names.arg=c("apple","orange","Banana","Kiwi","Blueberry","Grape")
+main="Favorite Fruit_by_Nancy_Sanchez",
+xlab="Number of people", ylab="Type of Fruit",
+Col=c("green","Orange","Yellow","Brown","Blue","red"))
+# Saved at 9/4/2024 21:17:21 pm<span title="9/4/2024 21:17:21 pm">fruit data</span>
+favorite_fruit_by_roxiechavez<-c(35,30,10,25,40,5) 
+barplot(favorite_fruit_by_roxiechavez,horiz=TRUE, names.arg=c("apple", "orange", "banana", "kiwi", "blueberry", "grape"), main= "favorite fruit", xlab= "number of people", ylab= "type of fruit", col=c("green", "orange", "yellow", "brown", "blue", "red"))
