@@ -1,0 +1,41 @@
+# Saved at 9/10/2024 9:37:07 am<span title="9/10/2024 9:37:07 am">tes 1</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+# Definisikan portofolio awal
+aset <- c(1000, 1500, 2000, 2500, 3000) # Nilai aset dalam ribuan
+modal <- 1000 # Modal awal dalam ribuan
+
+# Definisikan skenario stres
+# Misalnya, penurunan nilai aset sebesar 20%
+penurunan_nilai_aset <- 0.20
+
+# Hitung dampak skenario stres pada portofolio
+nilai_aset_setelah_stres <- aset * (1 - penurunan_nilai_aset)
+total_nilai_aset_setelah_stres <- sum(nilai_aset_setelah_stres)
+kewajiban <- 1800 # Kewajiban dalam ribuan
+
+# Hitung modal setelah stres
+modal_setelah_stres <- modal + total_nilai_aset_setelah_stres - kewajiban
+
+# Simpan hasil analisis
+hasil <- list(
+  nilai_aset_setelah_stres = nilai_aset_setelah_stres,
+  total_nilai_aset_setelah_stres = total_nilai_aset_setelah_stres,
+  modal_setelah_stres = modal_setelah_stres
+)
+
+# Tampilkan hasil analisis
+print(hasil)
+
+# Rencana pemulihan
+rencana_pemulihan <- if (modal_setelah_stres < 0) {
+  "Kebutuhan pemulihan: Tambahkan modal atau kurangi kewajiban untuk menutupi kerugian."
+} else {
+  "Portofolio cukup kuat. Tidak ada tindakan pemulihan yang diperlukan."
+}
+
+# Tampilkan rencana pemulihan
+print(rencana_pemulihan)
