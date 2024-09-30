@@ -1,0 +1,10 @@
+# Saved at 9/30/2024 16:00:11 pm<span title="9/30/2024 16:00:11 pm">quiz 7 x</span>
+female_baby_age<- data.frame("weight"=c(7.3,13.3,18.8,22,24.4,31.5),"length" =c (19.4,23.6,27.6,30.6,32.6,37), "age" =c (0,3,9,15,20,36))
+weight<-female_baby_age$weight
+length<-female_baby_age$length
+age<-female_baby_age$age
+M1= lm(weight~age+length,data=female_baby_age) #Creates the linear regression model
+summary(M1) 
+plot(M1$residuals)
+print("Predicted the age of a females baby age that has a weight of 20 pounds and a length of 28 inches.")  
+predict(M1,data.frame(weight=20, length=28))
