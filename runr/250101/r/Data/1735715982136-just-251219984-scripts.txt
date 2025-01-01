@@ -1,0 +1,129 @@
+# Saved at 1/1/2025 13:27:32 pm<span title="1/1/2025 13:27:32 pm">Practice lang </span>
+# Install required libraries
+if (!require("car")) install.packages("car", dependencies = TRUE)
+if (!require("MASS")) install.packages("MASS", dependencies = TRUE)
+
+# Load libraries
+library(car)
+library(MASS)
+
+# Load the dataset
+# Replace "your_dataset.csv" with the path to your dataset
+# Example dataset provided: mtcars
+data <- mtcars
+
+# Brief summary of the dataset
+print("Dataset Summary:")
+summary(data)
+str(data)
+
+# Full Model: Use all predictors
+# Replace 'mpg' with your dependent variable and others with independent variables
+full_model <- lm(mpg ~ ., data = data)
+print("Summary of Full Model:")
+summary(full_model)
+
+# Reduced Model: Select significant variables based on the full model
+# Adjust this based on the significant variables from the summary of the full model
+reduced_model <- lm(mpg ~ wt + qsec + am, data = data)
+print("Summary of Reduced Model:")
+summary(reduced_model)
+
+# Check Assumptions for the Reduced Model
+
+# 1. Linearity
+print("Checking Linearity:")
+plot(reduced_model$fitted.values, residuals(reduced_model),
+     main = "Residuals vs Fitted",
+     xlab = "Fitted Values",
+     ylab = "Residuals")
+abline(h = 0, col = "red")
+
+# 2. Normality of Residuals
+print("Checking Normality of Residuals:")
+qqnorm(residuals(reduced_model), main = "Q-Q Plot")
+qqline(residuals(reduced_model), col = "red")
+shapiro_test <- shapiro.test(residuals(reduced_model))
+print(shapiro_test)
+
+# 3. Homoscedasticity
+print("Checking Homoscedasticity:")
+ncv_test <- ncvTest(reduced_model) # Breusch-Pagan test
+print(ncv_test)
+
+# 4. Multicollinearity
+print("Checking Multicollinearity:")
+vif_values <- vif(reduced_model)
+print(vif_values)
+
+# 5. Independence of Residuals
+print("Checking Independence of Residuals:")
+dw_test <- durbinWatsonTest(reduced_model)
+print(dw_test)
+
+# Remedial Measures if Assumptions are Violated
+print("Applying Box-Cox Transformation if necessary:")
+boxcox_output <- boxcox(reduced_model, lambda = seq(-2, 2, 0.1), main = "Box-Cox Transformation")
+best_lambda <- boxcox_output$x[which.max(boxcox_output$y)]
+print(paste("Best Lambda: ", best_lambda))# Saved at 1/1/2025 15:19:41 pm<span title="1/1/2025 15:19:41 pm">R</span>
+# Load necessary libraries
+if (!require(car)) {
+  install.packages("car", dependencies = TRUE)
+  library(car)
+}
+
+# Load the dataset
+dataset <- tryCatch({
+  read.csv("house_price_dataset.csv")  # Replace with the correct dataset name if needed
+}, error = function(e) {
+  stop("Failed to read the dataset. Ensure the file exists in the working directory and is in CSV format.")
+})
+
+# Display the first few rows and a summary of the dataset
+cat("\nFirst few rows of the dataset:\n")
+print(head(dataset))
+
+cat("\nDataset Summary:\n")
+print(summary(dataset))
+
+# Full model: Using all independent variables
+full_model <- tryCatch({
+  lm(House_Price ~ House_Size + Number_of_Bedrooms + Number_of_Bathrooms +
+       Distance_to_City_Center + Age_of_House, data = dataset)
+}, error = function(e) {
+  stop("Error building the full model. Check if the dataset contains the required columns.")
+})
+
+# Print the summary of the full model
+cat("\nFull Model Summary:\n")
+print(summary(full_model))
+
+# Reduced model: Automatic backward elimination for significant variables
+reduced_model <- tryCatch({
+  step(full_model, direction = "backward")
+}, error = function(e) {
+  stop("Error during backward elimination. Ensure the dataset is suitable for model reduction.")
+})
+
+# Print the summary of the reduced model
+cat("\nReduced Model Summary:\n")
+print(summary(reduced_model))
+
+# Diagnostic plots for the reduced model
+cat("\nGenerating diagnostic plots...\n")
+tryCatch({
+  par(mfrow = c(2, 2)) # Arrange plots in a 2x2 grid
+  plot(reduced_model)
+}, error = function(e) {
+  warning("Failed to generate diagnostic plots.")
+})
+
+# Check for multicollinearity using Variance Inflation Factor (VIF)
+cat("\nVariance Inflation Factor (VIF):\n")
+tryCatch({
+  print(vif(reduced_model))
+}, error = function(e) {
+  warning("Failed to calculate VIF. Ensure the car package is properly installed.")
+})
+
+cat("\nScript execution completed successfully.\n")
