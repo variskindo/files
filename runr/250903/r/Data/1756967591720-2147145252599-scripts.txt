@@ -1,0 +1,16 @@
+# Saved at 9/3/2025 23:33:11 pm<span title="9/3/2025 23:33:11 pm">Q2</span>
+# Data
+fruit <- c("Apple", "Orange", "Banana", "Kiwi", "Blueberry", "Grape")
+people <- c(35, 30, 10, 25, 40, 5)
+
+# Colors for each fruit
+colors <- c("green", "orange", "yellow", "brown", "blue", "red")
+
+# Horizontal barplot
+barplot(people,
+        names.arg = fruit,
+        horiz = TRUE,
+        col = colors,
+        main = "Favorite Fruit by Vy Chau",
+        xlab = "Number of people",
+        ylab = "Type of Fruit")
