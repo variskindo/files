@@ -1,0 +1,25 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 9/3/2025 21:32:40 pm<span title="9/3/2025 21:32:40 pm">A2</span>
+x <- rnorm(1000)
+str(x)
+hx <- hist(x, breaks=50, plot=FALSE)
+plot(hx, col=ifelse(abs(hx$breaks) < 1.65, 3, 2))
+# Please click 'Run Script' to execute this code
+# Survey Data
+fruit <- c("Apple", "Orange", "Banana", "Kiwi", "Blueberry", "Grape")
+people <- c(35, 30, 10, 25, 40, 5)
+
+# Assigning colors to each fruit
+colors <- c("green", "orange", "yellow", "brown", "blue", "red")
+
+# Create the barplot
+barplot(
+  people,
+  names.arg = fruit,
+  horiz = TRUE,
+  col = colors,
+  main = "Favorite Fruit_by_put_your_name_here",
+  xlab = "Number of people",
+  ylab = "Type of Fruit"
+)
