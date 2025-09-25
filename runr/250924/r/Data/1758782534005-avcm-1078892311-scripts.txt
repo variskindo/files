@@ -1,0 +1,27 @@
+# Saved at 8/30/2021 22:45:21 pm
+
+# Saved at 9/24/2025 23:42:13 pm<span title="9/24/2025 23:42:13 pm">L7Q2</span>
+# Dataset
+cherry_tree <- data.frame(
+girth = c(8.6, 10.5, 11.4, 14, 16.3), height = c(65, 72, 76, 78, 77),volume = c(10.3, 16.4, 21.4, 35.5, 42.6))
+# Data structure
+str(cherry_tree)
+# Variables
+girth <- cherry_tree$girth
+height <- cherry_tree$height
+volume <- cherry_tree$volume
+# Linear regression model (Volume ~ Girth)
+Ml <- lm(volume ~ girth, data = cherry_tree)
+# Scatter plot with regression line
+plot(cherry_tree$girth, cherry_tree$volume,
+main = "Volume vs Girth of Black pCherry Trees",
+xlab = "Girth (inches)", ylab = "Volume (ft^3)",
+pch = 19, col = "blue")
+abline(Ml, col = "red", lwd = 2)
+# Model summary (R, Adjusted R, coefficients, residuals)
+summary(Ml)
+# Plot residuals (diagnostic plots)
+par(mfrow = c(2, 2))
+plot(Ml)
+par(mfrow = c(1, 1))
+# Predict the volume for a girth of 18.2 inches new_tree <- data.frame(girth=18.2)
