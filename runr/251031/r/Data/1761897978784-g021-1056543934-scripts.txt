@@ -1,0 +1,19 @@
+# Saved at 7/22/2018 8:35:52 am
+S<-NULL
+for(i in 1:100) {
+  x<-sample(0:100,4)
+  x<-x/sum(x)
+  S<-c(S, x[1]*x[2]+x[1]*x[3]+x[1]*x[4]+x[2]*x[3]+x[2]*x[4]+x[3]*x[4])
+}
+hist(S)
+
+# Saved at 7/22/2018 10:11:16 am
+S<-NULL
+x<-NULL
+for(i in 1:10^4) {
+  x<-sample(0:100,4, replace=TRUE)
+  x<-x/sum(x)
+  S<-c(S, x[1]*x[2]+x[1]*x[3]+x[1]*x[4]+x[2]*x[3]+x[2]*x[4]+x[3]*x[4])
+}
+hist(S)
+S[S > 3/8]
