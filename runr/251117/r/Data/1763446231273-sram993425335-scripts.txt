@@ -1,0 +1,45 @@
+# Saved at 11/17/2025 22:10:31 pm<span title="11/17/2025 22:10:31 pm">1</span>
+# Your data
+preTreat <- c(150,155,160,160,170,145,155,165,170,150,175,180,175,145,140,150,155,160,160,165,140,150,155,160,140,135,150,200,180,150)
+postTreat <- c(140,145,150,145,150,150,145,150,140,140,150,150,155,150,160,140,130,135,140,150,135,130,135,140,140,145,145,145,150,140)
+
+# Make numeric
+preTreat <- as.numeric(preTreat)
+postTreat <- as.numeric(postTreat)
+
+# Remove NA pairs just in case
+keep <- !is.na(preTreat) & !is.na(postTreat)
+preTreat_clean <- preTreat[keep]
+postTreat_clean <- postTreat[keep]
+
+# ---------------------------
+# a.) Boxplot (saved to file)
+# ---------------------------
+png("bp_boxplot.png", width=800, height=600)   # open graphics device
+boxplot(list(preTreat=preTreat_clean, postTreat=postTreat_clean),
+        main="Blood pressure before and after treatment",
+        names=c("preTreat", "postTreat"),
+        col=c("orange","red"),
+        ylab="Blood Pressure")
+dev.off()   # close graphics device
+
+print("Boxplot saved as 'bp_boxplot.png' in your working directory.")
+
+# ---------------------------
+# b.) Compute means and standard deviations
+# ---------------------------
+print("Number in our sample")
+length(preTreat_clean)
+print("Standard deviation of our before treatment group")
+sd(preTreat_clean)
+print("Standard deviation of our after treatment group")
+sd(postTreat_clean)
+print("Mean of our before treatment group")
+mean(preTreat_clean)
+print("Mean of our after treatment group")
+mean(postTreat_clean)
+
+# ---------------------------
+# c.) Paired two-sided t-test at alpha = 0.01
+# ---------------------------
+t.test(preTreat_clean, postTreat_clean, alternative="two.sided", paired=TRUE, conf.level=0.99)
